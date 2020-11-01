@@ -64,7 +64,8 @@
     }
   },
   "lint-staged": {
-    "*.(ts|tsx)$": "eslint \"src/**/*.{ts,tsx}\" --cache --fix"
+    "*.ts": "eslint \"src/**/*.ts\" --cache --fix",
+    "*.tsx": "eslint \"src/**/*.tsx\" --cache --fix"
   },
   "jest": {
     "preset": "react-native"
