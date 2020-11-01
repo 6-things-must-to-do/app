@@ -6,6 +6,14 @@ declare module '@stmt/application' {
   namespace Style {
     type Mode = 'dark' | 'light';
 
+    interface TextTheme {
+      default: string;
+      warn: string;
+      success: string;
+      tint: string;
+      outfocus: string;
+    }
+
     interface STMTTheme {
       primary: string;
       secondary: string;
@@ -13,11 +21,7 @@ declare module '@stmt/application' {
       warn: string;
       card: string;
       outfocus: string;
-      text: {
-        default: string;
-        warn: string;
-        success: string;
-      };
+      text: TextTheme;
     }
   }
 }

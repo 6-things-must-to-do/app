@@ -25,6 +25,8 @@ const GlobalTheme = (props: Props) => {
         default: COLORS.SUB_WHITE,
         warn: COLORS.SUB_RED,
         success: COLORS.MAIN_GREEN,
+        tint: COLORS.MAIN_GREEN,
+        outfocus: COLORS.MAIN_GREY,
       },
     },
     light: {
@@ -38,6 +40,8 @@ const GlobalTheme = (props: Props) => {
         default: COLORS.SUB_BLACK,
         warn: COLORS.SUB_RED,
         success: COLORS.MAIN_GREEN,
+        tint: COLORS.MAIN_TURQUOISE,
+        outfocus: COLORS.MAIN_GREY,
       },
     },
   };

@@ -7,7 +7,8 @@ STMT is cross platform application which is made of [React Native](https://react
 - [x] Typescript
 - [x] Redux
 - [x] Redux Saga
-- [ ] React Navigation
+- [x] React Navigation
+- [x] Styled Components
 - [ ] Fastlane
 - [ ] Sentry
 
