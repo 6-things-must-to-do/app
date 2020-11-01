@@ -33,3 +33,7 @@ or
 
 yarn ios
 ```
+
+## Author
+
+- [eunchai512](https://github.com/eunchai512)
