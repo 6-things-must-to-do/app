@@ -15,11 +15,11 @@ const GlobalTheme = (props: Props) => {
 
   const styleTheme: {[key in Style.Mode]: Style.STMTTheme} = {
     dark: {
-      primary: COLORS.SUB_BLACK,
+      primary: COLORS.MAIN_BLACK,
       secondary: COLORS.MAIN_TURQUOISE,
       tint: COLORS.MAIN_GREEN,
       warn: COLORS.SUB_RED,
-      card: COLORS.SUB_GRAY,
+      card: COLORS.SUB_BLACK,
       outfocus: COLORS.MAIN_GREY,
       text: {
         default: COLORS.SUB_WHITE,
