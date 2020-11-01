@@ -10,7 +10,7 @@ declare module '@stmt/redux-store' {
     isLoading: boolean;
   }
 
-  interface Store {
+  interface RootStore {
     auth: PersistPartial & AuthState;
     global: GlobalState;
   }
