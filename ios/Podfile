@@ -3,7 +3,6 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '10.0'
 
-pod 'Firebase/Analytics'
 pod 'GoogleSignIn', '~> 5.0.2'
 
 target 'STMT' do

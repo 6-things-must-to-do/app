@@ -1,4 +1,5 @@
 import useTheme from '@/hooks/useTheme';
+import mergeStyle from '@/utils/mergeStyle';
 import {Style} from '@stmt/application';
 import React, {ReactNode} from 'react';
 import {StyleProp, Text, TextProps, TextStyle} from 'react-native';
@@ -10,12 +11,23 @@ interface StyledTextProps extends TextProps {
 }
 
 const StyledText = (props: StyledTextProps) => {
-  const {color = 'default', fontSize = 16, ...textProps} = props;
+  const {
+    color = 'default',
+    fontSize = 16,
+    style: styleProps,
+    ...textProps
+  } = props;
+
   const theme = useTheme();
-  const style: StyleProp<TextStyle> = {
+  const defaultStyle: StyleProp<TextStyle> = {
     fontSize,
     color: theme.text[color]
   };
+
+  const style = styleProps
+    ? mergeStyle([defaultStyle], [styleProps])
+    : defaultStyle;
+
   return <Text style={style} {...textProps} />;
 };
 
