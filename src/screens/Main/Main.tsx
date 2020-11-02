@@ -4,7 +4,7 @@ import React from 'react';
 
 const Main = () => {
   return (
-    <StyledButton fullWidth>
+    <StyledButton>
       <StyledText>Hello</StyledText>
     </StyledButton>
   );
