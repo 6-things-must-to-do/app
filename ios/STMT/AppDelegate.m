@@ -55,4 +55,11 @@ static void InitializeFlipper(UIApplication *application) {
 #endif
 }
 
+// GOOGLE LOGIN
+- (BOOL)application:(UIApplication *)application
+    didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+  [FIRApp configure];
+  return YES;
+}
+
 @end
