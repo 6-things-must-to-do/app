@@ -1,11 +1,8 @@
+import LoginButton from '@/containers/LoginButton';
 import React from 'react';
-import {Text} from 'react-native';
-import CenterizedView from '@/components/CenterizedView';
 
-const Login: React.FC = () => (
-  <CenterizedView>
-    <Text>Hello World</Text>
-  </CenterizedView>
-);
+const Login = () => {
+  return <LoginButton />;
+};
 
 export default Login;
