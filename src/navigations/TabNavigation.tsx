@@ -11,23 +11,21 @@ export default function TabNavigation() {
     <Tab.Navigator>
       <Tab.Screen
         options={{
-          tabBarIcon: (props) => (
-            <FontAwesome5 {...props} name="user-friends" />
-          ),
+          tabBarIcon: (props) => <FontAwesome5 {...props} name="user-friends" />
         }}
         name="Social"
         component={Main}
       />
       <Tab.Screen
         options={{
-          tabBarIcon: (props) => <FontAwesome5 {...props} name="th-list" />,
+          tabBarIcon: (props) => <FontAwesome5 {...props} name="th-list" />
         }}
         name="Main"
         component={Main}
       />
       <Tab.Screen
         options={{
-          tabBarIcon: (props) => <MaterialIcons {...props} name="settings" />,
+          tabBarIcon: (props) => <MaterialIcons {...props} name="settings" />
         }}
         name="Setting"
         component={Main}

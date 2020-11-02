@@ -8,7 +8,7 @@ export type AuthAction = ReturnType<typeof authSetPartialData>;
 
 export default function reducer(
   state: AuthState = initialState,
-  action: AuthAction,
+  action: AuthAction
 ): AuthState {
   switch (action.type) {
     case SET_PARTIAL: {

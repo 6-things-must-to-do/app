@@ -1,7 +1,7 @@
 import {
   DefaultTheme,
   NavigationContainer,
-  Theme,
+  Theme
 } from '@react-navigation/native';
 import React, {ReactNode} from 'react';
 import * as R from 'ramda';
@@ -24,8 +24,8 @@ const NavigationTheme = (props: Props) => {
       card: theme.card,
       text: theme.text.default,
       border: theme.tint,
-      notification: theme.warn,
-    },
+      notification: theme.warn
+    }
   };
 
   return (

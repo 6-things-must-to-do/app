@@ -3,7 +3,7 @@ import {
   applyMiddleware,
   combineReducers,
   CombinedState,
-  Middleware,
+  Middleware
 } from 'redux';
 import {PersistConfig, persistReducer, persistStore} from 'redux-persist';
 import storage from '@react-native-community/async-storage';
@@ -16,23 +16,23 @@ import {all} from 'redux-saga/effects';
 
 const authPersistConfig: PersistConfig<AuthState> = {
   key: 'auth',
-  storage,
+  storage
 };
 
 const rootPersistConfig: PersistConfig<RootStore> = {
   storage,
   key: 'root',
-  whitelist: [],
+  whitelist: []
 };
 
 const rootReducer = combineReducers<RootStore>({
   auth: persistReducer<AuthState, AuthAction>(authPersistConfig, auth),
-  global,
+  global
 });
 
 const persistedReducer = persistReducer<CombinedState<RootStore>>(
   rootPersistConfig,
-  rootReducer,
+  rootReducer
 );
 
 function* rootSaga() {

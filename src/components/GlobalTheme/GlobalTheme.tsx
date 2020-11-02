@@ -26,8 +26,8 @@ const GlobalTheme = (props: Props) => {
         warn: COLORS.SUB_RED,
         success: COLORS.MAIN_GREEN,
         tint: COLORS.MAIN_GREEN,
-        outfocus: COLORS.MAIN_GREY,
-      },
+        outfocus: COLORS.MAIN_GREY
+      }
     },
     light: {
       primary: COLORS.SUB_WHITE,
@@ -41,9 +41,9 @@ const GlobalTheme = (props: Props) => {
         warn: COLORS.SUB_RED,
         success: COLORS.MAIN_GREEN,
         tint: COLORS.MAIN_TURQUOISE,
-        outfocus: COLORS.MAIN_GREY,
-      },
-    },
+        outfocus: COLORS.MAIN_GREY
+      }
+    }
   };
 
   const currentTheme = styleTheme[mode];

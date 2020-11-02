@@ -14,7 +14,7 @@ const StyledText = (props: StyledTextProps) => {
   const theme = useTheme();
   const style: StyleProp<TextStyle> = {
     fontSize,
-    color: theme.text[color],
+    color: theme.text[color]
   };
   return <Text style={style} {...textProps} />;
 };

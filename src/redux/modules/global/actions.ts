@@ -3,9 +3,9 @@ export const RESET_ERROR = 'GLOBAL/RESET_ERROR' as const;
 
 export const globalSetError = (e: any) => ({
   type: SET_ERROR,
-  payload: e,
+  payload: e
 });
 
 export const globalResetError = () => ({
-  type: RESET_ERROR,
+  type: RESET_ERROR
 });

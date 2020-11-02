@@ -6,10 +6,10 @@ export const LOGIN = 'AUTH/LOGIN' as const;
 
 export const authSetPartialData = (data: AuthState) => ({
   type: SET_PARTIAL,
-  payload: data,
+  payload: data
 });
 
 export const authLogin = (provider: Auth.Provider, appId: string) => ({
   type: LOGIN,
-  payload: {provider, appId},
+  payload: {provider, appId}
 });

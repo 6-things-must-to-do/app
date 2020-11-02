@@ -13,7 +13,7 @@ interface Props {
 const Loading = (props: Props) => {
   const theme = useTheme();
   const {isLoading} = useSelector<RootStore, GlobalState>(
-    (store) => store.global,
+    (store) => store.global
   );
   const {transparent = true} = props;
   const rgb = hexRgb(theme.primary);
