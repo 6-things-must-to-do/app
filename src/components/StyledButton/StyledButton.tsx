@@ -1,5 +1,6 @@
 import useTheme from '@/hooks/useTheme';
 import getShadowOption from '@/utils/getShadowOption';
+import mergeStyle from '@/utils/mergeStyle';
 import React, {ReactNode} from 'react';
 import {
   StyleProp,
@@ -10,8 +11,7 @@ import {
 
 interface Props extends TouchableOpacityProps {
   children?: ReactNode;
-  height?: number;
-  width?: number;
+  minWidth?: number;
   fullWidth?: boolean;
   shadowElevation?: number;
 }
@@ -19,25 +19,31 @@ interface Props extends TouchableOpacityProps {
 const StyledButton = (props: Props) => {
   const theme = useTheme();
   const {
-    height = 48,
-    width = 96,
+    minWidth = 96,
     fullWidth = false,
-    shadowElevation = 24,
+    shadowElevation = 5,
+    style: styleProps,
     ...touchableOpacityProps
   } = props;
 
   const shadowStyle = getShadowOption(shadowElevation);
 
-  const style: StyleProp<ViewStyle> = {
+  const defaultStyle: StyleProp<ViewStyle> = {
     borderColor: theme.tint,
     backgroundColor: theme.card,
+    padding: 16,
     borderRadius: 10,
-    width: fullWidth ? '100%' : width,
-    height,
+    minWidth,
+    alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
     ...shadowStyle
   };
+
+  if (fullWidth) defaultStyle.width = '100%';
+
+  let style = defaultStyle;
+  if (styleProps) style = mergeStyle([defaultStyle], [styleProps]);
 
   return <TouchableOpacity {...touchableOpacityProps} style={style} />;
 };

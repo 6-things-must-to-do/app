@@ -1,6 +1,12 @@
 declare module '@stmt/application' {
   namespace Auth {
     type Provider = 'google' | 'apple';
+
+    interface SocialData {
+      email: string;
+      nickname?: string;
+      id: string;
+    }
   }
 
   namespace Style {

@@ -7,17 +7,17 @@ import {globalSetError} from '../global/actions';
 import {authLogin, authSetPartialData} from './actions';
 
 function* login(action: ReturnType<typeof authLogin>) {
-  const {provider, appId} = action.payload;
+  const {provider, data} = action.payload;
   try {
-    const {data} = yield call(loginApi, provider, appId);
-    yield put(authSetPartialData(data));
+    const {data: response} = yield call(loginApi, provider, data);
+    yield put(authSetPartialData(response));
   } catch (e) {
     yield put(globalSetError(e));
   }
 }
 
-const loginApi = (provider: Auth.Provider, appId: string) =>
-  api().post(ENDPOINTS.LOGIN, {provider, appId});
+const loginApi = (provider: Auth.Provider, data: Auth.SocialData) =>
+  api().post(ENDPOINTS.LOGIN, {provider, ...data});
 
 export default function* authSaga() {
   yield takeLatest(LOGIN, login);

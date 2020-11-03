@@ -5,13 +5,9 @@ import React from 'react';
 
 const Main = () => {
   return (
-    <>
-      <StyledButton fullWidth>
-        <StyledText>Hello</StyledText>
-      </StyledButton>
-
-      <Setting />
-    </>
+    <StyledButton>
+      <StyledText>Hello</StyledText>
+    </StyledButton>
   );
 };
 

@@ -3,13 +3,17 @@ import * as R from 'ramda';
 import {
   globalResetError,
   globalSetError,
+  globalSetLoading,
   RESET_ERROR,
-  SET_ERROR
+  SET_ERROR,
+  SET_LOADING
 } from './actions';
 
 const initialState: GlobalState = {isLoading: false};
 
-type ActionTypes = ReturnType<typeof globalSetError | typeof globalResetError>;
+type ActionTypes = ReturnType<
+  typeof globalSetError | typeof globalResetError | typeof globalSetLoading
+>;
 
 export default function reducer(
   state = initialState,
@@ -22,6 +26,10 @@ export default function reducer(
 
     case RESET_ERROR: {
       return R.dissoc('error', state);
+    }
+
+    case SET_LOADING: {
+      return R.mergeDeepRight(state, {isLoading: action.payload});
     }
 
     default:
