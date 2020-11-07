@@ -1,10 +1,12 @@
 import {AuthState} from '@stmt/redux-store';
-import {authSetPartialData, SET_PARTIAL} from './actions';
+import {authReset, authSetPartialData, RESET, SET_PARTIAL} from './actions';
 import * as R from 'ramda';
 
 const initialState: AuthState = {};
 
-export type AuthAction = ReturnType<typeof authSetPartialData>;
+export type AuthAction = ReturnType<
+  typeof authSetPartialData | typeof authReset
+>;
 
 export default function reducer(
   state: AuthState = initialState,
@@ -13,6 +15,10 @@ export default function reducer(
   switch (action.type) {
     case SET_PARTIAL: {
       return R.mergeDeepRight(state, action.payload);
+    }
+
+    case RESET: {
+      return initialState;
     }
 
     default:

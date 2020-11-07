@@ -11,8 +11,10 @@ import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import auth, {AuthAction, authSaga} from './modules/auth';
 import global from './modules/global';
+import user from './modules/user';
 import {AuthState, RootStore} from '@stmt/redux-store';
 import {all} from 'redux-saga/effects';
+import globalSaga from './modules/global/saga';
 
 const authPersistConfig: PersistConfig<AuthState> = {
   key: 'auth',
@@ -27,7 +29,8 @@ const rootPersistConfig: PersistConfig<RootStore> = {
 
 const rootReducer = combineReducers<RootStore>({
   auth: persistReducer<AuthState, AuthAction>(authPersistConfig, auth),
-  global
+  global,
+  user
 });
 
 const persistedReducer = persistReducer<CombinedState<RootStore>>(
@@ -36,7 +39,7 @@ const persistedReducer = persistReducer<CombinedState<RootStore>>(
 );
 
 function* rootSaga() {
-  yield all([authSaga()]);
+  yield all([authSaga(), globalSaga()]);
 }
 
 export default () => {

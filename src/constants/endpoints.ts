@@ -6,3 +6,4 @@ export const BASE =
     : 'http://localhost:4000/api';
 
 export const LOGIN = '/auth/login' as const;
+export const MYPAGE = '/users/my-page' as const;

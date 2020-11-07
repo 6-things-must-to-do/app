@@ -10,8 +10,16 @@ declare module '@stmt/redux-store' {
     isLoading: boolean;
   }
 
+  interface UserState {
+    uuid?: string;
+    profileImage?: string;
+    email?: string;
+    nickname?: string;
+  }
+
   interface RootStore {
     auth: PersistPartial & AuthState;
     global: GlobalState;
+    user: UserState;
   }
 }

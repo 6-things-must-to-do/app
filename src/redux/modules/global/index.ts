@@ -1,6 +1,8 @@
 import {GlobalState} from '@stmt/redux-store';
 import * as R from 'ramda';
+import {RESET} from './actions';
 import {
+  globalReset,
   globalResetError,
   globalSetError,
   globalSetLoading,
@@ -12,7 +14,10 @@ import {
 const initialState: GlobalState = {isLoading: false};
 
 type ActionTypes = ReturnType<
-  typeof globalSetError | typeof globalResetError | typeof globalSetLoading
+  | typeof globalSetError
+  | typeof globalResetError
+  | typeof globalSetLoading
+  | typeof globalReset
 >;
 
 export default function reducer(
@@ -26,6 +31,10 @@ export default function reducer(
 
     case RESET_ERROR: {
       return R.dissoc('error', state);
+    }
+
+    case RESET: {
+      return initialState;
     }
 
     case SET_LOADING: {

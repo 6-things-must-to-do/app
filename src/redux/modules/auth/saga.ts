@@ -1,11 +1,18 @@
 import * as ENDPOINTS from '@/constants/endpoints';
-import {LOGIN} from './actions';
+import {CHECK_TOKEN, LOGIN} from './actions';
 import {api} from '@/utils/api';
 import {Auth} from '@stmt/application';
-import {put, call, takeLatest} from 'redux-saga/effects';
-import {globalSetError, globalSetLoading} from '../global/actions';
+import {put, call, takeLatest, select} from 'redux-saga/effects';
+import {
+  globalResetAll,
+  globalSetError,
+  globalSetLoading
+} from '../global/actions';
 import {authLogin, authSetPartialData} from './actions';
 import {AxiosError} from 'axios';
+import {AuthState, RootStore} from '@stmt/redux-store';
+import {userSetData} from '../user/actions';
+import {SagaError} from '@/utils/error';
 
 function* login(action: ReturnType<typeof authLogin>) {
   const body = action.payload;
@@ -24,8 +31,29 @@ function* login(action: ReturnType<typeof authLogin>) {
   }
 }
 
+function* checkToken() {
+  const {token} = yield select<(store: RootStore) => AuthState>(getAuthState);
+  try {
+    const {data} = yield call(checkTokenApi, token);
+
+    yield put(userSetData(data));
+  } catch (e) {
+    const error = new SagaError(e.message, globalResetAll);
+
+    yield put(globalResetAll());
+    yield put(globalSetError(error));
+  } finally {
+    yield put(globalSetLoading(false));
+  }
+}
+
 const loginApi = (body: Auth.SocialData) => api().post(ENDPOINTS.LOGIN, body);
+
+const getAuthState = (store: RootStore) => store.auth;
+
+const checkTokenApi = (token: string) => api(token).get(ENDPOINTS.MYPAGE);
 
 export default function* authSaga() {
   yield takeLatest(LOGIN, login);
+  yield takeLatest(CHECK_TOKEN, checkToken);
 }
