@@ -2,7 +2,7 @@ import {Auth} from '@stmt/application';
 import React from 'react';
 import Presenter from './Presenter';
 import {appleAuth} from '@invertase/react-native-apple-authentication';
-import {GoogleSignin, statusCodes} from 'react-native-google-signin';
+import {GoogleSignin} from '@react-native-community/google-signin';
 import {GOOGLE_IOS_CLIENT_ID} from '@/constants/string';
 import {useDispatch} from 'react-redux';
 import {authLogin} from '@/redux/modules/auth/actions';
@@ -54,13 +54,16 @@ const LoginButton = () => {
           data = await onPressGoogle();
           break;
         }
+
+        default:
+          throw new Error('Unhandled button');
       }
-      if (!data) throw new Error('Unhandled button');
+
+      console.log(data);
 
       dispatch(authLogin(type, data));
     } catch (e) {
-      console.log(e);
-      if (e.code === statusCodes.SIGN_IN_CANCELLED) {
+      if ('code' in e) {
         dispatch(globalSetLoading(false));
       }
     }

@@ -3,7 +3,7 @@ import {LOGIN} from './actions';
 import {api} from '@/utils/api';
 import {Auth} from '@stmt/application';
 import {put, call, takeLatest} from 'redux-saga/effects';
-import {globalSetError} from '../global/actions';
+import {globalSetError, globalSetLoading} from '../global/actions';
 import {authLogin, authSetPartialData} from './actions';
 
 function* login(action: ReturnType<typeof authLogin>) {
@@ -13,6 +13,8 @@ function* login(action: ReturnType<typeof authLogin>) {
     yield put(authSetPartialData(response));
   } catch (e) {
     yield put(globalSetError(e));
+  } finally {
+    yield put(globalSetLoading(false));
   }
 }
 
