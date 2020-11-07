@@ -5,21 +5,26 @@ import {Auth} from '@stmt/application';
 import {put, call, takeLatest} from 'redux-saga/effects';
 import {globalSetError, globalSetLoading} from '../global/actions';
 import {authLogin, authSetPartialData} from './actions';
+import {AxiosError} from 'axios';
 
 function* login(action: ReturnType<typeof authLogin>) {
-  const {provider, data} = action.payload;
+  const body = action.payload;
   try {
-    const {data: response} = yield call(loginApi, provider, data);
+    const {data: response} = yield call(loginApi, body);
     yield put(authSetPartialData(response));
   } catch (e) {
+    if (e.isAxiosError) {
+      console.error((e as AxiosError).toJSON());
+      console.error((e as AxiosError).response);
+    }
+
     yield put(globalSetError(e));
   } finally {
     yield put(globalSetLoading(false));
   }
 }
 
-const loginApi = (provider: Auth.Provider, data: Auth.SocialData) =>
-  api().post(ENDPOINTS.LOGIN, {provider, ...data});
+const loginApi = (body: Auth.SocialData) => api().post(ENDPOINTS.LOGIN, body);
 
 export default function* authSaga() {
   yield takeLatest(LOGIN, login);

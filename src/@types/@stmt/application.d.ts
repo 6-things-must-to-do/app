@@ -5,6 +5,8 @@ declare module '@stmt/application' {
     interface SocialData {
       email: string;
       nickname?: string;
+      profileImage?: string;
+      provider: Provider;
       id: string;
     }
   }
@@ -18,15 +20,20 @@ declare module '@stmt/application' {
       success: string;
       tint: string;
       outfocus: string;
+      contrast: string;
     }
 
-    interface STMTTheme {
+    interface DimensionTheme {
       primary: string;
       secondary: string;
+      contrast: string;
       tint: string;
       warn: string;
       card: string;
       outfocus: string;
+    }
+
+    interface STMTTheme extends DimensionTheme {
       text: TextTheme;
     }
   }

@@ -9,7 +9,7 @@ export const authSetPartialData = (data: AuthState) => ({
   payload: data
 });
 
-export const authLogin = (provider: Auth.Provider, data: Auth.SocialData) => ({
+export const authLogin = (data: Auth.SocialData) => ({
   type: LOGIN,
-  payload: {provider, data}
+  payload: data
 });

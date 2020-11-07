@@ -1,5 +1,5 @@
 import StyledView from '@/components/StyledView';
-import LoginButton from '@/containers/LoginButton';
+import LoginButtons from '@/containers/LoginButtons';
 import withLayout from '@/hocs/withLayout';
 import React from 'react';
 import styled from 'styled-components/native';
@@ -7,7 +7,7 @@ import styled from 'styled-components/native';
 const Login = () => {
   return (
     <Wrapper>
-      <LoginButton />
+      <LoginButtons />
     </Wrapper>
   );
 };

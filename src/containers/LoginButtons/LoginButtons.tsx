@@ -9,7 +9,7 @@ import {authLogin} from '@/redux/modules/auth/actions';
 import {Platform} from 'react-native';
 import {globalSetLoading} from '@/redux/modules/global/actions';
 
-const LoginButton = () => {
+const LoginButtons = () => {
   const dispatch = useDispatch();
 
   const onPressApple = async (): Promise<Auth.SocialData> => {
@@ -23,7 +23,7 @@ const LoginButton = () => {
     const {email, user, fullName} = appleAuthRequestResponse;
     if (!email) throw new Error('Email is required');
 
-    const ret: Auth.SocialData = {email, id: user};
+    const ret: Auth.SocialData = {email, id: user, provider: 'apple'};
     if (fullName?.nickname) ret.nickname = fullName.nickname;
 
     return ret;
@@ -32,10 +32,11 @@ const LoginButton = () => {
   const onPressGoogle = async (): Promise<Auth.SocialData> => {
     GoogleSignin.configure({iosClientId: GOOGLE_IOS_CLIENT_ID});
     const {
-      user: {email, name, id}
+      user: {email, name, id, photo}
     } = await GoogleSignin.signIn();
-    const ret: Auth.SocialData = {email, id};
+    const ret: Auth.SocialData = {email, id, provider: 'google'};
     if (name) ret.nickname = name;
+    if (photo) ret.profileImage = photo;
 
     return ret;
   };
@@ -59,9 +60,7 @@ const LoginButton = () => {
           throw new Error('Unhandled button');
       }
 
-      console.log(data);
-
-      dispatch(authLogin(type, data));
+      dispatch(authLogin(data));
     } catch (e) {
       if ('code' in e) {
         dispatch(globalSetLoading(false));
@@ -77,4 +76,4 @@ const LoginButton = () => {
   );
 };
 
-export default LoginButton;
+export default LoginButtons;

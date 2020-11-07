@@ -16,6 +16,7 @@ import Loading from './containers/Loading';
 import NavigationTheme from './components/NavigationTheme';
 import {StatusBar} from 'react-native';
 import RootNavigation from './navigations';
+import GlobalErrorHandler from './containers/GlobalErrorHandler';
 
 const App = (): ReactNode => {
   const {store, persistor} = getPersistedStore();
@@ -29,6 +30,7 @@ const App = (): ReactNode => {
             <RootNavigation />
           </NavigationTheme>
           <ColoredSafeArea />
+          <GlobalErrorHandler />
           <Loading />
         </GlobalTheme>
       </PersistGate>

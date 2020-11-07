@@ -17,12 +17,14 @@ const GlobalTheme = (props: Props) => {
     dark: {
       primary: COLORS.MAIN_BLACK,
       secondary: COLORS.MAIN_TURQUOISE,
+      contrast: COLORS.SUB_WHITE,
       tint: COLORS.MAIN_GREEN,
       warn: COLORS.SUB_RED,
       card: COLORS.SUB_BLACK,
       outfocus: COLORS.MAIN_GREY,
       text: {
         default: COLORS.SUB_WHITE,
+        contrast: COLORS.SUB_BLACK,
         warn: COLORS.SUB_RED,
         success: COLORS.MAIN_GREEN,
         tint: COLORS.MAIN_GREEN,
@@ -32,12 +34,14 @@ const GlobalTheme = (props: Props) => {
     light: {
       primary: COLORS.SUB_WHITE,
       secondary: COLORS.MAIN_GREEN,
+      contrast: COLORS.MAIN_BLACK,
       tint: COLORS.MAIN_TURQUOISE,
       warn: COLORS.SUB_RED,
       card: COLORS.SUB_WHITE,
       outfocus: COLORS.MAIN_GREY,
       text: {
         default: COLORS.SUB_BLACK,
+        contrast: COLORS.SUB_WHITE,
         warn: COLORS.SUB_RED,
         success: COLORS.MAIN_GREEN,
         tint: COLORS.MAIN_TURQUOISE,
