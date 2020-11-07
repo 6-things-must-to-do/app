@@ -1,4 +1,4 @@
-import useTheme from '@/hooks/useTheme';
+import mergeStyle from '@/utils/mergeStyle';
 import {Style} from '@stmt/application';
 import React, {ReactNode} from 'react';
 import {ScrollViewProps, StyleProp, ViewStyle, ScrollView} from 'react-native';
@@ -7,25 +7,24 @@ interface Props extends ScrollViewProps {
   children?: ReactNode;
   fullWidth?: boolean;
   width?: number;
-  height?: number;
   border?: keyof Style.TextTheme;
 }
 
 const StyledList = (props: Props) => {
-  const {fullWidth = false, width = 96, children, ...scrollViewProps} = props;
+  const {
+    fullWidth = true,
+    width = '90%',
+    children,
+    style: styleProps,
+    ...scrollViewProps
+  } = props;
 
-  const theme = useTheme();
-
-  const style: StyleProp<ViewStyle> = {
-    borderColor: theme.primary,
-    backgroundColor: theme.card,
-    width: fullWidth ? '100%' : width,
-    borderBottomColor: 'black',
-    borderLeftColor: 'black',
-    borderRightColor: 'black',
-    borderTopColor: 'black',
-    borderWidth: 1
+  const defaultStyle: StyleProp<ViewStyle> = {
+    width: fullWidth ? '100%' : width
   };
+
+  let style = defaultStyle;
+  if (styleProps) style = mergeStyle([defaultStyle], [styleProps]);
 
   return (
     <ScrollView {...scrollViewProps} style={style}>

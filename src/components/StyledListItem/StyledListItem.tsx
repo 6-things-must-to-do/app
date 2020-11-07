@@ -1,29 +1,29 @@
 import useTheme from '@/hooks/useTheme';
 import {Style} from '@stmt/application';
 import React from 'react';
+import {TouchableOpacityProps} from 'react-native';
 import styled from 'styled-components/native';
 
-interface Props {
+interface Props extends TouchableOpacityProps {
   title: string;
   description?: string;
   titleColor?: keyof Style.TextTheme;
   descriptionColor?: keyof Style.TextTheme;
-  onPress: () => void;
 }
 
 const StyledListItem = (props: Props) => {
   const {
     title,
-    description,
+    description = '',
     onPress,
     titleColor = 'default',
-    descriptionColor = 'outfocus'
+    descriptionColor = 'tint'
   } = props;
 
   const theme = useTheme();
 
   return (
-    <Wrapper onPress={onPress}>
+    <Wrapper borderColor={theme.secondary} onPress={onPress}>
       <Title color={theme.text[titleColor]}>{title}</Title>
       {description ? (
         <Description color={theme.text[descriptionColor]}>
@@ -36,14 +36,20 @@ const StyledListItem = (props: Props) => {
 
 export default StyledListItem;
 
-const Wrapper = styled.TouchableOpacity`
+const Wrapper = styled.TouchableOpacity<{borderColor: string}>`
+  ${(props) => `
   width: 100%;
+  padding-vertical: 8px;
+  border-bottom-width: 1px;
+  border-bottom-color: ${props.borderColor}
+`}
 `;
 
 const Title = styled.Text<{color: string}>`
   ${(props) => `
   color: ${props.color}
-  font-size: 16;
+  margin-bottom: 4px;
+  font-size: 18px;
   font-weight: bold;
 `}
 `;
@@ -51,27 +57,6 @@ const Title = styled.Text<{color: string}>`
 const Description = styled.Text<{color: string}>`
   ${(props) => `
     color: ${props.color};
-    font-size: 8;
-    font-weight: bold;
+    font-size: 14px;
 `}
 `;
-
-/*
-  interface Props extends TextProps {
-    color?: keyof Style.TextTheme;
-    fontSize?: number;
-};
-
-const StyledListItem = (props: Props) => {
-    const {color = 'default', fontSize = 16, ...textProps} = props;
-
-    const theme = useTheme();
-
-    const style: StyleProp<TextStyle> = {
-        fontSize,
-        color: theme.text[color]
-    };
-
-    return <Text {...textProps} style={style} />;
-};
-*/

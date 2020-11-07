@@ -6,7 +6,7 @@ import StyledText from '../StyledText';
 import StyledView from '../StyledView';
 import useTheme from '@/hooks/useTheme';
 
-interface ConfirmProps extends Partial<ModalProps> {
+export interface ConfirmModalProps extends Partial<ModalProps> {
   onConfirm?: () => void;
   onCancel?: () => void;
   information?: string;
@@ -19,7 +19,7 @@ interface ConfirmProps extends Partial<ModalProps> {
   cancelTextColor?: keyof Style.TextTheme;
 }
 
-const ConfirmModal = (props: ConfirmProps) => {
+const ConfirmModal = (props: ConfirmModalProps) => {
   const theme = useTheme();
   const {
     confirmText = 'Confirm',
