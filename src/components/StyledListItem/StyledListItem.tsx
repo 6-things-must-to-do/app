@@ -57,7 +57,7 @@ const TextBox = styled.View`
 `;
 
 const AddOnBox = styled.View`
-  flex: 1;
+  flex: 1.5;
 `;
 
 const Title = styled.Text<{color: string}>`

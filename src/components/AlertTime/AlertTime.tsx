@@ -12,9 +12,11 @@ const AlertTime = () => {
   if (!setAlert || hasSetAlertNull(setAlert)) return null;
 
   const {hour, minute} = setAlert;
+
   const division = hour > 12 ? 'PM' : 'AM';
   const h =
     division === 'AM' ? intToClockString(hour) : intToClockString(hour % 12);
+
   const m = intToClockString(minute);
 
   const string = `${division} ${h} : ${m}`;

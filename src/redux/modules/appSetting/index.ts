@@ -1,5 +1,12 @@
 import {AppSettingState} from '@stmt/redux-store';
-import {appSetReset, appSetSetData, RESET, SET_DATA} from './actions';
+import {
+  appSetLockHours,
+  appSetReset,
+  appSetSetData,
+  RESET,
+  SET_DATA,
+  SET_LOCK_HOUR
+} from './actions';
 import * as R from 'ramda';
 
 const initialState: AppSettingState = {
@@ -7,7 +14,7 @@ const initialState: AppSettingState = {
 };
 
 export type AppSettingAction = ReturnType<
-  typeof appSetReset | typeof appSetSetData
+  typeof appSetReset | typeof appSetSetData | typeof appSetLockHours
 >;
 
 export default function reducer(
@@ -17,6 +24,10 @@ export default function reducer(
   switch (action.type) {
     case RESET: {
       return initialState;
+    }
+
+    case SET_LOCK_HOUR: {
+      return R.mergeDeepRight(state, {lock: action.payload});
     }
 
     case SET_DATA: {
