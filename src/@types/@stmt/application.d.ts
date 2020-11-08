@@ -1,4 +1,33 @@
 declare module '@stmt/application' {
+  namespace Data {
+    interface TaskAlertSetting {
+      hour: number;
+      minute: number;
+      offset: number;
+    }
+
+    interface UserBase {
+      uuid: string;
+      profileImage: string;
+      email: string;
+      nickname: string;
+    }
+
+    interface UserProfile extends UserBase {
+      taskAlertSetting: TaskAlertSetting;
+    }
+  }
+
+  namespace APIResponse {
+    interface MyPage extends Omit<Data.UserProfile, 'taskAlertSetting'> {
+      taskAlertSetting?: Data.TaskAlertSetting;
+    }
+
+    interface SetTaskAlert {
+      taskAlertSetting: Data.TaskAlertSetting;
+    }
+  }
+
   namespace Auth {
     type Provider = 'google' | 'apple';
 
@@ -8,6 +37,14 @@ declare module '@stmt/application' {
       profileImage?: string;
       provider: Provider;
       id: string;
+    }
+  }
+
+  namespace AppSetting {
+    type Day = 'MON' | 'TUE' | 'WED' | 'THU' | 'FRI' | 'SAT' | 'SUN';
+
+    interface SetAlert extends Data.TaskAlertSetting {
+      day?: Set<Day>;
     }
   }
 

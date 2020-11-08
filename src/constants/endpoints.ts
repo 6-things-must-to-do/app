@@ -7,3 +7,4 @@ export const BASE =
 
 export const LOGIN = '/auth/login' as const;
 export const MYPAGE = '/users/my-page' as const;
+export const SETTING = '/settings/task' as const;

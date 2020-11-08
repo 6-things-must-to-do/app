@@ -3,7 +3,7 @@ import React from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Setting from '@/screens/Setting';
+import SettingStack from './SettingStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -28,8 +28,8 @@ export default function TabNavigation() {
         options={{
           tabBarIcon: (props) => <MaterialIcons {...props} name="settings" />
         }}
-        name="Setting"
-        component={Setting}
+        name="SettingStack"
+        component={SettingStack}
       />
     </Tab.Navigator>
   );

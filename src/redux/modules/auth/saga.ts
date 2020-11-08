@@ -1,7 +1,7 @@
 import * as ENDPOINTS from '@/constants/endpoints';
 import {CHECK_TOKEN, LOGIN} from './actions';
 import {api} from '@/utils/api';
-import {Auth} from '@stmt/application';
+import {APIResponse, Auth} from '@stmt/application';
 import {put, call, takeLatest, select} from 'redux-saga/effects';
 import {
   globalResetAll,
@@ -13,6 +13,7 @@ import {AxiosError} from 'axios';
 import {AuthState, RootStore} from '@stmt/redux-store';
 import {userSetData} from '../user/actions';
 import {SagaError} from '@/utils/error';
+import {appSetSetData} from '../appSetting/actions';
 
 function* login(action: ReturnType<typeof authLogin>) {
   const body = action.payload;
@@ -34,12 +35,13 @@ function* login(action: ReturnType<typeof authLogin>) {
 function* checkToken() {
   const {token} = yield select<(store: RootStore) => AuthState>(getAuthState);
   try {
-    const {data} = yield call(checkTokenApi, token);
+    const {data}: {data: APIResponse.MyPage} = yield call(checkTokenApi, token);
+    const {email, uuid, profileImage, nickname, taskAlertSetting} = data;
 
-    yield put(userSetData(data));
+    yield put(appSetSetData({setAlert: taskAlertSetting}));
+    yield put(userSetData({email, uuid, profileImage, nickname}));
   } catch (e) {
     const error = new SagaError(e.message, globalResetAll);
-
     yield put(globalResetAll());
     yield put(globalSetError(error));
   } finally {
@@ -51,7 +53,8 @@ const loginApi = (body: Auth.SocialData) => api().post(ENDPOINTS.LOGIN, body);
 
 const getAuthState = (store: RootStore) => store.auth;
 
-const checkTokenApi = (token: string) => api(token).get(ENDPOINTS.MYPAGE);
+const checkTokenApi = (token: string) =>
+  api(token).get<APIResponse.MyPage>(ENDPOINTS.MYPAGE);
 
 export default function* authSaga() {
   yield takeLatest(LOGIN, login);

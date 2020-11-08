@@ -1,5 +1,6 @@
 declare module '@stmt/redux-store' {
   import {PersistPartial} from 'redux-persist/es/persistReducer';
+  import {Data} from '@stmt/application';
 
   interface AuthState {
     token?: string;
@@ -10,16 +11,20 @@ declare module '@stmt/redux-store' {
     isLoading: boolean;
   }
 
-  interface UserState {
-    uuid?: string;
-    profileImage?: string;
-    email?: string;
-    nickname?: string;
+  type UserState = Partial<Data.UserBase>;
+
+  interface TaskRelated {
+    setAlert: Data.TaskAlertSetting;
+    lock: number;
   }
+
+  type AppSettingState = Partial<Pick<TaskRelated, 'setAlert'>> &
+    Pick<TaskRelated, 'lock'>;
 
   interface RootStore {
     auth: PersistPartial & AuthState;
     global: GlobalState;
     user: UserState;
+    appSetting: PersistPartial & AppSettingState;
   }
 }

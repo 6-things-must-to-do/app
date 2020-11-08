@@ -12,12 +12,19 @@ import createSagaMiddleware from 'redux-saga';
 import auth, {AuthAction, authSaga} from './modules/auth';
 import global from './modules/global';
 import user from './modules/user';
-import {AuthState, RootStore} from '@stmt/redux-store';
+import appSetting, {AppSettingAction} from './modules/appSetting';
+import {AppSettingState, AuthState, RootStore} from '@stmt/redux-store';
 import {all} from 'redux-saga/effects';
 import globalSaga from './modules/global/saga';
+import appSettingSaga from './modules/appSetting/saga';
 
 const authPersistConfig: PersistConfig<AuthState> = {
   key: 'auth',
+  storage
+};
+
+const appSettingPersistConfig: PersistConfig<AppSettingState> = {
+  key: 'appSetting',
   storage
 };
 
@@ -29,6 +36,10 @@ const rootPersistConfig: PersistConfig<RootStore> = {
 
 const rootReducer = combineReducers<RootStore>({
   auth: persistReducer<AuthState, AuthAction>(authPersistConfig, auth),
+  appSetting: persistReducer<AppSettingState, AppSettingAction>(
+    appSettingPersistConfig,
+    appSetting
+  ),
   global,
   user
 });
@@ -39,7 +50,7 @@ const persistedReducer = persistReducer<CombinedState<RootStore>>(
 );
 
 function* rootSaga() {
-  yield all([authSaga(), globalSaga()]);
+  yield all([authSaga(), globalSaga(), appSettingSaga()]);
 }
 
 export default () => {
