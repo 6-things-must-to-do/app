@@ -1,5 +1,21 @@
 declare module '@stmt/application' {
   namespace Data {
+    interface Todo {
+      content: string;
+      isCompleted: boolean;
+    }
+
+    interface Task {
+      index: 0 | 1 | 2 | 3 | 4 | 5;
+      willStartAt?: number;
+      estimatedMinutes?: number;
+      completedAt?: number;
+      createdAt: number;
+      where?: string;
+      memo?: string;
+      todos: Array<Todo>;
+    }
+
     interface TaskAlertSetting {
       hour: number;
       minute: number;

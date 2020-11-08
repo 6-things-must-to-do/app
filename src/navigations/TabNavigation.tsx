@@ -1,7 +1,6 @@
 import Main from '@/screens/Main';
 import React from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import SettingStack from './SettingStack';
 
@@ -9,7 +8,7 @@ const Tab = createBottomTabNavigator();
 
 export default function TabNavigation() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator tabBarOptions={{showLabel: false}}>
       <Tab.Screen
         options={{
           tabBarIcon: (props) => <FontAwesome5 {...props} name="user-friends" />
@@ -26,7 +25,7 @@ export default function TabNavigation() {
       />
       <Tab.Screen
         options={{
-          tabBarIcon: (props) => <MaterialIcons {...props} name="settings" />
+          tabBarIcon: (props) => <FontAwesome5 {...props} name="cog" />
         }}
         name="SettingStack"
         component={SettingStack}
