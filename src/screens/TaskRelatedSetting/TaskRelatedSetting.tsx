@@ -1,6 +1,7 @@
 import StyledList from '@/components/StyledList';
 import LockTimeSettingListItem from '@/containers/LockTimeSettingListItem';
 import TaskAlertSettingListItem from '@/containers/TaskAlertSettingListItem';
+import withPadding from '@/hocs/withPadding';
 import React from 'react';
 
 const TaskRelatedSetting = () => {
@@ -12,4 +13,4 @@ const TaskRelatedSetting = () => {
   );
 };
 
-export default TaskRelatedSetting;
+export default withPadding(TaskRelatedSetting);

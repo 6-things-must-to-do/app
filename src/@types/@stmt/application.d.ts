@@ -8,7 +8,7 @@ declare module '@stmt/application' {
 
     interface UserBase {
       uuid: string;
-      profileImage: string;
+      profileImage?: string;
       email: string;
       nickname: string;
     }

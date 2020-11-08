@@ -17,6 +17,7 @@ import {appSetSetData} from '../appSetting/actions';
 
 function* login(action: ReturnType<typeof authLogin>) {
   const body = action.payload;
+  yield put(globalSetLoading(true));
   try {
     const {data: response} = yield call(loginApi, body);
     yield put(authSetPartialData(response));
@@ -34,6 +35,7 @@ function* login(action: ReturnType<typeof authLogin>) {
 
 function* checkToken() {
   const {token} = yield select<(store: RootStore) => AuthState>(getAuthState);
+  yield put(globalSetLoading(true));
   try {
     const {data}: {data: APIResponse.MyPage} = yield call(checkTokenApi, token);
     const {email, uuid, profileImage, nickname, taskAlertSetting} = data;

@@ -1,6 +1,6 @@
 import StyledView from '@/components/StyledView';
 import LoginButtons from '@/containers/LoginButtons';
-import withLayout from '@/hocs/withLayout';
+import withStyledViewLayout from '@/hocs/withStyledViewLayout';
 import React from 'react';
 import styled from 'styled-components/native';
 
@@ -12,7 +12,7 @@ const Login = () => {
   );
 };
 
-export default withLayout(Login);
+export default withStyledViewLayout(Login);
 
 const Wrapper = styled(StyledView)`
   width: 100%;
