@@ -1,5 +1,5 @@
 import React from 'react';
-import {Picker as P} from '@react-native-picker/picker';
+import {Picker as PickerAOS} from '@react-native-picker/picker';
 import useTheme from '@/hooks/useTheme';
 
 export interface PickerItem<T extends string | number> {
@@ -20,7 +20,7 @@ export default function Picker<T extends string | number>(
   const theme = useTheme();
 
   return (
-    <P
+    <PickerAOS
       dropdownIconColor={theme.secondary}
       style={{color: theme.text.default}}
       itemStyle={{backgroundColor: theme.card, color: theme.text.default}}
@@ -28,8 +28,8 @@ export default function Picker<T extends string | number>(
       selectedValue={selected}
       onValueChange={onValueChange}>
       {items.map((i) => (
-        <P.Item label={i.label} value={i.value} key={i.value} />
+        <PickerAOS.Item label={i.label} value={i.value} key={i.value} />
       ))}
-    </P>
+    </PickerAOS>
   );
 }

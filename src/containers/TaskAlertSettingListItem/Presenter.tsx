@@ -25,6 +25,7 @@ export default (props: Props) => {
           display="spinner"
           value={pickerValue}
           mode="time"
+          minuteInterval={5}
           onChange={onChangeAlert}
         />
       ) : null}
