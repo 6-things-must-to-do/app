@@ -9,6 +9,7 @@ interface Props extends TouchableOpacityProps {
   description?: string;
   titleColor?: keyof Style.TextTheme;
   descriptionColor?: keyof Style.TextTheme;
+  height?: number;
   addOn?: ReactNode;
 }
 
@@ -16,6 +17,7 @@ const StyledListItem = (props: Props) => {
   const {
     title,
     description = '',
+    height = 64,
     onPress,
     titleColor = 'default',
     descriptionColor = 'tint',
@@ -25,7 +27,7 @@ const StyledListItem = (props: Props) => {
   const theme = useTheme();
 
   return (
-    <Wrapper borderColor={theme.secondary} onPress={onPress}>
+    <Wrapper height={height} borderColor={theme.secondary} onPress={onPress}>
       <TextBox>
         <Title color={theme.text[titleColor]}>{title}</Title>
         {description ? (
@@ -41,12 +43,13 @@ const StyledListItem = (props: Props) => {
 
 export default StyledListItem;
 
-const Wrapper = styled.TouchableOpacity<{borderColor: string}>`
+const Wrapper = styled.TouchableOpacity<{height: number; borderColor: string}>`
   ${(props) => `
   width: 100%;
   padding-vertical: 8px;
   margin-vertical: 4px;
   border-bottom-width: 1px;
+  height: ${props.height}px;
   border-bottom-color: ${props.borderColor}
   flex-direction: row;
 `}
