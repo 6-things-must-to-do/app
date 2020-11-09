@@ -4,9 +4,9 @@ import mergeStyle from '@/utils/mergeStyle';
 import React, {ReactNode} from 'react';
 import {
   StyleProp,
+  ViewStyle,
   TouchableOpacity,
-  TouchableOpacityProps,
-  ViewStyle
+  TouchableOpacityProps
 } from 'react-native';
 
 interface Props extends TouchableOpacityProps {
@@ -22,6 +22,7 @@ const StyledButton = (props: Props) => {
     minWidth = 96,
     fullWidth = false,
     shadowElevation = 5,
+    children,
     style: styleProps,
     ...touchableOpacityProps
   } = props;
@@ -32,7 +33,7 @@ const StyledButton = (props: Props) => {
     borderColor: theme.tint,
     backgroundColor: theme.card,
     padding: 16,
-    borderRadius: 10,
+    borderRadius: 16,
     minWidth,
     alignSelf: 'center',
     alignItems: 'center',
@@ -45,7 +46,11 @@ const StyledButton = (props: Props) => {
   let style = defaultStyle;
   if (styleProps) style = mergeStyle([defaultStyle], [styleProps]);
 
-  return <TouchableOpacity {...touchableOpacityProps} style={style} />;
+  return (
+    <TouchableOpacity {...touchableOpacityProps} style={style}>
+      {children}
+    </TouchableOpacity>
+  );
 };
 
 export default StyledButton;

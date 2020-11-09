@@ -13,7 +13,7 @@ import {
 
 const initialState: GlobalState = {isLoading: false};
 
-type ActionTypes = ReturnType<
+type GlobalAction = ReturnType<
   | typeof globalSetError
   | typeof globalResetError
   | typeof globalSetLoading
@@ -22,7 +22,7 @@ type ActionTypes = ReturnType<
 
 export default function reducer(
   state = initialState,
-  action: ActionTypes
+  action: GlobalAction
 ): GlobalState {
   switch (action.type) {
     case SET_ERROR: {

@@ -11,6 +11,12 @@ declare module '@stmt/redux-store' {
     isLoading: boolean;
   }
 
+  interface RecordState {
+    tasks: Array<Data.Task>;
+    inProcess?: Data.Task;
+    date?: Date;
+  }
+
   type UserState = Partial<Data.UserBase>;
 
   interface TaskRelated {
@@ -26,5 +32,6 @@ declare module '@stmt/redux-store' {
     global: GlobalState;
     user: UserState;
     appSetting: PersistPartial & AppSettingState;
+    record: PersistPartial & RecordState;
   }
 }

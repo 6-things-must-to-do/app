@@ -1,17 +1,14 @@
-import {Data} from '@stmt/application';
+import {Data, Style} from '@stmt/application';
 import {RenderItemParams} from 'react-native-draggable-flatlist';
 import React from 'react';
-import StyledButton from '../StyledButton';
-import StyledText from '../StyledText';
+import Presenter from './Presenter';
 
 const Task = (props: RenderItemParams<Data.Task>) => {
-  //   const {isActive, item, index, drag} = props;
+  const {item, drag} = props;
 
-  return (
-    <StyledButton onLongPress={props.drag}>
-      <StyledText>{JSON.stringify(props)}</StyledText>
-    </StyledButton>
-  );
+  const color: keyof Style.DimensionTheme = item.completedAt ? 'tint' : 'warn';
+
+  return <Presenter drag={drag} item={item} color={color} />;
 };
 
 export default Task;
