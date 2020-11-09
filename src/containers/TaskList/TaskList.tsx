@@ -21,7 +21,7 @@ const TaskList = () => {
 
   const makeList = () => {
     const data: Array<Data.Task | Record.NoTask> = [...tasks];
-    if (!data.length) {
+    if (data.length < 6) {
       const noTask: Record.NoTask = {noTask: true, index: -1};
       data.push(noTask);
     }

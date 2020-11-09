@@ -1,13 +1,20 @@
 import * as R from 'ramda';
 import {RecordState} from '@stmt/redux-store';
-import {ALIGN_TASKS, recordSetData, recordTaskAlign, SET_DATA} from './actions';
+import {
+  ADD_TASK,
+  ALIGN_TASKS,
+  recordAddTask,
+  recordSetData,
+  recordTaskAlign,
+  SET_DATA
+} from './actions';
 
 const initialState: RecordState = {
   tasks: []
 };
 
 export type RecordAction = ReturnType<
-  typeof recordSetData | typeof recordTaskAlign
+  typeof recordSetData | typeof recordTaskAlign | typeof recordAddTask
 >;
 
 export default function reducer(
@@ -31,6 +38,13 @@ export default function reducer(
 
       const newState = {tasks};
 
+      return R.mergeRight(state, newState);
+    }
+
+    case ADD_TASK: {
+      const tasks = state.tasks;
+      tasks.push(action.payload);
+      const newState = {tasks};
       return R.mergeRight(state, newState);
     }
 

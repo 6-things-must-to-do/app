@@ -1,8 +1,11 @@
 import useTheme from '@/hooks/useTheme';
+import {recordAddTask} from '@/redux/modules/record/actions';
 import {Data, Style} from '@stmt/application';
+import {RecordState, RootStore} from '@stmt/redux-store';
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components/native';
 import StyledButton from '../StyledButton';
 import StyledText from '../StyledText';
@@ -52,8 +55,15 @@ const ClickButton = (props: ClickButtonProps) => {
 
 export const NoTask = () => {
   const theme = useTheme();
+  const dispatch = useDispatch();
 
-  const onClickAdd = () => {};
+  const {tasks} = useSelector<RootStore, RecordState>((store) => store.record);
+
+  const length = tasks.length;
+
+  const onClickAdd = () => {
+    dispatch(recordAddTask({index: length, createdAt: Date.now(), todos: []}));
+  };
 
   return (
     <Wrapper useBorder>

@@ -6,7 +6,7 @@ declare module '@stmt/application' {
     }
 
     interface Task {
-      index: 0 | 1 | 2 | 3 | 4 | 5;
+      index: number;
       willStartAt?: number;
       estimatedMinutes?: number;
       completedAt?: number;
