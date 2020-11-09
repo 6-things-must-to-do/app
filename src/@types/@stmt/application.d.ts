@@ -56,6 +56,13 @@ declare module '@stmt/application' {
     }
   }
 
+  namespace Record {
+    interface NoTask {
+      noTask: true;
+      index: -1;
+    }
+  }
+
   namespace AppSetting {
     type Day = 'MON' | 'TUE' | 'WED' | 'THU' | 'FRI' | 'SAT' | 'SUN';
 

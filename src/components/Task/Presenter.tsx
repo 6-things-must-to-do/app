@@ -50,6 +50,20 @@ const ClickButton = (props: ClickButtonProps) => {
   );
 };
 
+export const NoTask = () => {
+  const theme = useTheme();
+
+  const onClickAdd = () => {};
+
+  return (
+    <Wrapper useBorder>
+      <StyledButton fullWidth onPress={onClickAdd}>
+        <MaterialCommunityIcons name="plus" size={32} color={theme.secondary} />
+      </StyledButton>
+    </Wrapper>
+  );
+};
+
 const Wrapper = styled(StyledView)`
   margin: 4px;
 `;
