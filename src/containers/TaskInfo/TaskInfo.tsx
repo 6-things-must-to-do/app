@@ -1,3 +1,4 @@
+import useCurrentTask from '@/hooks/useCurrentTask';
 import React, {useState} from 'react';
 import Presenter from './Presenter';
 
@@ -7,7 +8,16 @@ const TaskInfo = () => {
     setIsFolded(!isFolded);
   };
 
-  return <Presenter onToggleDetail={onToggleDetail} isFolded={isFolded} />;
+  const {control, task} = useCurrentTask();
+
+  return (
+    <Presenter
+      control={control}
+      task={task}
+      onToggleDetail={onToggleDetail}
+      isFolded={isFolded}
+    />
+  );
 };
 
 export default TaskInfo;

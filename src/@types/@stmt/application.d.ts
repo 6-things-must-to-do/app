@@ -11,6 +11,8 @@ declare module '@stmt/application' {
       estimatedMinutes?: number;
       completedAt?: number;
       createdAt: number;
+      title: string;
+      with?: string;
       where?: string;
       memo?: string;
       todos: Array<Todo>;

@@ -4,6 +4,7 @@ import BaseListItem, {BaseListItemProps} from '../BaseListItem';
 import StyledText from '../StyledText';
 import StyledTextInput from '../StyledTextInput';
 import {StyledTextInputProps} from '../StyledTextInput/StyledTextInput';
+import withController from '@/hocs/withController';
 
 export interface StyledInputListItemProps extends StyledTextInputProps {
   label: ReactNode;
@@ -26,6 +27,10 @@ const StyledInputListItem = (props: StyledInputListItemProps) => {
 };
 
 export default StyledInputListItem;
+
+export const StyledInputListItemWithController = withController(
+  StyledInputListItem
+);
 
 const ListContent = styled.View`
   height: 100%;

@@ -1,1 +1,4 @@
-export {default} from './StyledInputListItem';
+export {
+  default,
+  StyledInputListItemWithController
+} from './StyledInputListItem';

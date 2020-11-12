@@ -1,21 +1,36 @@
 import {MainStackParam} from '@/navigations/MainStack';
 import {StackProps} from '@stmt/navigation';
-import React from 'react';
-import Presenter from './Presenter';
 import {Data} from '@stmt/application';
+import React, {useState} from 'react';
+import {useForm} from 'react-hook-form';
+import Presenter from './Presenter';
+import CurrentTaskDetailProvider from '@/contexts/CurrentTaskDetail';
+import {useSelector} from 'react-redux';
+import {RecordState, RootStore} from '@stmt/redux-store';
 
 const TaskDetail = (props: StackProps<MainStackParam, 'TaskDetail'>) => {
-  const {} = props;
+  const {control, handleSubmit} = useForm<Data.Task>();
+  const {route} = props;
 
-  const onClickAddTask = () => {};
+  const {index} = route.params;
 
-  const demo: Data.Task = {
-    index: 0,
-    todos: [{isCompleted: false, content: 'Test my application'}],
-    createdAt: Date.now()
-  };
+  const {tasks} = useSelector<RootStore, RecordState>((store) => store.record);
 
-  return <Presenter onClickAddTask={onClickAddTask} task={demo} />;
+  let data: Data.Task = tasks[index]
+    ? tasks[index]
+    : {createdAt: Date.now(), title: '', todos: [], index};
+
+  const [task, setTask] = useState(data);
+
+  const onClickAddTask = handleSubmit((data) => {
+    setTask({...data, todos: []});
+  });
+
+  return (
+    <CurrentTaskDetailProvider control={control} task={task}>
+      <Presenter onClickAddTask={onClickAddTask} task={task} />
+    </CurrentTaskDetailProvider>
+  );
 };
 
 export default TaskDetail;
