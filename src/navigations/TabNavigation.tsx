@@ -3,6 +3,7 @@ import React from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import SettingStack from './SettingStack';
+import MainStack from './MainStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -21,7 +22,7 @@ export default function TabNavigation() {
           tabBarIcon: (props) => <FontAwesome5 {...props} name="th-list" />
         }}
         name="Main"
-        component={Main}
+        component={MainStack}
       />
       <Tab.Screen
         options={{

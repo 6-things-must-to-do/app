@@ -1,15 +1,14 @@
 import useTheme from '@/hooks/useTheme';
 import {Style} from '@stmt/application';
 import React, {ReactNode} from 'react';
-import {TouchableOpacityProps} from 'react-native';
 import styled from 'styled-components/native';
+import BaseListItem, {BaseListItemProps} from '../BaseListItem';
 
-interface Props extends TouchableOpacityProps {
+interface Props extends BaseListItemProps {
   title: string;
   description?: string;
   titleColor?: keyof Style.TextTheme;
   descriptionColor?: keyof Style.TextTheme;
-  height?: number;
   addOn?: ReactNode;
 }
 
@@ -17,17 +16,16 @@ const StyledListItem = (props: Props) => {
   const {
     title,
     description = '',
-    height = 64,
-    onPress,
     titleColor = 'default',
     descriptionColor = 'tint',
-    addOn
+    addOn,
+    ...baseListItemProps
   } = props;
 
   const theme = useTheme();
 
   return (
-    <Wrapper height={height} borderColor={theme.secondary} onPress={onPress}>
+    <BaseListItem {...baseListItemProps}>
       <TextBox>
         <Title color={theme.text[titleColor]}>{title}</Title>
         {description ? (
@@ -37,23 +35,11 @@ const StyledListItem = (props: Props) => {
         ) : null}
       </TextBox>
       {addOn ? <AddOnBox>{addOn}</AddOnBox> : null}
-    </Wrapper>
+    </BaseListItem>
   );
 };
 
 export default StyledListItem;
-
-const Wrapper = styled.TouchableOpacity<{height: number; borderColor: string}>`
-  ${(props) => `
-  width: 100%;
-  padding-vertical: 8px;
-  margin-vertical: 4px;
-  border-bottom-width: 1px;
-  height: ${props.height}px;
-  border-bottom-color: ${props.borderColor}
-  flex-direction: row;
-`}
-`;
 
 const TextBox = styled.View`
   flex: 3;

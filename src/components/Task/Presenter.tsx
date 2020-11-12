@@ -1,11 +1,8 @@
 import useTheme from '@/hooks/useTheme';
-import {recordAddTask} from '@/redux/modules/record/actions';
 import {Data, Style} from '@stmt/application';
-import {RecordState, RootStore} from '@stmt/redux-store';
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components/native';
 import StyledButton from '../StyledButton';
 import StyledText from '../StyledText';
@@ -15,15 +12,16 @@ interface Props {
   drag: () => void;
   item: Data.Task;
   color: keyof Style.DimensionTheme;
+  onClick: () => void;
 }
 
 export default (props: Props) => {
-  const {item, drag, color} = props;
+  const {item, drag, color, onClick} = props;
   const isCompleted = Boolean(item.completedAt);
 
   return (
     <Wrapper useBorder borderColor={color}>
-      <Button fullWidth onLongPress={drag}>
+      <Button onPress={onClick} fullWidth onLongPress={drag}>
         <Content>{JSON.stringify(item)}</Content>
 
         <CheckView>
@@ -50,27 +48,6 @@ const ClickButton = (props: ClickButtonProps) => {
     <TouchableOpacity onPress={onClick}>
       <MaterialCommunityIcons color={color} size={32} name={name} />
     </TouchableOpacity>
-  );
-};
-
-export const NoTask = () => {
-  const theme = useTheme();
-  const dispatch = useDispatch();
-
-  const {tasks} = useSelector<RootStore, RecordState>((store) => store.record);
-
-  const length = tasks.length;
-
-  const onClickAdd = () => {
-    dispatch(recordAddTask({index: length, createdAt: Date.now(), todos: []}));
-  };
-
-  return (
-    <Wrapper useBorder>
-      <StyledButton fullWidth onPress={onClickAdd}>
-        <MaterialCommunityIcons name="plus" size={32} color={theme.secondary} />
-      </StyledButton>
-    </Wrapper>
   );
 };
 

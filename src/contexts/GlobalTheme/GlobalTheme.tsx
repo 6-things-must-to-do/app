@@ -27,7 +27,7 @@ const GlobalTheme = (props: Props) => {
         contrast: COLORS.SUB_BLACK,
         warn: COLORS.SUB_RED,
         success: COLORS.MAIN_GREEN,
-        tint: COLORS.MAIN_GREEN,
+        tint: COLORS.MAIN_TURQUOISE,
         outfocus: COLORS.MAIN_GREY
       }
     },

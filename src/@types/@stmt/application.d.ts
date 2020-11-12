@@ -59,8 +59,15 @@ declare module '@stmt/application' {
   namespace Record {
     interface NotFull {
       notFull: true;
-      index: -1;
+      index: 6;
+      onClick: () => void;
     }
+
+    interface Task extends Data.Task {
+      onClick: () => void;
+    }
+
+    type RecordData = NotFull | Task;
   }
 
   namespace AppSetting {
