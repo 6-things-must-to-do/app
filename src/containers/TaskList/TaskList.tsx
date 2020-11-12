@@ -8,22 +8,27 @@ import {useDispatch, useSelector} from 'react-redux';
 import {RecordState, RootStore} from '@stmt/redux-store';
 import {recordTaskAlign} from '@/redux/modules/record/actions';
 
-const TaskList = () => {
+export interface TaskListProps {
+  editable: boolean;
+}
+
+const TaskList = (props: TaskListProps) => {
   const dispatch = useDispatch();
   const {tasks} = useSelector<RootStore, RecordState>((store) => store.record);
 
-  const keyExtractor = (item: Data.Task | Record.NoTask, _index: number) =>
+  const keyExtractor = (item: Data.Task | Record.NotFull, _index: number) =>
     `${item.index}`;
 
-  const onDragEnd = (param: DragEndParams<Data.Task | Record.NoTask>) => {
+  const onDragEnd = (param: DragEndParams<Data.Task | Record.NotFull>) => {
     dispatch(recordTaskAlign(param.from, param.to));
   };
 
   const makeList = () => {
-    const data: Array<Data.Task | Record.NoTask> = [...tasks];
-    if (data.length < 6) {
-      const noTask: Record.NoTask = {noTask: true, index: -1};
-      data.push(noTask);
+    const {editable} = props;
+    const data: Array<Data.Task | Record.NotFull> = [...tasks];
+    if (editable && data.length < 6) {
+      const notFull: Record.NotFull = {notFull: true, index: -1};
+      data.push(notFull);
     }
     return data;
   };

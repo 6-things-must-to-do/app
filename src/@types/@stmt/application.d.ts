@@ -57,8 +57,8 @@ declare module '@stmt/application' {
   }
 
   namespace Record {
-    interface NoTask {
-      noTask: true;
+    interface NotFull {
+      notFull: true;
       index: -1;
     }
   }
