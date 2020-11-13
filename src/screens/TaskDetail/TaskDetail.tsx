@@ -9,7 +9,6 @@ import {useSelector} from 'react-redux';
 import {RecordState, RootStore} from '@stmt/redux-store';
 
 const TaskDetail = (props: StackProps<MainStackParam, 'TaskDetail'>) => {
-  const {control, handleSubmit} = useForm<Data.Task>();
   const {route} = props;
 
   const {index} = route.params;
@@ -20,11 +19,15 @@ const TaskDetail = (props: StackProps<MainStackParam, 'TaskDetail'>) => {
     ? tasks[index]
     : {createdAt: Date.now(), title: '', todos: [], index};
 
+  const {control, handleSubmit} = useForm<Data.Task>({defaultValues: data});
+
   const [task, setTask] = useState(data);
 
-  const onClickAddTask = handleSubmit((data) => {
-    console.log(data);
-    setTask({...data, todos: []});
+  const onClickAddTask = handleSubmit((form) => {
+    console.log(form);
+
+    // REDUX LOGIC
+    setTask({...form});
   });
 
   return (

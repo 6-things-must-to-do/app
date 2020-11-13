@@ -9,6 +9,9 @@ import Collapsible from 'react-native-collapsible';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import styled from 'styled-components/native';
 import {Data} from '@stmt/application';
+import {StyledTimePickListItemWithController} from '@/components/StyledTimePickListItem/StyledTimePickListItem';
+import {StyledPickerListItemWithController} from '@/components/StyledPickerListItem/StyledPickerIndexListItem';
+import {Item} from 'react-native-picker-select';
 
 interface Props {
   isFolded: boolean;
@@ -21,6 +24,26 @@ export default (props: Props) => {
   const {isFolded, onToggleDetail, control, task} = props;
   const iconName = !isFolded ? 'expand-less' : 'expand-more';
   const theme = useTheme();
+
+  const estimatedMinutesItems: Array<Item> = [...new Array(12)].map(
+    (_, index) => {
+      const value = (index + 1) * 15;
+
+      if (index < 3) return {label: `${value} minutes`, value};
+
+      if (index === 3) return {label: '1 hour', value};
+
+      if (index < 7) return {label: `1 hour ${value - 60} minutes`, value};
+
+      if (index === 7) return {label: '2 hours', value};
+
+      if (index < 11) return {label: `2 hours ${value - 120} minutes`, value};
+
+      if (index === 11) return {label: '3 hours', value};
+
+      return {label: `${value} minutes`, value};
+    }
+  );
 
   return (
     <>
@@ -45,30 +68,37 @@ export default (props: Props) => {
           name="where"
           label="Where 📍"
           placeholder="Where you do this task"
-          defaultValue={task.where}
-        />
-        <StyledInputListItemWithController
-          control={control}
-          name="willStartAt"
-          label="When ⏰"
-          placeholder="When will you start this task"
-          defaultValue={task.willStartAt?.toString()}
+          defaultValue={task.where || ''}
         />
         <StyledInputListItemWithController
           control={control}
           name="with"
           label="With 👥"
           placeholder="People who are in this task"
-          defaultValue={task.with}
+          defaultValue={task.with || ''}
+        />
+        <StyledTimePickListItemWithController
+          mode="datetime"
+          control={control}
+          placeholder="When will you start this task"
+          name="willStartAt"
+          label="When ⏰"
+        />
+        <StyledPickerListItemWithController
+          items={estimatedMinutesItems}
+          label="Estimated minutes ⏳"
+          control={control}
+          defaultValue={task.estimatedMinutes || null}
+          name="estimatedMinutes"
         />
         <StyledInputListItemWithController
-          baseListItemProps={{height: 88}}
+          baseLabelProps={{height: 88}}
           multiline
           label="Memo 📝"
           placeholder="Any record about this task"
           control={control}
           name="memo"
-          defaultValue={task.memo}
+          defaultValue={task.memo || ''}
         />
       </Collapsible>
       <Detail onPress={onToggleDetail}>

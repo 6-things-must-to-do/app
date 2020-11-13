@@ -1,19 +1,57 @@
+import useCurrentTask from '@/hooks/useCurrentTask';
 import {Data} from '@stmt/application';
-import React from 'react';
+import React, {useState} from 'react';
+import {Controller} from 'react-hook-form';
 import Presenter from './Presenter';
 
-interface Props {
-  todos: Array<Data.Todo>;
-}
+const TodoList = () => {
+  const {control, task} = useCurrentTask();
+  const {todos} = task;
 
-const TodoList = (props: Props) => {
-  const {todos} = props;
+  const [isCollapsed, setIsCollapsed] = useState(true);
+  const [content, setContent] = useState('');
 
   const onToggleTodo = (index: number) => () => {
     console.log(index);
   };
 
-  return <Presenter todos={todos} onToggleTodo={onToggleTodo} />;
+  const onPressAdd = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+
+  const onChangeContent = (text: string) => {
+    setContent(text);
+  };
+
+  const onPressSave = (
+    change: (todoList: Array<Data.Todo>) => void
+  ) => (): void => {
+    if (content) {
+      const todo: Data.Todo = {content, isCompleted: false};
+      change([...todos, todo]);
+      setContent('');
+    }
+    setIsCollapsed(!isCollapsed);
+  };
+
+  return (
+    <Controller
+      name="todos"
+      defaultValue={[]}
+      control={control}
+      render={({onChange, value}) => (
+        <Presenter
+          contentValue={content}
+          onChangeContent={onChangeContent}
+          onPressSave={onPressSave(onChange)}
+          onPressAdd={onPressAdd}
+          isCollapsed={isCollapsed}
+          todos={value}
+          onToggleTodo={onToggleTodo}
+        />
+      )}
+    />
+  );
 };
 
 export default TodoList;

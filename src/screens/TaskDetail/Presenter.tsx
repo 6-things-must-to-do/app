@@ -13,11 +13,11 @@ interface Props {
 }
 
 export default withPadding((props: Props) => {
-  const {task, onClickAddTask} = props;
+  const {onClickAddTask} = props;
   return (
     <Wrapper>
       <TodoInfo />
-      <TodoList todos={task.todos} />
+      <TodoList />
       <StyledButton onPress={onClickAddTask} fullWidth>
         <StyledText>Add Task</StyledText>
       </StyledButton>

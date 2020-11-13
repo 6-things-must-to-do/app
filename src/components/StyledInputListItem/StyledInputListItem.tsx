@@ -1,28 +1,27 @@
-import styled from 'styled-components/native';
-import React, {ReactNode} from 'react';
-import BaseListItem, {BaseListItemProps} from '../BaseListItem';
+import React from 'react';
+import BaseLabel, {BaseLabelProps} from '../BaseLabel';
 import StyledText from '../StyledText';
 import StyledTextInput from '../StyledTextInput';
 import {StyledTextInputProps} from '../StyledTextInput/StyledTextInput';
 import withController from '@/hocs/withController';
 
+type RequiredBaseLabel = Omit<BaseLabelProps, 'label'>;
+
 export interface StyledInputListItemProps extends StyledTextInputProps {
-  label: ReactNode;
-  baseListItemProps?: BaseListItemProps;
+  label: string;
+  baseLabelProps?: RequiredBaseLabel;
 }
 
 const StyledInputListItem = (props: StyledInputListItemProps) => {
-  const {label, baseListItemProps, ...styledTextInputProps} = props;
+  const {label, baseLabelProps, ...styledTextInputProps} = props;
 
   return (
-    <BaseListItem disabled {...baseListItemProps}>
-      <Label>
-        <StyledText>{label}</StyledText>
-      </Label>
-      <Input>
-        <StyledTextInput {...styledTextInputProps} />
-      </Input>
-    </BaseListItem>
+    <BaseLabel
+      label={<StyledText>{label}</StyledText>}
+      disabled
+      {...baseLabelProps}>
+      <StyledTextInput {...styledTextInputProps} />
+    </BaseLabel>
   );
 };
 
@@ -31,17 +30,3 @@ export default StyledInputListItem;
 export const StyledInputListItemWithController = withController(
   StyledInputListItem
 );
-
-const ListContent = styled.View`
-  height: 100%;
-  justify-content: center;
-  align-items: flex-start;
-`;
-
-const Label = styled(ListContent)`
-  flex: 1.5;
-`;
-
-const Input = styled(ListContent)`
-  flex: 4;
-`;
