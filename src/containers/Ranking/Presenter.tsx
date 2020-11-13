@@ -1,13 +1,11 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import useTheme from '@/hooks/useTheme';
-import {Style} from '@stmt/application';
 import StyledText from '@/components/StyledText';
+import withPadding from '@/hocs/withPadding';
+import StyledList from '@/components/StyledList';
 
 interface Props {
-  height?: number;
-  titleColor?: keyof Style.TextTheme;
-  descriptionColor?: keyof Style.TextTheme;
   rankinglist: Array<Rank>;
   onClick: () => void;
 }
@@ -18,93 +16,66 @@ interface Rank {
   percentage: number;
 }
 
-const StyledListItem = (props: Props) => {
-  const {
-    height = 64,
-    // titleColor = 'default',
-    // descriptionColor = 'tint',
-    rankinglist,
-    onClick
-  } = props;
-
+export default withPadding((props: Props) => {
+  const {rankinglist, onClick} = props;
   const theme = useTheme();
-
   return (
-    <Wrapper
-      height={height}
-      borderColor={theme.secondary}
-      bgColor={theme.primary}>
-      <Header disabled>
-        <NumberColumn>
+    <>
+      <Header disabled borderColor={theme.secondary} bgColor={theme.secondary}>
+        <Column>
           <StyledText>Ranking</StyledText>
-        </NumberColumn>
-        <NameColumn>
+        </Column>
+        <Column>
           <StyledText>Name</StyledText>
-        </NameColumn>
-        <PercentageColumn>
+        </Column>
+        <Column>
           <StyledText>Percentage</StyledText>
-        </PercentageColumn>
+        </Column>
       </Header>
 
-      {rankinglist.map((rank) => (
-        <Row onPress={onClick}>
-          <NumberColumn>
-            <StyledText>{rank.rank}</StyledText>
-          </NumberColumn>
-          <NameColumn>
-            <StyledText>{rank.nickname}</StyledText>
-          </NameColumn>
-          <PercentageColumn>
-            <StyledText>{rank.percentage}</StyledText>
-          </PercentageColumn>
-        </Row>
-      ))}
-    </Wrapper>
+      <StyledList>
+        {rankinglist.map((rank) => (
+          <Row
+            borderColor={theme.secondary}
+            bgColor={theme.primary}
+            onPress={onClick}>
+            <Column>
+              <StyledText>{rank.rank}</StyledText>
+            </Column>
+            <Column>
+              <StyledText>{rank.nickname}</StyledText>
+            </Column>
+            <Column>
+              <StyledText>{rank.percentage}</StyledText>
+            </Column>
+          </Row>
+        ))}
+      </StyledList>
+    </>
   );
-};
+});
 
-export default StyledListItem;
-
-const Wrapper = styled.View<{
-  height: number;
+const Row = styled.TouchableOpacity<{
   borderColor: string;
   bgColor: string;
 }>`
   ${(props) => `
   width: 100%;
-  padding-vertical: 8px;
-  margin-vertical: 4px;
-  border-bottom-width: 1px;
-  height: ${props.height}px;
-  border-bottom-color: ${props.borderColor}
-  flex-direction: row;
-  background-color: ${props.bgColor};
-  flex: 1;
-`}
-`;
-
-const Row = styled.TouchableOpacity`
-  width: 100%;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
   height: 40px;
-  border: 1px solid;
+  border: 1px solid ${props.borderColor};
+  border-top-width: 0;
+  background-color: ${props.bgColor};
+`}
 `;
 
-const Header = styled(Row)``;
-
-const NumberColumn = styled.View`
-  flex: 1;
-  align-items: center;
+const Header = styled(Row)`
+  border-top-width: 1px;
 `;
 
-const NameColumn = styled.View`
-  flex: 1;
-  align-items: center;
-`;
-
-const PercentageColumn = styled.View`
+const Column = styled.View`
   flex: 1;
   align-items: center;
 `;
