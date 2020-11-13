@@ -1,6 +1,8 @@
-/*
-import Presenter from './Presenter';
 import React from 'react';
-*/
-// eslint-disable-next-line no-undef
+import Presenter from './Presenter';
+
+const SearchFriends = () => {
+  return <Presenter />;
+};
+
 export default SearchFriends;
