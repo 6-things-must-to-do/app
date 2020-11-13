@@ -1,9 +1,9 @@
-import Main from '@/screens/Main';
 import React from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import SettingStack from './SettingStack';
 import MainStack from './MainStack';
+import Temp from '@/screens/Temp';
 
 const Tab = createBottomTabNavigator();
 
@@ -15,7 +15,7 @@ export default function TabNavigation() {
           tabBarIcon: (props) => <FontAwesome5 {...props} name="user-friends" />
         }}
         name="Social"
-        component={Main}
+        component={Temp}
       />
       <Tab.Screen
         options={{

@@ -23,6 +23,7 @@ const TaskDetail = (props: StackProps<MainStackParam, 'TaskDetail'>) => {
   const [task, setTask] = useState(data);
 
   const onClickAddTask = handleSubmit((data) => {
+    console.log(data);
     setTask({...data, todos: []});
   });
 
