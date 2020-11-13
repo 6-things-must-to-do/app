@@ -63,6 +63,7 @@ const LoginButtons = () => {
       dispatch(authLogin(data));
     } catch (e) {
       if ('code' in e) {
+        console.error(e);
         dispatch(globalSetLoading(false));
       }
     }
