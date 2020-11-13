@@ -15,8 +15,9 @@ import ColoredSafeArea from './components/ColoredSafeArea';
 import Loading from './containers/Loading';
 import NavigationTheme from './components/NavigationTheme';
 import {StatusBar} from 'react-native';
-import RootNavigation from './navigations';
+// import RootNavigation from './navigations';
 import GlobalErrorHandler from './containers/GlobalErrorHandler';
+import Dashboard from './screens/Dashboard';
 
 const App = (): ReactNode => {
   const {store, persistor} = getPersistedStore();
@@ -27,7 +28,8 @@ const App = (): ReactNode => {
         <GlobalTheme>
           <ColoredSafeArea />
           <NavigationTheme>
-            <RootNavigation />
+            {/* <RootNavigation /> */}
+            <Dashboard />
           </NavigationTheme>
           <ColoredSafeArea />
           <GlobalErrorHandler />
