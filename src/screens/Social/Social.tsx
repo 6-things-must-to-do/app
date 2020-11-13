@@ -1,9 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Presenter from './Presenter';
 
 const Social = () => {
-  // 랭킹
-  return <Presenter />;
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const onTabPress = (index: number) => {
+    setSelectedIndex(index);
+  };
+
+  return <Presenter selectedIndex={selectedIndex} onTabPress={onTabPress} />;
 };
 
 export default Social;

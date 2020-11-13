@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components/native';
 import useTheme from '@/hooks/useTheme';
 import StyledText from '@/components/StyledText';
-import withPadding from '@/hocs/withPadding';
 import StyledList from '@/components/StyledList';
 
 interface Props {
@@ -16,7 +15,7 @@ interface Rank {
   percentage: number;
 }
 
-export default withPadding((props: Props) => {
+export default (props: Props) => {
   const {rankinglist, onClick} = props;
   const theme = useTheme();
   return (
@@ -34,8 +33,9 @@ export default withPadding((props: Props) => {
       </Header>
 
       <StyledList>
-        {rankinglist.map((rank) => (
+        {rankinglist.map((rank, index) => (
           <Row
+            key={`${rank.rank}-${index}`}
             borderColor={theme.secondary}
             bgColor={theme.primary}
             onPress={onClick}>
@@ -53,7 +53,7 @@ export default withPadding((props: Props) => {
       </StyledList>
     </>
   );
-});
+};
 
 const Row = styled.TouchableOpacity<{
   borderColor: string;
