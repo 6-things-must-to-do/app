@@ -3,8 +3,12 @@ import calendar from 'dayjs/plugin/calendar';
 
 dayjs.extend(calendar);
 
-export const unixToDate = (unix: number): string => {
-  return dayjs(unix).format('DD/MM/YYYY'); // '25/01/2019'
+export const unixToDateFormat = (unix: number): string => {
+  return dayjs(unix).format('DD / MM / YYYY'); // '25/01/2019'
+};
+
+export const getToday = () => {
+  return dayjs().format('DD / MM / YYYY');
 };
 
 export const unixToCalendar = (unix: number): string => {
@@ -23,4 +27,8 @@ export const unixToDayTime = (unix: number): {minute: number; hour: number} => {
 
 export const DateStringToUnix = (date: string): number => {
   return dayjs(date, 'DD/MM/YYYY').toDate().getTime();
+};
+
+export const unixToDate = (unix?: number): Date => {
+  return dayjs(unix).toDate();
 };

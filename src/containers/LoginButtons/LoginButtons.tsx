@@ -18,8 +18,6 @@ const LoginButtons = () => {
       requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME]
     });
 
-    console.log(appleAuthRequestResponse);
-
     const {email, user, fullName} = appleAuthRequestResponse;
     if (!email) throw new Error('Email is required');
 

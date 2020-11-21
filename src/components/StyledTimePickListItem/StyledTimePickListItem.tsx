@@ -16,9 +16,9 @@ const StyledTimePickListItem = (props: Props) => {
   const {onConfirm, ...others} = props;
   const [isVisible, setIsVisible] = useState(false);
 
-  const onClickConfirm = (e: any) => {
+  const onClickConfirm = (e: Date) => {
     if (onConfirm) {
-      onConfirm(e);
+      onConfirm(e.getTime());
     }
     setIsVisible(false);
   };
@@ -62,7 +62,6 @@ export const StyledTimePickListItemWithController = (
           onConfirm={onChange}
         />
       )}
-      defaultValue={null}
       control={control}
       name={name}
     />

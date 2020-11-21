@@ -7,6 +7,7 @@ export type MainStackParam = {
   Main: undefined;
   TaskDetail: {
     index: number;
+    isNew: boolean;
   };
   Dashboard: undefined;
 };

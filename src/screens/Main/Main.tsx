@@ -1,13 +1,8 @@
-import TaskList from '@/containers/TaskList';
 import React from 'react';
-import {View} from 'react-native';
+import Presenter from './Presenter';
 
 const Main = () => {
-  return (
-    <View style={{flex: 1}}>
-      <TaskList editable />
-    </View>
-  );
+  return <Presenter />;
 };
 
 export default Main;

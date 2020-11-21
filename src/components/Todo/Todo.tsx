@@ -3,8 +3,9 @@ import {Data} from '@stmt/application';
 import React, {ComponentProps} from 'react';
 import BouncyCheckBox from 'react-native-bouncy-checkbox';
 
-interface Props extends ComponentProps<typeof BouncyCheckBox> {
-  todo?: Data.Todo;
+interface Props
+  extends Omit<ComponentProps<typeof BouncyCheckBox>, 'isChecked'> {
+  todo: Data.Todo;
 }
 
 const Todo = (props: Props) => {
@@ -12,13 +13,13 @@ const Todo = (props: Props) => {
   const theme = useTheme();
   return (
     <BouncyCheckBox
+      {...bouncyCheckboxProps}
       fillColor={theme.text.success}
       fontSize={20}
       borderColor={theme.text.success}
       color={theme.text.default}
-      isChecked={todo?.isCompleted}
-      text={todo?.content}
-      {...bouncyCheckboxProps}
+      isChecked={todo.isCompleted}
+      text={todo.content}
     />
   );
 };

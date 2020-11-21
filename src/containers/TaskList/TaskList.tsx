@@ -20,6 +20,7 @@ const TaskList = (props: TaskListProps) => {
   const dispatch = useDispatch();
   const {navigate} = useNavigation<StackNavigationProp<MainStackParam>>();
   const {tasks} = useSelector<RootStore, RecordState>((store) => store.record);
+  console.log(tasks);
 
   const keyExtractor = (item: Data.Task | Record.NotFull, _index: number) =>
     `${item.index}`;
@@ -29,10 +30,10 @@ const TaskList = (props: TaskListProps) => {
   };
 
   const onClick = (index: number) => () => {
-    navigate('TaskDetail', {index});
+    navigate('TaskDetail', {index, isNew: false});
   };
   const onClickAdd = () => {
-    navigate('TaskDetail', {index: tasks.length});
+    navigate('TaskDetail', {index: tasks.length, isNew: true});
   };
 
   const makeList = () => {
@@ -48,6 +49,7 @@ const TaskList = (props: TaskListProps) => {
       };
       data.push(notFull);
     }
+
     return data;
   };
 

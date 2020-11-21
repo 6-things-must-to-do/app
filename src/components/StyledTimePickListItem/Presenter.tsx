@@ -1,4 +1,4 @@
-import {unixToCalendar} from '@/utils/date';
+import {unixToCalendar, unixToDate} from '@/utils/date';
 import React, {ReactNode} from 'react';
 import DateTimePickerModal, {
   ReactNativeModalDateTimePickerProps
@@ -7,7 +7,7 @@ import BaseLabel from '../BaseLabel';
 import StyledText from '../StyledText';
 
 interface Props extends Omit<ReactNativeModalDateTimePickerProps, 'date'> {
-  value?: Date;
+  value?: number;
   label: ReactNode;
   fontSize?: number;
   placeholder?: string;
@@ -24,12 +24,12 @@ export default (props: Props) => {
     ...dateTimePickerProps
   } = props;
 
+  const date = value ? unixToDate(value) : undefined;
+
   return (
     <BaseLabel onPress={onClickItem} label={<StyledText>{label}</StyledText>}>
       {value ? (
-        <StyledText fontSize={fontSize}>
-          {unixToCalendar(value.getTime())}
-        </StyledText>
+        <StyledText fontSize={fontSize}>{unixToCalendar(value)}</StyledText>
       ) : (
         <StyledText fontSize={fontSize} color="outfocus">
           {placeholder}
@@ -38,7 +38,7 @@ export default (props: Props) => {
       <DateTimePickerModal
         mode="datetime"
         {...dateTimePickerProps}
-        date={value}
+        date={date}
       />
     </BaseLabel>
   );

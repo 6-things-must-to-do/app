@@ -15,7 +15,7 @@ interface Props {
   contentValue: string;
   onPressAdd: () => void;
   onChangeContent: (text: string) => void;
-  onToggleTodo: (index: number) => () => void;
+  onToggleTodo: (index: number) => (isChecked: boolean) => void;
   onPressSave: () => void;
 }
 
@@ -51,7 +51,11 @@ export default (props: Props) => {
         <Collapsible collapsed={isCollapsed}>
           <AddView>
             <AddIcon>
-              <Todo disableText disabled />
+              <Todo
+                todo={{isCompleted: false, content: ''}}
+                disableText
+                disabled
+              />
             </AddIcon>
             <StyledTextInput
               value={contentValue}
