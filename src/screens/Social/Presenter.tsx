@@ -1,10 +1,11 @@
 import Ranking from '@/containers/Ranking';
-//import SearchFriends from '@/containers/SearchFriends';
 import React from 'react';
 import styled from 'styled-components/native';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
 import SocialButtons from '@/containers/SocialButtons';
 import useTheme from '@/hooks/useTheme';
+import SearchFriends from '@/containers/SearchFriends';
+import ShareButtons from '@/containers/ShareButtons';
 
 interface Props {
   selectedIndex: number;
@@ -15,8 +16,14 @@ export default (props: Props) => {
   const {selectedIndex, onTabPress} = props;
   const theme = useTheme();
   return (
-    <>
-      <Wrapper>
+    <Wrapper>
+      <SearchFriendsFlex>
+        <SearchFriends />
+        <AddButtonFlex>
+          <SocialButtons />
+        </AddButtonFlex>
+      </SearchFriendsFlex>
+      <TabFlex>
         <SegmentedControlTab
           values={['Friends', 'All']}
           selectedIndex={selectedIndex}
@@ -25,14 +32,14 @@ export default (props: Props) => {
           tabStyle={{borderColor: theme.secondary}}
           onTabPress={onTabPress}
         />
-        <RankingFlex>
-          <Ranking />
-        </RankingFlex>
-        <ButtonsFlex>
-          <SocialButtons />
-        </ButtonsFlex>
-      </Wrapper>
-    </>
+      </TabFlex>
+      <RankingFlex>
+        <Ranking />
+      </RankingFlex>
+      <ShareFlex>
+        <ShareButtons />
+      </ShareFlex>
+    </Wrapper>
   );
 };
 
@@ -42,10 +49,29 @@ const Wrapper = styled.View`
 `;
 
 const RankingFlex = styled.View`
-  flex: 1;
+  flex: 5;
 `;
 
-const ButtonsFlex = styled.View`
+const AddButtonFlex = styled.View`
+  flex-direction: row;
+  padding-top: 16px;
+`;
+
+const SearchFriendsFlex = styled.View`
   flex: 1;
-  padding-horizontal: 16px;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+  padding-right: 10px;
+`;
+
+const TabFlex = styled.View`
+  flex: 0.5;
+`;
+
+const ShareFlex = styled.View`
+  flex: 1;
+  flex-direction: row-reverse;
+  padding-top: 10px;
+  margin-left: 10px;
 `;

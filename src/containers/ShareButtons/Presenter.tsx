@@ -1,5 +1,5 @@
 import React from 'react';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import useTheme from '@/hooks/useTheme';
 import {TouchableOpacity} from 'react-native';
 
@@ -12,11 +12,11 @@ export default (props: ClickButtonProps) => {
   const theme = useTheme();
 
   const color = theme.primary;
-  const name = 'adduser';
+  const name = 'share-social-outline';
 
   return (
     <TouchableOpacity onPress={onClick}>
-      <AntDesign color={color} size={32} name={name} />
+      <Ionicons color={color} size={32} name={name} />
     </TouchableOpacity>
   );
 };

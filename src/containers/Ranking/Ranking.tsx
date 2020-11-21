@@ -32,6 +32,26 @@ const Ranking = () => {
       rank: 6,
       nickname: 'User Name',
       percentage: 100
+    },
+    {
+      rank: 7,
+      nickname: 'User Name',
+      percentage: 100
+    },
+    {
+      rank: 8,
+      nickname: 'User Name',
+      percentage: 100
+    },
+    {
+      rank: 9,
+      nickname: 'User Name',
+      percentage: 100
+    },
+    {
+      rank: 10,
+      nickname: 'User Name',
+      percentage: 100
     }
   ];
 

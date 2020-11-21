@@ -1,11 +1,12 @@
 import React from 'react';
 import Presenter from './Presenter';
 
-const SearchFriends = () => {
+const SocialButtons = () => {
   const onClickAdd = () => {
-    console.log('clicked!');
+    console.log('clicked!!');
   };
+
   return <Presenter onClick={onClickAdd} />;
 };
 
-export default SearchFriends;
+export default SocialButtons;
