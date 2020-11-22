@@ -6,40 +6,62 @@ import StyledText from '@/components/StyledText';
 import useTheme from '@/hooks/useTheme';
 import styled from 'styled-components/native';
 import StyledView from '@/components/StyledView';
+import Svg from 'react-native-svg';
 
 interface Props {
-  data: Array<{x: number; y: number}>;
+  data: Array<{x: number; y: number; m: number}>;
+  currentDate: number;
+  onPressDate: (newdate: number) => void;
 }
 
 export default (props: Props) => {
-  const {data} = props;
+  const {data, currentDate, onPressDate} = props;
 
   const theme = useTheme();
 
   return (
     <Wrapper>
       <GraphView>
-        <VictoryBar
-          data={data}
-          labels={({datum}) => datum.x}
-          labelComponent={<VictoryLabel dy={0} />}
-          style={{
-            data: {
-              fill: ({datum}) => (datum.y === 1 ? theme.tint : theme.outfocus)
-            },
-            labels: {
-              fill: theme.text.default
-            }
-          }}
-        />
+        <Svg>
+          <VictoryBar
+            data={data}
+            labels={({datum}) => datum.x}
+            labelComponent={<VictoryLabel dy={0} />}
+            style={{
+              data: {
+                fill: ({datum}) => (datum.y === 1 ? theme.tint : theme.outfocus)
+              },
+              labels: {
+                fill: theme.text.default
+              }
+            }}
+            events={[
+              {
+                target: 'data',
+                eventHandlers: {
+                  onPressIn: () => {
+                    return [
+                      {
+                        target: 'data',
+                        mutation: (datum) => {
+                          onPressDate(datum.datum.x);
+                        }
+                      }
+                    ];
+                  }
+                }
+              }
+            ]}
+          />
+        </Svg>
       </GraphView>
       <DateView>
-        <BigCenterText color="default">11월 12일 (목)</BigCenterText>
+        <BigCenterText color="default">11월 {currentDate}일 (목)</BigCenterText>
         <CenterText color="default">4/5 (80%)</CenterText>
       </DateView>
       <ProgressView>
         <Progress.Bar
-          progress={4 / 6}
+          progress={4 / 5}
           color={theme.tint}
           width={300}
           height={2}

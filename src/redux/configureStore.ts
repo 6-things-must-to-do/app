@@ -13,6 +13,7 @@ import auth, {AuthAction, authSaga} from './modules/auth';
 import record, {RecordAction} from './modules/record';
 import global from './modules/global';
 import user from './modules/user';
+import dashboard from './modules/dashboard';
 import appSetting, {AppSettingAction} from './modules/appSetting';
 import {
   AppSettingState,
@@ -23,6 +24,7 @@ import {
 import {all} from 'redux-saga/effects';
 import globalSaga from './modules/global/saga';
 import appSettingSaga from './modules/appSetting/saga';
+import dashboardSaga from './modules/dashboard/saga';
 
 const authPersistConfig: PersistConfig<AuthState> = {
   key: 'auth',
@@ -53,6 +55,7 @@ const rootReducer = combineReducers<RootStore>({
   ),
   global,
   user,
+  dashboard,
   record: persistReducer<RecordState, RecordAction>(recordPersistConfig, record)
 });
 
@@ -62,7 +65,7 @@ const persistedReducer = persistReducer<CombinedState<RootStore>>(
 );
 
 function* rootSaga() {
-  yield all([authSaga(), globalSaga(), appSettingSaga()]);
+  yield all([authSaga(), globalSaga(), appSettingSaga(), dashboardSaga()]);
 }
 
 export default () => {
