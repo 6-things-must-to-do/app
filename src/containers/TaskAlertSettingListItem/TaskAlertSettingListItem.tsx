@@ -3,8 +3,6 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import Presenter from './Presenter';
 import dayjs from 'dayjs';
-import {Platform} from 'react-native';
-import {Event, AndroidEvent} from '@react-native-community/datetimepicker';
 import {AppSettingState, RootStore} from '@stmt/redux-store';
 
 const TaskAlertSettingListItem = () => {
@@ -20,16 +18,11 @@ const TaskAlertSettingListItem = () => {
     setIsPickerOpen(true);
   };
 
-  const onChangeAlert = (event: AndroidEvent & Event, date?: Date) => {
-    if (event.type === 'dismissed') {
-      setIsPickerOpen(false);
-      return;
-    }
+  const onCancel = () => {
+    setIsPickerOpen(false);
+  };
 
-    if (Platform.OS === 'android') {
-      setIsPickerOpen(false);
-    }
-
+  const onConfirm = (date?: Date) => {
     if (!date) throw new Error('Date 필요');
     const hour = dayjs(date).get('hour');
     const minute = dayjs(date).get('minute');
@@ -40,7 +33,11 @@ const TaskAlertSettingListItem = () => {
   };
 
   useEffect(() => {
-    if (setAlert && setAlert.hour && setAlert.minute) {
+    if (
+      setAlert &&
+      !Number.isNaN(setAlert.hour) &&
+      !Number.isNaN(setAlert.minute)
+    ) {
       const date = dayjs().hour(setAlert.hour).minute(setAlert.minute).toDate();
       setPickerValue(date);
     }
@@ -48,8 +45,9 @@ const TaskAlertSettingListItem = () => {
 
   return (
     <Presenter
+      onCancel={onCancel}
       pickerValue={pickerValue}
-      onChangeAlert={onChangeAlert}
+      onConfirm={onConfirm}
       isPickerOpen={isPickerOpen}
       onClick={onClick}
     />

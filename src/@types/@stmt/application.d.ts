@@ -7,10 +7,12 @@ declare module '@stmt/application' {
 
     interface Task {
       index: number;
-      willStartAt?: number;
-      estimatedMinutes?: number;
-      completedAt?: number;
+      willStartAt: number | null;
+      estimatedMinutes: number | null;
+      completedAt: number | null;
       createdAt: number;
+      title: string;
+      with?: string;
       where?: string;
       memo?: string;
       todos: Array<Todo>;
@@ -64,10 +66,17 @@ declare module '@stmt/application' {
   }
 
   namespace Record {
-    interface NoTask {
-      noTask: true;
-      index: -1;
+    interface NotFull {
+      notFull: true;
+      index: 6;
+      onClick: () => void;
     }
+
+    interface Task extends Data.Task {
+      onClick: () => void;
+    }
+
+    type RecordData = NotFull | Task;
   }
 
   namespace AppSetting {

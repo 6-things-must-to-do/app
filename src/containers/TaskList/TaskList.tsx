@@ -7,24 +7,49 @@ import Presenter from './Presenter';
 import {useDispatch, useSelector} from 'react-redux';
 import {RecordState, RootStore} from '@stmt/redux-store';
 import {recordTaskAlign} from '@/redux/modules/record/actions';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {MainStackParam} from '@/navigations/MainStack';
 
-const TaskList = () => {
+export interface TaskListProps {
+  editable: boolean;
+}
+
+const TaskList = (props: TaskListProps) => {
+  const {editable} = props;
   const dispatch = useDispatch();
+  const {navigate} = useNavigation<StackNavigationProp<MainStackParam>>();
   const {tasks} = useSelector<RootStore, RecordState>((store) => store.record);
+  console.log(tasks);
 
-  const keyExtractor = (item: Data.Task | Record.NoTask, _index: number) =>
+  const keyExtractor = (item: Data.Task | Record.NotFull, _index: number) =>
     `${item.index}`;
 
-  const onDragEnd = (param: DragEndParams<Data.Task | Record.NoTask>) => {
+  const onDragEnd = (param: DragEndParams<Data.Task | Record.NotFull>) => {
     dispatch(recordTaskAlign(param.from, param.to));
   };
 
+  const onClick = (index: number) => () => {
+    navigate('TaskDetail', {index, isNew: false});
+  };
+  const onClickAdd = () => {
+    navigate('TaskDetail', {index: tasks.length, isNew: true});
+  };
+
   const makeList = () => {
-    const data: Array<Data.Task | Record.NoTask> = [...tasks];
-    if (data.length < 6) {
-      const noTask: Record.NoTask = {noTask: true, index: -1};
-      data.push(noTask);
+    const data: Array<Record.RecordData> = tasks.map<Record.RecordData>(
+      (task) => ({...task, onClick: onClick(task.index)})
+    );
+
+    if (editable && data.length < 6) {
+      const notFull: Record.NotFull = {
+        notFull: true,
+        index: 6,
+        onClick: onClickAdd
+      };
+      data.push(notFull);
     }
+
     return data;
   };
 

@@ -1,18 +1,21 @@
-import {Data, Record, Style} from '@stmt/application';
+import {Record, Style} from '@stmt/application';
 import {RenderItemParams} from 'react-native-draggable-flatlist';
 import React from 'react';
-import Presenter, {NoTask} from './Presenter';
+import Presenter from './Presenter';
+import NotFull from './NotFull';
 
-const Task = (props: RenderItemParams<Data.Task | Record.NoTask>) => {
+const Task = (props: RenderItemParams<Record.RecordData>) => {
   const {item, drag} = props;
 
-  if ('noTask' in item) {
-    return <NoTask />;
+  if ('notFull' in item) {
+    return <NotFull onClickAdd={item.onClick} />;
   }
 
   const color: keyof Style.DimensionTheme = item.completedAt ? 'tint' : 'warn';
 
-  return <Presenter drag={drag} item={item} color={color} />;
+  return (
+    <Presenter onClick={item.onClick} drag={drag} item={item} color={color} />
+  );
 };
 
 export default Task;

@@ -1,17 +1,18 @@
 import AlertTime from '@/components/AlertTime';
 import React from 'react';
 import StyledListItem from '@/components/StyledListItem';
-import DateTimePicker, {Event} from '@react-native-community/datetimepicker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 interface Props {
   onClick: () => void;
-  onChangeAlert: (event: Event, date?: Date) => void;
+  onCancel: () => void;
+  onConfirm: (date?: Date) => void;
   isPickerOpen: boolean;
   pickerValue: Date;
 }
 
 export default (props: Props) => {
-  const {onClick, onChangeAlert, isPickerOpen, pickerValue} = props;
+  const {onClick, onConfirm, onCancel, isPickerOpen, pickerValue} = props;
   return (
     <>
       <StyledListItem
@@ -20,15 +21,15 @@ export default (props: Props) => {
         onPress={onClick}
         addOn={<AlertTime />}
       />
-      {isPickerOpen ? (
-        <DateTimePicker
-          display="spinner"
-          value={pickerValue}
-          mode="time"
-          minuteInterval={5}
-          onChange={onChangeAlert}
-        />
-      ) : null}
+      <DateTimePickerModal
+        date={pickerValue}
+        display="spinner"
+        isVisible={isPickerOpen}
+        onCancel={onCancel}
+        mode="time"
+        minuteInterval={5}
+        onConfirm={onConfirm}
+      />
     </>
   );
 };

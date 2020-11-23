@@ -2,6 +2,7 @@ import React from 'react';
 import StyledList from '@/components/StyledList';
 import StyledListItem from '@/components/StyledListItem';
 import LogoutButton from '@/containers/LogoutButton';
+import ClearCacheButton from '@/components/ClearCacheButton';
 
 interface Props {
   onClickItem: (target: 'update' | 'task') => () => void;
@@ -23,6 +24,7 @@ export default (props: Props) => {
         onPress={onClickItem('task')}
       />
       <LogoutButton />
+      <ClearCacheButton />
     </StyledList>
   );
 };

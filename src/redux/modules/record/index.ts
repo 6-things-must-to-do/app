@@ -6,7 +6,11 @@ import {
   recordAddTask,
   recordSetData,
   recordTaskAlign,
-  SET_DATA
+  recordUpdateTask,
+  recordUpdateTodo,
+  SET_DATA,
+  UPDATE_TASK,
+  UPDATE_TODO
 } from './actions';
 
 const initialState: RecordState = {
@@ -14,7 +18,11 @@ const initialState: RecordState = {
 };
 
 export type RecordAction = ReturnType<
-  typeof recordSetData | typeof recordTaskAlign | typeof recordAddTask
+  | typeof recordSetData
+  | typeof recordTaskAlign
+  | typeof recordAddTask
+  | typeof recordUpdateTask
+  | typeof recordUpdateTodo
 >;
 
 export default function reducer(
@@ -46,6 +54,39 @@ export default function reducer(
       tasks.push(action.payload);
       const newState = {tasks};
       return R.mergeRight(state, newState);
+    }
+
+    case UPDATE_TASK: {
+      const tasks = state.tasks;
+      const target = action.payload;
+
+      const arrayIndex = tasks.findIndex((task) => task.index === target.index);
+      if (arrayIndex === -1) return state;
+
+      tasks[arrayIndex] = target;
+
+      const newTasks = [...tasks];
+      return R.mergeRight(state, {tasks: newTasks});
+    }
+
+    case UPDATE_TODO: {
+      const {todo, index, taskIndex} = action.payload;
+      const tasks = [...state.tasks];
+      const targetTaskIndex = tasks.findIndex(
+        (task) => task.index === taskIndex
+      );
+
+      if (targetTaskIndex === -1) return state;
+
+      const targetTask = tasks[targetTaskIndex];
+      const todos = [...targetTask.todos];
+      const target = todos[index];
+      if (!target) return state;
+
+      todos[index] = todo;
+      tasks[targetTaskIndex] = {...targetTask, todos};
+
+      return R.mergeRight(state, {tasks});
     }
 
     default:

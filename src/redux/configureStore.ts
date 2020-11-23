@@ -7,7 +7,7 @@ import {
 } from 'redux';
 import {PersistConfig, persistReducer, persistStore} from 'redux-persist';
 import storage from '@react-native-community/async-storage';
-import logger from 'redux-logger';
+// import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import auth, {AuthAction, authSaga} from './modules/auth';
 import record, {RecordAction} from './modules/record';
@@ -71,9 +71,9 @@ function* rootSaga() {
 export default () => {
   const sagaMiddleware = createSagaMiddleware();
   const middlewares: Array<Middleware> = [sagaMiddleware];
-  if (__DEV__) {
-    middlewares.push(logger);
-  }
+  // if (__DEV__) {
+  //   middlewares.push(logger);
+  // }
 
   const store = createStore(persistedReducer, applyMiddleware(...middlewares));
   const persistor = persistStore(store);
