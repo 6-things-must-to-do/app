@@ -34,6 +34,13 @@ declare module '@stmt/application' {
     interface UserProfile extends UserBase {
       taskAlertSetting: TaskAlertSetting;
     }
+
+    // 위치가 이상함. 정의도 이상함. 일단은 이렇게 써놓음.
+    interface Progress {
+      x: number; // 날짜 (ex:06)
+      y: number; // 수행율 (0~1)
+      m: number; // 해당일의 월 (ex:11)
+    }
   }
 
   namespace APIResponse {
