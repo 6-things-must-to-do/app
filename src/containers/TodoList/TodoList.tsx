@@ -26,7 +26,7 @@ const TodoList = () => {
     targetTodo.isCompleted = isChecked;
 
     // TODO REDUX LOGIC (TODO Check 하는 거는 업데이트 누르지 않더라도 반영되게 하려고)
-    dispatch(recordUpdateTodo(targetTodo, index, task.index));
+    dispatch(recordUpdateTodo(targetTodo, index, task.priority));
   };
 
   const onPressAdd = () => {

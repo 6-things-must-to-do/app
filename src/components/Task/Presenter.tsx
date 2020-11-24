@@ -13,19 +13,21 @@ interface Props {
   item: Data.Task;
   color: keyof Style.DimensionTheme;
   onClick: () => void;
+  onClickComplete: () => void;
 }
 
 export default (props: Props) => {
-  const {item, drag, color, onClick} = props;
+  const {item, drag, color, onClick, onClickComplete} = props;
   const isCompleted = Boolean(item.completedAt);
 
   return (
     <Wrapper useBorder borderColor={color}>
       <Button onPress={onClick} fullWidth onLongPress={drag}>
-        <Content>{JSON.stringify(item)}</Content>
-
+        <Content>
+          <StyledText fontSize={18}>{item.title}</StyledText>
+        </Content>
         <CheckView>
-          <ClickButton isCompleted={isCompleted} />
+          <ClickButton onClick={onClickComplete} isCompleted={isCompleted} />
         </CheckView>
       </Button>
     </Wrapper>

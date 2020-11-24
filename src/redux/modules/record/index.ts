@@ -3,10 +3,12 @@ import {RecordState} from '@stmt/redux-store';
 import {
   ADD_TASK,
   ALIGN_TASKS,
+  CLICK_TASK_CHECKBOX,
   recordAddTask,
   recordSetData,
   recordTaskAlign,
   recordUpdateTask,
+  recordClickTaskCheckbox,
   recordUpdateTodo,
   SET_DATA,
   UPDATE_TASK,
@@ -22,6 +24,7 @@ export type RecordAction = ReturnType<
   | typeof recordTaskAlign
   | typeof recordAddTask
   | typeof recordUpdateTask
+  | typeof recordClickTaskCheckbox
   | typeof recordUpdateTodo
 >;
 
@@ -38,9 +41,9 @@ export default function reducer(
       const {from, to} = action.payload;
       const tasks = state.tasks;
 
-      [tasks[from].index, tasks[to].index] = [
-        tasks[to].index,
-        tasks[from].index
+      [tasks[from].priority, tasks[to].priority] = [
+        tasks[to].priority,
+        tasks[from].priority
       ];
       [tasks[from], tasks[to]] = [tasks[to], tasks[from]];
 
@@ -56,11 +59,26 @@ export default function reducer(
       return R.mergeRight(state, newState);
     }
 
+    case CLICK_TASK_CHECKBOX: {
+      const priority = action.payload;
+      const tasks = state.tasks;
+
+      tasks[priority].completedAt = tasks[priority].completedAt
+        ? null
+        : Date.now();
+
+      const newState = {tasks};
+
+      return R.mergeRight(state, newState);
+    }
+
     case UPDATE_TASK: {
       const tasks = state.tasks;
       const target = action.payload;
 
-      const arrayIndex = tasks.findIndex((task) => task.index === target.index);
+      const arrayIndex = tasks.findIndex(
+        (task) => task.priority === target.priority
+      );
       if (arrayIndex === -1) return state;
 
       tasks[arrayIndex] = target;
@@ -73,7 +91,7 @@ export default function reducer(
       const {todo, index, taskIndex} = action.payload;
       const tasks = [...state.tasks];
       const targetTaskIndex = tasks.findIndex(
-        (task) => task.index === taskIndex
+        (task) => task.priority === taskIndex
       );
 
       if (targetTaskIndex === -1) return state;

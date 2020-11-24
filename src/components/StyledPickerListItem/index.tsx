@@ -1,1 +1,1 @@
-export {default} from './StyledPickerIndexListItem';
+export {default} from './StyledPickerListItem';

@@ -19,11 +19,11 @@ const NavigationTheme = (props: Props) => {
   const navigationTheme: Theme = {
     dark: isDarkMode,
     colors: {
-      primary: theme.tint,
+      primary: theme.secondary,
       background: theme.primary,
       card: theme.card,
       text: theme.text.default,
-      border: theme.tint,
+      border: theme.secondary,
       notification: theme.warn
     }
   };

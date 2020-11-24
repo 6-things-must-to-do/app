@@ -33,9 +33,9 @@ const GlobalTheme = (props: Props) => {
     },
     light: {
       primary: COLORS.SUB_WHITE,
-      secondary: COLORS.MAIN_GREEN,
+      secondary: COLORS.MAIN_TURQUOISE,
       contrast: COLORS.MAIN_BLACK,
-      tint: COLORS.MAIN_TURQUOISE,
+      tint: COLORS.MAIN_GREEN,
       warn: COLORS.SUB_RED,
       card: COLORS.SUB_WHITE,
       outfocus: COLORS.MAIN_GREY,

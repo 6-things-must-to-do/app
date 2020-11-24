@@ -1,19 +1,19 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import StyledText from '@/components/StyledText';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import useTheme from '@/hooks/useTheme';
 
 interface Props {
   day: string;
   isLocked: boolean;
   onPressLock: () => void;
+  onPressDashboard: () => void;
 }
 
 export default (props: Props) => {
-  const {day, isLocked, onPressLock} = props;
-  const iconName = isLocked ? 'lock-open' : 'lock';
+  const {day, isLocked, onPressLock, onPressDashboard} = props;
+  const iconName = isLocked ? 'lock1' : 'unlock';
   const theme = useTheme();
 
   return (
@@ -22,9 +22,12 @@ export default (props: Props) => {
         <StyledText>{day}</StyledText>
       </Day>
       <Buttons>
-        <TouchableOpacity onPress={onPressLock}>
-          <FontAwesome5 size={24} color={theme.secondary} name={iconName} />
-        </TouchableOpacity>
+        <Button onPress={onPressLock}>
+          <AntDesign size={24} color={theme.secondary} name={iconName} />
+        </Button>
+        <Button onPress={onPressDashboard}>
+          <AntDesign name="barschart" color={theme.secondary} size={24} />
+        </Button>
       </Buttons>
     </Wrapper>
   );
@@ -41,4 +44,10 @@ const Wrapper = styled.View`
 
 const Day = styled.View``;
 
-const Buttons = styled.View``;
+const Button = styled.TouchableOpacity`
+  margin-horizontal: 8px;
+`;
+
+const Buttons = styled.View`
+  flex-direction: row;
+`;

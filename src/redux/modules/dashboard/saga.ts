@@ -3,10 +3,10 @@ import {put, takeLatest} from 'redux-saga/effects';
 import {dashboardFetchList, dashboardSetList, FETCH_LIST} from './actions';
 
 interface ProgressResponse {
-  list?: Array<Data.Progress>;
+  list: Array<Data.Progress>;
 }
 
-const ProgressApi = (date: number) => {
+const ProgressApi = (date: number): ProgressResponse => {
   const data1 = [
     {x: 5, y: 0.8, m: 11},
     {x: 6, y: 0.4, m: 11},
@@ -77,7 +77,6 @@ function* progressSaga(action: ReturnType<typeof dashboardFetchList>) {
   try {
     const {payload} = action;
     const {list} = ProgressApi(payload);
-    console.log('list: ', list);
     yield put(dashboardSetList(list));
   } catch (e) {
     console.log(e);

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import TodoInfo from '@/containers/TaskInfo';
 import withPadding from '@/hocs/withPadding';
 import TodoList from '@/containers/TodoList';
@@ -15,8 +16,10 @@ export default withPadding((props: Props) => {
   const {onClickAddTask, buttonText} = props;
   return (
     <Wrapper>
-      <TodoInfo />
-      <TodoList />
+      <KeyboardAwareScrollView>
+        <TodoInfo />
+        <TodoList />
+      </KeyboardAwareScrollView>
       <StyledButton onPress={onClickAddTask} fullWidth>
         <StyledText>{buttonText}</StyledText>
       </StyledButton>

@@ -45,7 +45,6 @@ export const StyledPickerListItemWithController = (
   props: WithControllerProps
 ) => {
   const {control, name, defaultValue, ...styledPickerListItemProps} = props;
-
   return (
     <Controller
       control={control}

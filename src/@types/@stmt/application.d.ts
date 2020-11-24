@@ -6,7 +6,7 @@ declare module '@stmt/application' {
     }
 
     interface Task {
-      index: number;
+      priority: number;
       willStartAt: number | null;
       estimatedMinutes: number | null;
       completedAt: number | null;
@@ -68,12 +68,13 @@ declare module '@stmt/application' {
   namespace Record {
     interface NotFull {
       notFull: true;
-      index: 6;
+      priority: 6;
       onClick: () => void;
     }
 
     interface Task extends Data.Task {
       onClick: () => void;
+      onClickComplete: () => void;
     }
 
     type RecordData = NotFull | Task;

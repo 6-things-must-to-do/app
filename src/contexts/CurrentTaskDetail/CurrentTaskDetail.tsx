@@ -1,12 +1,11 @@
 import {Data} from '@stmt/application';
-import React, {createContext, Dispatch, ReactNode, SetStateAction} from 'react';
+import React, {createContext, ReactNode} from 'react';
 import {Control} from 'react-hook-form';
 
 export interface CurrentTaskDetailContext {
   control: Control<Data.Task>;
   task: Data.Task;
   isNew: boolean;
-  setTask: Dispatch<SetStateAction<Data.Task>>;
 }
 
 interface Props {
@@ -14,7 +13,6 @@ interface Props {
   task: Data.Task;
   isNew: boolean;
   control: Control<Data.Task>;
-  setTask: Dispatch<SetStateAction<Data.Task>>;
 }
 
 export const CurrentTaskDetail = createContext<CurrentTaskDetailContext>(
@@ -22,13 +20,12 @@ export const CurrentTaskDetail = createContext<CurrentTaskDetailContext>(
 );
 
 const CurrentTaskDetailProvider = (props: Props) => {
-  const {task, children, control, isNew, setTask} = props;
+  const {task, children, control, isNew} = props;
 
   const defaultValue: CurrentTaskDetailContext = {
     control,
     task,
-    isNew,
-    setTask
+    isNew
   };
 
   return (

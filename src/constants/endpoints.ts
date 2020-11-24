@@ -10,10 +10,10 @@ const localUrl =
 
 const prodUrl = '';
 
-const devServer = 'http://dev.sixthings.tech/api';
+const devServer = 'https://dev.sixthings.tech/api';
 
 export const BASE = __DEV__ ? (isLocal ? localUrl : devServer) : prodUrl;
 
 export const LOGIN = '/auth/login' as const;
-export const MYPAGE = '/users/my-page' as const;
+export const MYPAGE = '/user' as const;
 export const SETTING = '/settings/task' as const;

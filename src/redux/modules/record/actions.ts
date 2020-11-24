@@ -5,6 +5,7 @@ export const SET_DATA = 'RECORD/SET_DATA' as const;
 export const ALIGN_TASKS = 'RECORD/ALIGN_TASKS' as const;
 export const ADD_TASK = 'RECORD/ADD_TASK' as const;
 export const UPDATE_TASK = 'RECORD/UPDATE_TASK' as const;
+export const CLICK_TASK_CHECKBOX = 'RECORD/CLICK_TASK_CHECKBOX' as const;
 export const UPDATE_TODO = 'RECORD/UPDATE_TODO' as const;
 
 export const recordSetData = (data: RecordState) => ({
@@ -15,6 +16,11 @@ export const recordSetData = (data: RecordState) => ({
 export const recordUpdateTask = (task: Data.Task) => ({
   type: UPDATE_TASK,
   payload: task
+});
+
+export const recordClickTaskCheckbox = (priority: number) => ({
+  type: CLICK_TASK_CHECKBOX,
+  payload: priority
 });
 
 export const recordUpdateTodo = (

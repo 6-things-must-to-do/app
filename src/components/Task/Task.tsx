@@ -14,7 +14,13 @@ const Task = (props: RenderItemParams<Record.RecordData>) => {
   const color: keyof Style.DimensionTheme = item.completedAt ? 'tint' : 'warn';
 
   return (
-    <Presenter onClick={item.onClick} drag={drag} item={item} color={color} />
+    <Presenter
+      onClick={item.onClick}
+      onClickComplete={item.onClickComplete}
+      drag={drag}
+      item={item}
+      color={color}
+    />
   );
 };
 

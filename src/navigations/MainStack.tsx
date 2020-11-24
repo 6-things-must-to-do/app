@@ -2,11 +2,12 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import Main from '@/screens/Main';
 import TaskDetail from '@/screens/TaskDetail';
+import Dashboard from '@/screens/Dashboard';
 
 export type MainStackParam = {
   Main: undefined;
   TaskDetail: {
-    index: number;
+    priority: number;
     isNew: boolean;
   };
   Dashboard: undefined;
@@ -26,6 +27,11 @@ const MainStack = () => {
         options={{headerTitle: 'Task Detail'}}
         name="TaskDetail"
         component={TaskDetail}
+      />
+      <Stack.Screen
+        options={{headerTitle: 'Dashboard'}}
+        name="Dashboard"
+        component={Dashboard}
       />
     </Stack.Navigator>
   );

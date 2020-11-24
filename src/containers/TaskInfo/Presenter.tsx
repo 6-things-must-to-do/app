@@ -10,7 +10,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import styled from 'styled-components/native';
 import {Data} from '@stmt/application';
 import {StyledTimePickListItemWithController} from '@/components/StyledTimePickListItem/StyledTimePickListItem';
-import {StyledPickerListItemWithController} from '@/components/StyledPickerListItem/StyledPickerIndexListItem';
+import {StyledPickerListItemWithController} from '@/components/StyledPickerListItem/StyledPickerListItem';
 import {Item} from 'react-native-picker-select';
 
 interface Props {

@@ -3,25 +3,27 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import SettingStack from './SettingStack';
 import MainStack from './MainStack';
-import Temp from '@/screens/Temp';
+import SocialStack from './SocialStack';
 
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigation() {
   return (
-    <Tab.Navigator tabBarOptions={{showLabel: false}}>
+    <Tab.Navigator
+      initialRouteName="MainStack"
+      tabBarOptions={{showLabel: false}}>
       <Tab.Screen
         options={{
           tabBarIcon: (props) => <FontAwesome5 {...props} name="user-friends" />
         }}
-        name="Social"
-        component={Temp}
+        name="SocialStack"
+        component={SocialStack}
       />
       <Tab.Screen
         options={{
           tabBarIcon: (props) => <FontAwesome5 {...props} name="th-list" />
         }}
-        name="Main"
+        name="MainStack"
         component={MainStack}
       />
       <Tab.Screen
