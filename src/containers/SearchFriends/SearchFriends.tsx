@@ -3,9 +3,13 @@ import Presenter from './Presenter';
 
 const SearchFriends = () => {
   const onClickAdd = () => {
-    console.log('clicked!');
+    console.log('Add Clicked!');
   };
-  return <Presenter onClick={onClickAdd} />;
+
+  const onClickSearch = () => {
+    console.log('Search Clicked!');
+  };
+  return <Presenter onClickAdd={onClickAdd} onClickSearch={onClickSearch} />;
 };
 
 export default SearchFriends;

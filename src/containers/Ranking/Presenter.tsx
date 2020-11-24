@@ -19,7 +19,7 @@ export default (props: Props) => {
   const {rankinglist, onClick} = props;
   const theme = useTheme();
   return (
-    <>
+    <Wrapper>
       <Header disabled borderColor={theme.secondary} bgColor={theme.secondary}>
         <Column>
           <StyledText>Ranking</StyledText>
@@ -51,9 +51,13 @@ export default (props: Props) => {
           </Row>
         ))}
       </StyledList>
-    </>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.View`
+  flex: 5;
+`;
 
 const Row = styled.TouchableOpacity<{
   borderColor: string;
