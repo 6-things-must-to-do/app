@@ -15,13 +15,14 @@ import {Item} from 'react-native-picker-select';
 
 interface Props {
   isFolded: boolean;
+  editable: boolean;
   control: Control<Data.Task>;
   task: Data.Task;
   onToggleDetail: () => void;
 }
 
 export default (props: Props) => {
-  const {isFolded, onToggleDetail, control, task} = props;
+  const {isFolded, onToggleDetail, control, task, editable} = props;
   const iconName = !isFolded ? 'expand-less' : 'expand-more';
   const theme = useTheme();
 
@@ -51,6 +52,7 @@ export default (props: Props) => {
         control={control}
         render={({onBlur, onChange, value}) => (
           <StyledInputListItem
+            editable={editable}
             label="What 🎯"
             value={value}
             onBlur={onBlur}
@@ -64,6 +66,7 @@ export default (props: Props) => {
       />
       <Collapsible collapsed={isFolded}>
         <StyledInputListItemWithController
+          editable={editable}
           control={control}
           name="where"
           label="Where 📍"
@@ -71,6 +74,7 @@ export default (props: Props) => {
           defaultValue={task.where || ''}
         />
         <StyledInputListItemWithController
+          editable={editable}
           control={control}
           name="with"
           label="With 👥"
@@ -85,6 +89,7 @@ export default (props: Props) => {
           label="When ⏰"
         />
         <StyledPickerListItemWithController
+          disabled={editable}
           items={estimatedMinutesItems}
           label="Estimated minutes ⏳"
           control={control}
@@ -92,6 +97,7 @@ export default (props: Props) => {
           name="estimatedMinutes"
         />
         <StyledInputListItemWithController
+          editable={editable}
           baseLabelProps={{height: 88}}
           multiline
           label="Memo 📝"

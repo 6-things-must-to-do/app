@@ -3,13 +3,20 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Main from '@/screens/Main';
 import TaskDetail from '@/screens/TaskDetail';
 import Dashboard from '@/screens/Dashboard';
+import {Data} from '@stmt/application';
+
+interface RecordTaskDetail {
+  isRecord: true;
+  task: Data.Task;
+}
+
+interface CurrentTaskDetail {
+  isRecord: false;
+}
 
 export type MainStackParam = {
   Main: undefined;
-  TaskDetail: {
-    priority: number;
-    isNew: boolean;
-  };
+  TaskDetail: undefined;
   Dashboard: undefined;
 };
 

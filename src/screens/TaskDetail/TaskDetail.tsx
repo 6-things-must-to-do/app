@@ -3,44 +3,43 @@ import {StackProps} from '@stmt/navigation';
 import {Data} from '@stmt/application';
 import React from 'react';
 import {useForm} from 'react-hook-form';
+import {BulletList} from 'react-content-loader';
 import Presenter from './Presenter';
 import CurrentTaskDetailProvider from '@/contexts/CurrentTaskDetail';
 import {useDispatch, useSelector} from 'react-redux';
-import {RecordState, RootStore} from '@stmt/redux-store';
-import {recordAddTask, recordUpdateTask} from '@/redux/modules/record/actions';
+import {RootStore, TaskDetailState} from '@stmt/redux-store';
+import {
+  tasksAddTask,
+  tasksUpdateTask
+} from '@/redux/modules/currentTasks/actions';
 
 const TaskDetail = (props: StackProps<MainStackParam, 'TaskDetail'>) => {
-  const {route, navigation} = props;
-  const {priority, isNew} = route.params;
-
-  const {tasks} = useSelector<RootStore, RecordState>((store) => store.record);
+  const {navigation} = props;
   const dispatch = useDispatch();
+  const {detail, isNew, isRecord} = useSelector<RootStore, TaskDetailState>(
+    (store) => store.taskDetail
+  );
+  const {control, handleSubmit} = useForm<Data.Task>({defaultValues: detail});
 
-  let task: Data.Task = isNew
-    ? {
-        createdAt: Date.now(),
-        title: '',
-        todos: [],
-        priority,
-        completedAt: null,
-        estimatedMinutes: null,
-        willStartAt: null
-      }
-    : tasks[priority];
-
-  const {control, handleSubmit} = useForm<Data.Task>({defaultValues: task});
+  if (!detail) {
+    return <BulletList />;
+  }
 
   const onClickAddTask = handleSubmit((form) => {
-    const actionCreator = isNew ? recordAddTask : recordUpdateTask;
-    dispatch(actionCreator({...form, priority}));
+    const actionCreator = isNew ? tasksAddTask : tasksUpdateTask;
+    dispatch(actionCreator({...form, priority: detail.priority}));
     navigation.goBack();
   });
 
   const buttonText = isNew ? 'Add Task' : 'Update Task';
 
   return (
-    <CurrentTaskDetailProvider isNew={isNew} control={control} task={task}>
-      <Presenter buttonText={buttonText} onClickAddTask={onClickAddTask} />
+    <CurrentTaskDetailProvider isNew={isNew} control={control} task={detail}>
+      <Presenter
+        useButton={!isRecord}
+        buttonText={buttonText}
+        onClickAddTask={onClickAddTask}
+      />
     </CurrentTaskDetailProvider>
   );
 };

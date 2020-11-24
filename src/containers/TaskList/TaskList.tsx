@@ -1,80 +1,78 @@
 import Task from '@/components/Task';
 import {DragEndParams} from 'react-native-draggable-flatlist';
-import {Data, Record} from '@stmt/application';
+import {Data, TaskList as TL} from '@stmt/application';
 import React from 'react';
 import Animated from 'react-native-reanimated';
 import Presenter from './Presenter';
-import {useDispatch, useSelector} from 'react-redux';
-import {RecordState, RootStore} from '@stmt/redux-store';
-import {
-  recordClickTaskCheckbox,
-  recordTaskAlign
-} from '@/redux/modules/record/actions';
+import {useDispatch} from 'react-redux';
+import {tasksTaskAlign} from '@/redux/modules/currentTasks/actions';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {MainStackParam} from '@/navigations/MainStack';
+import EditableStateProvider from '@/contexts/EditableState';
+import {detailSetData} from '@/redux/modules/taskDetail/actions';
 
 export interface TaskListProps {
-  editable: boolean;
+  list: Array<TL.Task>;
+  isRecord: boolean;
+  isLocked: boolean;
 }
 
 const TaskList = (props: TaskListProps) => {
-  const {editable} = props;
+  const {isRecord, list, isLocked} = props;
   const dispatch = useDispatch();
   const {navigate} = useNavigation<StackNavigationProp<MainStackParam>>();
-  const {tasks} = useSelector<RootStore, RecordState>((store) => store.record);
 
-  const keyExtractor = (item: Data.Task | Record.NotFull, _index: number) =>
+  const keyExtractor = (item: Data.Task | TL.NotFull, _index: number) =>
     `${item.priority}`;
 
-  const onDragEnd = (param: DragEndParams<Data.Task | Record.NotFull>) => {
-    dispatch(recordTaskAlign(param.from, param.to));
+  const onDragEnd = (param: DragEndParams<Data.Task | TL.NotFull>) => {
+    dispatch(tasksTaskAlign(param.from, param.to));
   };
 
-  const onClick = (priority: number) => () => {
-    navigate('TaskDetail', {priority, isNew: false});
-  };
+  const data: Array<TL.TaskListData> = [...list];
 
-  const onClickComplete = (priority: number) => () => {
-    dispatch(recordClickTaskCheckbox(priority));
-  };
-
-  const onClickAdd = () => {
-    navigate('TaskDetail', {priority: tasks.length, isNew: true});
-  };
-
-  const makeList = () => {
-    const data: Array<Record.RecordData> = tasks.map<Record.RecordData>(
-      (task) => ({
-        ...task,
-        onClick: onClick(task.priority),
-        onClickComplete: onClickComplete(task.priority)
-      })
-    );
-
-    if (editable && data.length < 6) {
-      const notFull: Record.NotFull = {
-        notFull: true,
-        priority: 6,
-        onClick: onClickAdd
+  if (!isRecord && !isLocked && list.length < 6) {
+    const onClick = () => {
+      let task: Data.Task = {
+        createdAt: Date.now(),
+        title: '',
+        todos: [],
+        priority: list.length,
+        completedAt: null,
+        estimatedMinutes: null,
+        willStartAt: null
       };
-      data.push(notFull);
-    }
+      dispatch(
+        detailSetData({
+          detail: task,
+          isRecord: false,
+          isNew: true,
+          isLocked: false
+        })
+      );
+      navigate('TaskDetail');
+    };
 
-    return data;
-  };
-
-  const data = makeList();
+    const notFull: TL.NotFull = {
+      priority: 6,
+      onClick,
+      notFull: true
+    };
+    data.push(notFull);
+  }
 
   return (
-    <Presenter
-      onDragEnd={onDragEnd}
-      data={data}
-      renderItem={Task}
-      keyExtractor={keyExtractor}
-      dragItemOverflow={false}
-      animationConfig={{} as Animated.SpringConfig}
-    />
+    <EditableStateProvider editable={!isRecord}>
+      <Presenter
+        onDragEnd={onDragEnd}
+        data={data}
+        renderItem={Task}
+        keyExtractor={keyExtractor}
+        dragItemOverflow={false}
+        animationConfig={{} as Animated.SpringConfig}
+      />
+    </EditableStateProvider>
   );
 };
 

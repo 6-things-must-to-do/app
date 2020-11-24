@@ -10,14 +10,17 @@ import storage from '@react-native-community/async-storage';
 // import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import auth, {AuthAction, authSaga} from './modules/auth';
+import currentTasks, {CurrentTasksAction} from './modules/currentTasks';
 import record, {RecordAction} from './modules/record';
 import global from './modules/global';
 import user from './modules/user';
 import dashboard from './modules/dashboard';
+import taskDetail from './modules/taskDetail';
 import appSetting, {AppSettingAction} from './modules/appSetting';
 import {
   AppSettingState,
   AuthState,
+  CurrentTasksState,
   RecordState,
   RootStore
 } from '@stmt/redux-store';
@@ -28,6 +31,11 @@ import dashboardSaga from './modules/dashboard/saga';
 
 const authPersistConfig: PersistConfig<AuthState> = {
   key: 'auth',
+  storage
+};
+
+const currentTasksPersistConfig: PersistConfig<CurrentTasksState> = {
+  key: 'currentTasks',
   storage
 };
 
@@ -56,6 +64,11 @@ const rootReducer = combineReducers<RootStore>({
   global,
   user,
   dashboard,
+  currentTasks: persistReducer<CurrentTasksState, CurrentTasksAction>(
+    currentTasksPersistConfig,
+    currentTasks
+  ),
+  taskDetail,
   record: persistReducer<RecordState, RecordAction>(recordPersistConfig, record)
 });
 

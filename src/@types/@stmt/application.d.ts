@@ -18,6 +18,30 @@ declare module '@stmt/application' {
       todos: Array<Todo>;
     }
 
+    interface RecordData {
+      tasks: Array<{
+        title: string;
+        priority: number;
+        createdAt: number;
+      }>;
+      lockTime: number;
+      score: number;
+      inComplete: number;
+      complete: number;
+      percent: number;
+      nickname: string;
+    }
+
+    interface RecordMeta {
+      year: number;
+      month: number;
+      day: number;
+      dayOfYear: number;
+      score: number;
+      percent: number;
+      lockTime: number;
+    }
+
     interface TaskAlertSetting {
       hour: number;
       minute: number;
@@ -65,7 +89,7 @@ declare module '@stmt/application' {
     }
   }
 
-  namespace Record {
+  namespace TaskList {
     interface NotFull {
       notFull: true;
       priority: 6;
@@ -77,7 +101,7 @@ declare module '@stmt/application' {
       onClickComplete: () => void;
     }
 
-    type RecordData = NotFull | Task;
+    type TaskListData = NotFull | Task;
   }
 
   namespace AppSetting {

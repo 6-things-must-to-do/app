@@ -68,7 +68,7 @@ export default (props: Props) => {
         />
       </ProgressView>
       <ListView>
-        <TaskList />
+        <TaskList isRecord list={[]} />
       </ListView>
     </Wrapper>
   );
@@ -100,6 +100,6 @@ const CenterText = styled(StyledText)`
 `;
 
 const BigCenterText = styled(CenterText)`
-font-weight: bold,
-font-size: 20
+  font-weight: bold;
+  font-size: 20px;
 `;

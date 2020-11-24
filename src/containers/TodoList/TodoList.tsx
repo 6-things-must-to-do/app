@@ -1,5 +1,5 @@
 import useCurrentTask from '@/hooks/useCurrentTask';
-import {recordUpdateTodo} from '@/redux/modules/record/actions';
+import {tasksUpdateTodo} from '@/redux/modules/currentTasks/actions';
 import {Data} from '@stmt/application';
 import React, {useEffect, useState} from 'react';
 import {Controller} from 'react-hook-form';
@@ -26,7 +26,7 @@ const TodoList = () => {
     targetTodo.isCompleted = isChecked;
 
     // TODO REDUX LOGIC (TODO Check 하는 거는 업데이트 누르지 않더라도 반영되게 하려고)
-    dispatch(recordUpdateTodo(targetTodo, index, task.priority));
+    dispatch(tasksUpdateTodo(targetTodo, index, task.priority));
   };
 
   const onPressAdd = () => {

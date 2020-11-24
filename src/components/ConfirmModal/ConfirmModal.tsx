@@ -29,7 +29,7 @@ const ConfirmModal = (props: ConfirmModalProps) => {
     onCancel,
     useCancelButton = true,
     cancelColor = 'outfocus',
-    confirmTextColor = 'tint',
+    confirmTextColor = 'success',
     confirmColor = 'secondary',
     cancelTextColor = 'default',
     ...modalProps

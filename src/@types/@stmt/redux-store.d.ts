@@ -11,10 +11,23 @@ declare module '@stmt/redux-store' {
     isLoading: boolean;
   }
 
+  interface CurrentTasksState {
+    tasks: Array<Data.Task>;
+    lockTime?: number;
+    date?: Date;
+  }
+
   interface RecordState {
     tasks: Array<Data.Task>;
-    inProcess?: Data.Task;
-    date?: Date;
+    standard?: number;
+    metaList: Array<Data.RecordMeta>;
+  }
+
+  interface TaskDetailState {
+    isRecord: boolean;
+    isLocked: boolean;
+    isNew: boolean;
+    detail?: Data.Task;
   }
 
   interface DashboardState {
@@ -38,6 +51,8 @@ declare module '@stmt/redux-store' {
     global: GlobalState;
     user: UserState;
     appSetting: PersistPartial & AppSettingState;
+    currentTasks: PersistPartial & CurrentTasksState;
+    taskDetail: TaskDetailState;
     record: PersistPartial & RecordState;
     dashboard: DashboardState;
   }

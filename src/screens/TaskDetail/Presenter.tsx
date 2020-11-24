@@ -10,19 +10,22 @@ import StyledText from '@/components/StyledText';
 interface Props {
   onClickAddTask: () => void;
   buttonText: string;
+  useButton: boolean;
 }
 
 export default withPadding((props: Props) => {
-  const {onClickAddTask, buttonText} = props;
+  const {onClickAddTask, useButton, buttonText} = props;
   return (
     <Wrapper>
       <KeyboardAwareScrollView>
         <TodoInfo />
         <TodoList />
       </KeyboardAwareScrollView>
-      <StyledButton onPress={onClickAddTask} fullWidth>
-        <StyledText>{buttonText}</StyledText>
-      </StyledButton>
+      {useButton ? (
+        <StyledButton onPress={onClickAddTask} fullWidth>
+          <StyledText>{buttonText}</StyledText>
+        </StyledButton>
+      ) : null}
     </Wrapper>
   );
 });
