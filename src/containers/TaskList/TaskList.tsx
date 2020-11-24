@@ -9,7 +9,6 @@ import {tasksTaskAlign} from '@/redux/modules/currentTasks/actions';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {MainStackParam} from '@/navigations/MainStack';
-import EditableStateProvider from '@/contexts/EditableState';
 import {detailSetData} from '@/redux/modules/taskDetail/actions';
 
 export interface TaskListProps {
@@ -63,16 +62,14 @@ const TaskList = (props: TaskListProps) => {
   }
 
   return (
-    <EditableStateProvider editable={!isRecord}>
-      <Presenter
-        onDragEnd={onDragEnd}
-        data={data}
-        renderItem={Task}
-        keyExtractor={keyExtractor}
-        dragItemOverflow={false}
-        animationConfig={{} as Animated.SpringConfig}
-      />
-    </EditableStateProvider>
+    <Presenter
+      onDragEnd={onDragEnd}
+      data={data}
+      renderItem={Task}
+      keyExtractor={keyExtractor}
+      dragItemOverflow={false}
+      animationConfig={{} as Animated.SpringConfig}
+    />
   );
 };
 
