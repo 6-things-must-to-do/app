@@ -3,6 +3,16 @@ import calendar from 'dayjs/plugin/calendar';
 
 dayjs.extend(calendar);
 
+export const getYesterdayTimestamp = (): number => {
+  return dayjs()
+    .subtract(24, 'hour')
+    .set('minute', 0)
+    .set('second', 0)
+    .set('millisecond', 0)
+    .toDate()
+    .getTime();
+};
+
 export const unixToDateFormat = (unix: number): string => {
   return dayjs(unix).format('DD / MM / YYYY'); // '25/01/2019'
 };

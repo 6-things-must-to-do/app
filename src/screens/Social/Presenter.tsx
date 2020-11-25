@@ -5,21 +5,23 @@ import SegmentedControlTab from 'react-native-segmented-control-tab';
 import useTheme from '@/hooks/useTheme';
 import SearchFriends from '@/containers/SearchFriends';
 import ShareButtons from '@/containers/ShareButtons';
+import {Data} from '@stmt/application';
 
 interface Props {
   selectedIndex: number;
   onTabPress: (index: number) => void;
+  ranking: Array<Data.Rank>;
 }
 
 export default (props: Props) => {
-  const {selectedIndex, onTabPress} = props;
+  const {selectedIndex, onTabPress, ranking} = props;
   const theme = useTheme();
   return (
     <Wrapper>
       <SearchFriends />
       <TabFlex>
         <SegmentedControlTab
-          values={['Friends', 'All']}
+          values={['All', 'Friends']}
           selectedIndex={selectedIndex}
           activeTabStyle={{backgroundColor: theme.secondary}}
           tabTextStyle={{color: theme.primary}}
@@ -27,7 +29,7 @@ export default (props: Props) => {
           onTabPress={onTabPress}
         />
       </TabFlex>
-      <Ranking />
+      <Ranking data={ranking} />
       <ShareButtons />
     </Wrapper>
   );

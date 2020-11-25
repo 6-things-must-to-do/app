@@ -30,6 +30,14 @@ declare module '@stmt/redux-store' {
     detail?: Data.Task;
   }
 
+  type RankType = 'all' | 'friends';
+
+  interface SocialState {
+    date: number;
+    type: RankType;
+    ranking: Array<Data.Rank>;
+  }
+
   interface DashboardState {
     date: number; // Date든 뭐든 뭐라도 되겠지 뭐
     progress: Array<Data.Progress>;
@@ -53,6 +61,7 @@ declare module '@stmt/redux-store' {
     appSetting: PersistPartial & AppSettingState;
     currentTasks: PersistPartial & CurrentTasksState;
     taskDetail: TaskDetailState;
+    social: SocialState;
     record: PersistPartial & RecordState;
     dashboard: DashboardState;
   }

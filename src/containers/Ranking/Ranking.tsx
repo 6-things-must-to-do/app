@@ -1,60 +1,18 @@
-import Presenter from './Presenter';
+import Presenter, {Rank} from './Presenter';
 import React from 'react';
+import {Data} from '@stmt/application';
 
-const Ranking = () => {
-  const rankinglist = [
-    {
-      rank: 1,
-      nickname: 'User Name',
-      percentage: 100
-    },
-    {
-      rank: 2,
-      nickname: 'User Name',
-      percentage: 100
-    },
-    {
-      rank: 3,
-      nickname: 'User Name',
-      percentage: 100
-    },
-    {
-      rank: 4,
-      nickname: 'User Name',
-      percentage: 100
-    },
-    {
-      rank: 5,
-      nickname: 'User Name',
-      percentage: 100
-    },
-    {
-      rank: 6,
-      nickname: 'User Name',
-      percentage: 100
-    },
-    {
-      rank: 7,
-      nickname: 'User Name',
-      percentage: 100
-    },
-    {
-      rank: 8,
-      nickname: 'User Name',
-      percentage: 100
-    },
-    {
-      rank: 9,
-      nickname: 'User Name',
-      percentage: 100
-    },
-    {
-      rank: 10,
-      nickname: 'User Name',
-      percentage: 100
-    }
-  ];
+interface Props {
+  data: Array<Data.Rank>;
+}
 
+const Ranking = (props: Props) => {
+  const {data} = props;
+  const rankinglist: Array<Rank> = data.map((r, index) => ({
+    rank: index + 1,
+    percentage: r.percent,
+    nickname: r.nickname
+  }));
   const onClick = () => {};
 
   return <Presenter rankinglist={rankinglist} onClick={onClick} />;

@@ -9,7 +9,7 @@ interface Props {
   onClick: () => void;
 }
 
-interface Rank {
+export interface Rank {
   rank: number;
   nickname: string;
   percentage: number;

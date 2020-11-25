@@ -18,18 +18,15 @@ declare module '@stmt/application' {
       todos: Array<Todo>;
     }
 
-    interface RecordData {
-      tasks: Array<{
-        title: string;
-        priority: number;
-        createdAt: number;
-      }>;
+    interface Rank {
+      tasks: Array<Task>;
       lockTime: number;
       score: number;
       inComplete: number;
       complete: number;
       percent: number;
       nickname: string;
+      uuid: string;
     }
 
     interface RecordMeta {
@@ -74,6 +71,10 @@ declare module '@stmt/application' {
 
     interface SetTaskAlert {
       taskAlertSetting: Data.TaskAlertSetting;
+    }
+
+    interface Rank {
+      records: Array<Data.Rank>;
     }
   }
 
