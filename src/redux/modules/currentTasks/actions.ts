@@ -4,6 +4,7 @@ import {CurrentTasksState} from '@stmt/redux-store';
 export const SET_DATA = 'CURTASKS/SET_DATA' as const;
 export const ALIGN_TASKS = 'CURTASKS/ALIGN_TASKS' as const;
 export const ADD_TASK = 'CURTASKS/ADD_TASK' as const;
+export const FETCH_CURRENT = 'CURTASKS/FETCH_CUR' as const;
 export const UPDATE_TASK = 'CURTASKS/UPDATE_TASK' as const;
 export const DELETE_TASK = 'CURTASKS/DELETE_TASK' as const;
 export const CLICK_TASK_CHECKBOX = 'CURTASKS/CLICK_TASK_CHECKBOX' as const;
@@ -12,6 +13,10 @@ export const LOCK = 'CURTASKS/LOCK' as const;
 
 export const tasksLock = () => ({
   type: LOCK
+});
+
+export const tasksFetchCurrent = () => ({
+  type: FETCH_CURRENT
 });
 
 export const tasksSetData = (data: Partial<CurrentTasksState>) => ({

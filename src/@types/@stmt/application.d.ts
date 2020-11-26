@@ -82,6 +82,11 @@ declare module '@stmt/application' {
     interface Rank {
       records: Array<Data.Rank>;
     }
+
+    interface CurrentTasks {
+      meta: Data.TaskMeta;
+      tasks: Array<Data.Task>;
+    }
   }
 
   namespace APIRequest {

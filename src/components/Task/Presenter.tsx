@@ -1,15 +1,17 @@
 import useTheme from '@/hooks/useTheme';
 import {Data, Style} from '@stmt/application';
+import {CurrentTasksState, RootStore} from '@stmt/redux-store';
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import {GestureResponderEvent, TouchableOpacity} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useSelector} from 'react-redux';
 import styled from 'styled-components/native';
 import StyledButton from '../StyledButton';
 import StyledText from '../StyledText';
 import StyledView from '../StyledView';
 
 interface Props {
-  drag: () => void;
+  drag: (e: GestureResponderEvent) => void;
   item: Data.Task;
   color: keyof Style.DimensionTheme;
   onClick: () => void;
@@ -20,9 +22,22 @@ export default (props: Props) => {
   const {item, drag, color, onClick, onClickComplete} = props;
   const isCompleted = Boolean(item.completedAt);
 
+  const {lockTime} = useSelector<RootStore, CurrentTasksState>(
+    (store) => store.currentTasks
+  );
+
+  const onLongPress = (e: GestureResponderEvent) => {
+    if (!lockTime) {
+      drag(e);
+      return;
+    }
+
+    e.preventDefault();
+  };
+
   return (
     <Wrapper useBorder borderColor={color}>
-      <Button onPress={onClick} fullWidth onLongPress={drag}>
+      <Button onPress={onClick} fullWidth onLongPress={onLongPress}>
         <Content>
           <StyledText fontSize={18}>{item.title}</StyledText>
         </Content>

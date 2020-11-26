@@ -1,10 +1,13 @@
 import {MainStackParam} from '@/navigations/MainStack';
-import {tasksClickTaskCheckbox} from '@/redux/modules/currentTasks/actions';
+import {
+  tasksClickTaskCheckbox,
+  tasksFetchCurrent
+} from '@/redux/modules/currentTasks/actions';
 import {detailSetData} from '@/redux/modules/taskDetail/actions';
 import {TaskList} from '@stmt/application';
 import {StackProps} from '@stmt/navigation';
 import {CurrentTasksState, RootStore} from '@stmt/redux-store';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import Presenter from './Presenter';
 
@@ -42,6 +45,12 @@ const Main = (props: StackProps<MainStackParam, 'Main'>) => {
   };
 
   const list = makeList();
+
+  useEffect(() => {
+    if (!tasks) {
+      dispatch(tasksFetchCurrent());
+    }
+  }, [tasks, dispatch]);
 
   return <Presenter isLocked={Boolean(lockTime)} taskList={list} />;
 };

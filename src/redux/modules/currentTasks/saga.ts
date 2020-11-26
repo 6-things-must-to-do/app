@@ -1,11 +1,39 @@
 import {TASKS} from '@/constants/endpoints';
 import {api} from '@/utils/api';
-import {APIRequest} from '@stmt/application';
+import {APIRequest, APIResponse} from '@stmt/application';
 import {AuthState, CurrentTasksState, RootStore} from '@stmt/redux-store';
 
 import {put, call, select, takeLatest} from 'redux-saga/effects';
-import {globalSetLoading} from '../global/actions';
-import {LOCK, tasksSetData} from './actions';
+import {globalSetError, globalSetLoading} from '../global/actions';
+import {FETCH_CURRENT, LOCK, tasksSetData} from './actions';
+
+// function* infoUpdate() {
+//   //
+// }
+
+// function* completeTask() {
+//   //
+// }
+
+function* fetchCurrent() {
+  const {token} = yield select<(store: RootStore) => AuthState>(
+    (store) => store.auth
+  );
+
+  try {
+    yield put(globalSetLoading(true));
+
+    const {
+      data: {meta, tasks}
+    }: {data: APIResponse.CurrentTasks} = yield call(fetchCurrentApi, token);
+
+    yield put(tasksSetData({meta, tasks, lockTime: meta.lockTime}));
+  } catch (e) {
+    yield put(globalSetError(e));
+  } finally {
+    yield put(globalSetLoading(false));
+  }
+}
 
 function* lock() {
   const lockTime = Date.now();
@@ -31,7 +59,7 @@ function* lock() {
 
     yield put(tasksSetData({meta, lockTime}));
   } catch (e) {
-    console.log(e);
+    yield put(globalSetError(e));
   } finally {
     yield put(globalSetLoading(false));
   }
@@ -41,6 +69,9 @@ const lockApi = (token: string, body: APIRequest.Lock) => {
   return api(token).post(TASKS, body);
 };
 
+const fetchCurrentApi = (token: string) => api(token).get(TASKS);
+
 export default function* currentTasksSaga() {
   yield takeLatest(LOCK, lock);
+  yield takeLatest(FETCH_CURRENT, fetchCurrent);
 }
