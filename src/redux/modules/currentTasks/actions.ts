@@ -1,14 +1,20 @@
 import {Data} from '@stmt/application';
-import {RecordState} from '@stmt/redux-store';
+import {CurrentTasksState} from '@stmt/redux-store';
 
 export const SET_DATA = 'CURTASKS/SET_DATA' as const;
 export const ALIGN_TASKS = 'CURTASKS/ALIGN_TASKS' as const;
 export const ADD_TASK = 'CURTASKS/ADD_TASK' as const;
 export const UPDATE_TASK = 'CURTASKS/UPDATE_TASK' as const;
+export const DELETE_TASK = 'CURTASKS/DELETE_TASK' as const;
 export const CLICK_TASK_CHECKBOX = 'CURTASKS/CLICK_TASK_CHECKBOX' as const;
 export const UPDATE_TODO = 'CURTASKS/UPDATE_TODO' as const;
+export const LOCK = 'CURTASKS/LOCK' as const;
 
-export const tasksSetData = (data: RecordState) => ({
+export const tasksLock = () => ({
+  type: LOCK
+});
+
+export const tasksSetData = (data: Partial<CurrentTasksState>) => ({
   type: SET_DATA,
   payload: data
 });
@@ -16,6 +22,11 @@ export const tasksSetData = (data: RecordState) => ({
 export const tasksUpdateTask = (task: Data.Task) => ({
   type: UPDATE_TASK,
   payload: task
+});
+
+export const tasksDeleteTask = (priority: number) => ({
+  type: DELETE_TASK,
+  payload: priority
 });
 
 export const tasksClickTaskCheckbox = (priority: number) => ({

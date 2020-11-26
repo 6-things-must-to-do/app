@@ -29,46 +29,40 @@ const TaskList = (props: TaskListProps) => {
     dispatch(tasksTaskAlign(param.from, param.to));
   };
 
-  const data: Array<TL.TaskListData> = [...list];
-
-  if (!isRecord && !isLocked && list.length < 6) {
-    const onClick = () => {
-      let task: Data.Task = {
-        createdAt: Date.now(),
-        title: '',
-        todos: [],
-        priority: list.length,
-        completedAt: null,
-        estimatedMinutes: null,
-        willStartAt: null
-      };
-      dispatch(
-        detailSetData({
-          detail: task,
-          isRecord: false,
-          isNew: true,
-          isLocked: false
-        })
-      );
-      navigate('TaskDetail');
+  const data: Array<TL.Task> = [...list];
+  const onClickAdd = () => {
+    let task: Data.Task = {
+      createdAt: Date.now(),
+      title: '',
+      todos: [],
+      priority: list.length,
+      completedAt: null,
+      estimatedMinutes: null,
+      willStartAt: null
     };
+    dispatch(
+      detailSetData({
+        detail: task,
+        isRecord: false,
+        isNew: true,
+        isLocked: false
+      })
+    );
+    navigate('TaskDetail');
+  };
 
-    const notFull: TL.NotFull = {
-      priority: 6,
-      onClick,
-      notFull: true
-    };
-    data.push(notFull);
-  }
+  const useAddButton = !isRecord && !isLocked && list.length < 6;
 
   return (
     <Presenter
+      onClickAdd={onClickAdd}
       onDragEnd={onDragEnd}
       data={data}
       renderItem={Task}
       keyExtractor={keyExtractor}
       dragItemOverflow={false}
       animationConfig={{} as Animated.SpringConfig}
+      useAddButton={useAddButton}
     />
   );
 };

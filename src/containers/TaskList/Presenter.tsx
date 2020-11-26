@@ -1,16 +1,39 @@
 import React, {ComponentProps} from 'react';
-import {Record} from '@stmt/application';
 import DraggableFlatList, {
   RenderItemParams
 } from 'react-native-draggable-flatlist';
+import StyledButton from '@/components/StyledButton';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import StyledView from '@/components/StyledView';
+import useTheme from '@/hooks/useTheme';
+import {TaskList} from '@stmt/application';
 
-class DraggableTaskList extends DraggableFlatList<Record.RecordData> {}
+class DraggableTaskList extends DraggableFlatList<TaskList.Task> {}
 
 interface Props extends ComponentProps<typeof DraggableTaskList> {
-  data: Array<Record.RecordData>;
-  renderItem: React.FC<RenderItemParams<Record.RecordData>>;
+  data: Array<TaskList.Task>;
+  renderItem: React.FC<RenderItemParams<TaskList.Task>>;
+  onClickAdd: () => void;
+  useAddButton: boolean;
 }
 
 export default function (props: Props) {
-  return <DraggableFlatList {...props} />;
+  const {useAddButton, onClickAdd} = props;
+  const theme = useTheme();
+  return (
+    <>
+      <DraggableFlatList {...props} />
+      {useAddButton ? (
+        <StyledView useBorder>
+          <StyledButton fullWidth onPress={onClickAdd}>
+            <MaterialCommunityIcons
+              name="plus"
+              size={32}
+              color={theme.secondary}
+            />
+          </StyledButton>
+        </StyledView>
+      ) : null}
+    </>
+  );
 }

@@ -30,7 +30,9 @@ export default (props: Props) => {
   };
 
   return (
-    <BaseLabel label={<StyledText>{label}</StyledText>}>
+    <BaseLabel
+      disabled={pickerSelectProps.disabled}
+      label={<StyledText>{label}</StyledText>}>
       {/* <StyledText fontSize={fontSize}> */}
       <RNPickerSelect
         placeholder={{

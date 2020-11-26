@@ -12,8 +12,11 @@ import {
   tasksUpdateTodo,
   SET_DATA,
   UPDATE_TASK,
-  UPDATE_TODO
+  UPDATE_TODO,
+  tasksDeleteTask,
+  DELETE_TASK
 } from './actions';
+import {Data} from '@stmt/application';
 
 const initialState: CurrentTasksState = {
   tasks: []
@@ -23,6 +26,7 @@ export type CurrentTasksAction = ReturnType<
   | typeof tasksSetData
   | typeof tasksTaskAlign
   | typeof tasksAddTask
+  | typeof tasksDeleteTask
   | typeof tasksUpdateTask
   | typeof tasksClickTaskCheckbox
   | typeof tasksUpdateTodo
@@ -37,17 +41,59 @@ export default function reducer(
       return R.mergeRight(state, action.payload);
     }
 
+    case DELETE_TASK: {
+      const priority = action.payload;
+      const newTasks = state.tasks.filter((task) => task.priority !== priority);
+      const len = newTasks.length;
+      for (let i = priority; i < len; i++) {
+        newTasks[i].priority = i;
+      }
+
+      return R.mergeRight(state, {tasks: newTasks});
+    }
+
     case ALIGN_TASKS: {
+      const frontToBack = (
+        front: number,
+        back: number,
+        arr: Array<Data.Task>
+      ) => {
+        const [head, mid, tail] = [
+          arr.slice(0, front),
+          arr.slice(front + 1, back + 1),
+          arr.slice(back + 1)
+        ];
+
+        return [...head, ...mid, arr[front], ...tail];
+      };
+
+      const backToFront = (
+        front: number,
+        back: number,
+        arr: Array<Data.Task>
+      ) => {
+        const [head, mid, tail] = [
+          arr.slice(0, front),
+          arr.slice(front, back),
+          arr.slice(back + 1)
+        ];
+
+        return [...head, arr[back], ...mid, ...tail];
+      };
+
       const {from, to} = action.payload;
+      console.log(from, to);
       const tasks = state.tasks;
 
-      [tasks[from].priority, tasks[to].priority] = [
-        tasks[to].priority,
-        tasks[from].priority
-      ];
-      [tasks[from], tasks[to]] = [tasks[to], tasks[from]];
+      const isBackToFront = from > to;
+      const [front, back] = isBackToFront ? [to, from] : [from, to];
+      const taskFactory = isBackToFront ? backToFront : frontToBack;
+      const newTasks = taskFactory(front, back, tasks).map((task, index) => ({
+        ...task,
+        priority: index
+      }));
 
-      const newState = {tasks};
+      const newState = {tasks: newTasks};
 
       return R.mergeRight(state, newState);
     }

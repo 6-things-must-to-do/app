@@ -23,8 +23,6 @@ function* getRankByDate(action: ReturnType<typeof socialChangeRankType>) {
 
   const cachedRanking = cached[type][timestamp];
 
-  console.log(cached);
-
   const base = {date: timestamp, type};
 
   if (cachedRanking) {

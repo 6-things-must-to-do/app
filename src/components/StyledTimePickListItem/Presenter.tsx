@@ -11,6 +11,7 @@ interface Props extends Omit<ReactNativeModalDateTimePickerProps, 'date'> {
   label: ReactNode;
   fontSize?: number;
   placeholder?: string;
+  disabled?: boolean;
   onClickItem: () => void;
 }
 
@@ -21,13 +22,17 @@ export default (props: Props) => {
     fontSize = 20,
     onClickItem,
     placeholder,
+    disabled = false,
     ...dateTimePickerProps
   } = props;
 
   const date = value ? unixToDate(value) : undefined;
 
   return (
-    <BaseLabel onPress={onClickItem} label={<StyledText>{label}</StyledText>}>
+    <BaseLabel
+      disabled={disabled}
+      onPress={onClickItem}
+      label={<StyledText>{label}</StyledText>}>
       {value ? (
         <StyledText fontSize={fontSize}>{unixToCalendar(value)}</StyledText>
       ) : (

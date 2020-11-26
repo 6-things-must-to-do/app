@@ -17,6 +17,12 @@ declare module '@stmt/application' {
       memo?: string;
       todos: Array<Todo>;
     }
+    interface TaskMeta {
+      inComplete: number;
+      complete: number;
+      percent: number;
+      lockTime: number;
+    }
 
     interface Rank {
       tasks: Array<Task>;
@@ -75,6 +81,15 @@ declare module '@stmt/application' {
 
     interface Rank {
       records: Array<Data.Rank>;
+    }
+  }
+
+  namespace APIRequest {
+    interface Lock {
+      lockTime: number;
+      current: {
+        tasks: Array<Data.Task>;
+      };
     }
   }
 

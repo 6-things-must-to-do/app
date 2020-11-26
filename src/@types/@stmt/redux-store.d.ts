@@ -13,6 +13,7 @@ declare module '@stmt/redux-store' {
 
   interface CurrentTasksState {
     tasks: Array<Data.Task>;
+    meta?: Data.TaskMeta;
     lockTime?: number;
     date?: Date;
   }

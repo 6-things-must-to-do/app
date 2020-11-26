@@ -22,7 +22,7 @@ export default (props: Props) => {
         <StyledText>{day}</StyledText>
       </Day>
       <Buttons>
-        <Button onPress={onPressLock}>
+        <Button disabled={isLocked} onPress={onPressLock}>
           <AntDesign size={24} color={theme.secondary} name={iconName} />
         </Button>
         <Button onPress={onPressDashboard}>

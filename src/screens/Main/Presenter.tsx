@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import {TaskList as TL} from '@stmt/application';
 import TaskList from '@/containers/TaskList';
 import withPadding from '@/hocs/withPadding';
-import RecordToolbar from '@/containers/RecordToolbar';
+import RecordToolbar from '@/containers/TasksToolbar';
 
 interface Props {
   taskList: Array<TL.Task>;

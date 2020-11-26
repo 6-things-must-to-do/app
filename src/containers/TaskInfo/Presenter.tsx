@@ -82,6 +82,7 @@ export default (props: Props) => {
           defaultValue={task.with || ''}
         />
         <StyledTimePickListItemWithController
+          disabled={!editable}
           mode="datetime"
           control={control}
           placeholder="When will you start this task"
@@ -89,7 +90,7 @@ export default (props: Props) => {
           label="When ⏰"
         />
         <StyledPickerListItemWithController
-          disabled={editable}
+          disabled={!editable}
           items={estimatedMinutesItems}
           label="Estimated minutes ⏳"
           control={control}

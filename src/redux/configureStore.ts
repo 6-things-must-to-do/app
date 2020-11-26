@@ -7,7 +7,8 @@ import {
 } from 'redux';
 import {PersistConfig, persistReducer, persistStore} from 'redux-persist';
 import storage from '@react-native-community/async-storage';
-import createSagaMiddleware from 'redux-saga';
+
+// MODULE
 import auth, {AuthAction, authSaga} from './modules/auth';
 import currentTasks, {CurrentTasksAction} from './modules/currentTasks';
 import record, {RecordAction} from './modules/record';
@@ -24,11 +25,15 @@ import {
   RecordState,
   RootStore
 } from '@stmt/redux-store';
+
+// SAGA
+import createSagaMiddleware from 'redux-saga';
 import {all} from 'redux-saga/effects';
 import globalSaga from './modules/global/saga';
 import appSettingSaga from './modules/appSetting/saga';
 import dashboardSaga from './modules/dashboard/saga';
 import socialSaga from './modules/social/saga';
+import currentTasksSaga from './modules/currentTasks/saga';
 
 const authPersistConfig: PersistConfig<AuthState> = {
   key: 'auth',
@@ -85,7 +90,8 @@ function* rootSaga() {
     globalSaga(),
     appSettingSaga(),
     dashboardSaga(),
-    socialSaga()
+    socialSaga(),
+    currentTasksSaga()
   ]);
 }
 
