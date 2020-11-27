@@ -6,23 +6,32 @@ declare module '@stmt/application' {
       isCompleted: boolean;
     }
 
-    interface Task {
+    interface SimplifiedTask {
+      title: string;
       priority: number;
+      createdAt: number;
+      completedAt: number | null;
+    }
+
+    interface Task extends SimplifiedTask {
       willStartAt: number | null;
       estimatedMinutes: number | null;
-      completedAt: number | null;
-      createdAt: number;
-      title: string;
       with?: string;
       where?: string;
       memo?: string;
       todos: Array<Todo>;
     }
+
     interface TaskMeta {
       inComplete: number;
       complete: number;
       percent: number;
       lockTime: number;
+    }
+
+    interface RecordMeta extends TaskMeta {
+      nickname: string;
+      score: number;
     }
 
     interface Rank {
@@ -86,6 +95,10 @@ declare module '@stmt/application' {
 
     interface CurrentTasks {
       meta: Data.TaskMeta;
+      tasks: Array<Data.Task>;
+    }
+
+    interface Record extends Data.RecordMeta {
       tasks: Array<Data.Task>;
     }
   }

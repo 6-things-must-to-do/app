@@ -7,7 +7,7 @@ import {detailSetData} from '@/redux/modules/taskDetail/actions';
 import {TaskList} from '@stmt/application';
 import {StackProps} from '@stmt/navigation';
 import {CurrentTasksState, RootStore} from '@stmt/redux-store';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {GestureResponderEvent} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import Presenter from './Presenter';
@@ -17,6 +17,7 @@ const Main = (props: StackProps<MainStackParam, 'Main'>) => {
   const {tasks, lockTime, current} = useSelector<RootStore, CurrentTasksState>(
     (store) => store.currentTasks
   );
+  const [fetched, setFetched] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -53,11 +54,11 @@ const Main = (props: StackProps<MainStackParam, 'Main'>) => {
   const list = makeList();
 
   useEffect(() => {
-    if (!tasks.length) {
+    if (!tasks.length && !fetched) {
+      setFetched(true);
       dispatch(tasksFetchCurrent());
     }
-    console.log('rerender');
-  }, [tasks, dispatch]);
+  }, [tasks, dispatch, setFetched, fetched]);
 
   return <Presenter isLocked={Boolean(lockTime)} taskList={list} />;
 };

@@ -6,12 +6,14 @@ export interface CurrentTaskDetailContext {
   control: Control<Data.Task>;
   task: Data.Task;
   isNew: boolean;
+  isLocked: boolean;
 }
 
 interface Props {
   children: ReactNode;
   task: Data.Task;
   isNew: boolean;
+  isLocked: boolean;
   control: Control<Data.Task>;
 }
 
@@ -20,16 +22,10 @@ export const CurrentTaskDetail = createContext<CurrentTaskDetailContext>(
 );
 
 const CurrentTaskDetailProvider = (props: Props) => {
-  const {task, children, control, isNew} = props;
-
-  const defaultValue: CurrentTaskDetailContext = {
-    control,
-    task,
-    isNew
-  };
+  const {children, ...values} = props;
 
   return (
-    <CurrentTaskDetail.Provider value={defaultValue}>
+    <CurrentTaskDetail.Provider value={values}>
       {children}
     </CurrentTaskDetail.Provider>
   );

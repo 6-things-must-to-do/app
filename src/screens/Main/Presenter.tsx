@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import {TaskList as TL} from '@stmt/application';
 import TaskList from '@/containers/TaskList';
 import withPadding from '@/hocs/withPadding';
-import RecordToolbar from '@/containers/TasksToolbar';
+import TasksToolbar from '@/containers/TasksToolbar';
 
 interface Props {
   taskList: Array<TL.Task>;
@@ -14,7 +14,7 @@ export default (props: Props) => {
   const {taskList, isLocked} = props;
   return (
     <Wrapper>
-      <RecordToolbar />
+      <TasksToolbar />
       <TaskList list={taskList} isRecord={false} isLocked={isLocked} />
     </Wrapper>
   );

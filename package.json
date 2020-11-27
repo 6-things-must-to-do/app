@@ -31,6 +31,7 @@
     "react-content-loader": "^5.1.4",
     "react-hook-form": "^6.11.0",
     "react-native": "0.63.3",
+    "react-native-background-timer": "^2.4.1",
     "react-native-bouncy-checkbox": "^1.0.8",
     "react-native-collapsible": "^1.5.3",
     "react-native-dotenv": "^2.4.2",

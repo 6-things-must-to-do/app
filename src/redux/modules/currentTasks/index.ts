@@ -14,17 +14,20 @@ import {
   tasksDeleteTask,
   DELETE_TASK,
   COMPLETE_TASK_UPDATE,
-  tasksCompleteUpdate
+  tasksCompleteUpdate,
+  OVERWRITE,
+  tasksOverwrite
 } from './actions';
 import {Data} from '@stmt/application';
 
-const initialState: CurrentTasksState = {
+export const initialState: CurrentTasksState = {
   tasks: [],
   current: -1
 };
 
 export type CurrentTasksAction = ReturnType<
   | typeof tasksSetData
+  | typeof tasksOverwrite
   | typeof tasksTaskAlign
   | typeof tasksAddTask
   | typeof tasksDeleteTask
@@ -40,6 +43,10 @@ export default function reducer(
   switch (action.type) {
     case SET_DATA: {
       return R.mergeRight(state, action.payload);
+    }
+
+    case OVERWRITE: {
+      return action.payload;
     }
 
     case DELETE_TASK: {

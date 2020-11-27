@@ -7,12 +7,13 @@ import useTheme from '@/hooks/useTheme';
 interface Props {
   day: string;
   isLocked: boolean;
+  lockable: boolean;
   onPressLock: () => void;
   onPressDashboard: () => void;
 }
 
 export default (props: Props) => {
-  const {day, isLocked, onPressLock, onPressDashboard} = props;
+  const {day, isLocked, lockable, onPressLock, onPressDashboard} = props;
   const iconName = isLocked ? 'lock1' : 'unlock';
   const theme = useTheme();
 
@@ -22,7 +23,7 @@ export default (props: Props) => {
         <StyledText>{day}</StyledText>
       </Day>
       <Buttons>
-        <Button disabled={isLocked} onPress={onPressLock}>
+        <Button disabled={!lockable} onPress={onPressLock}>
           <AntDesign size={24} color={theme.secondary} name={iconName} />
         </Button>
         <Button onPress={onPressDashboard}>

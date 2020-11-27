@@ -10,16 +10,20 @@ import Presenter from './Presenter';
 
 const TasksToolbar = () => {
   const {navigate} = useNavigation<StackNavigationProp<MainStackParam>>();
-  const {lockTime} = useSelector<RootStore, CurrentTasksState>(
+  const {lockTime, tasks} = useSelector<RootStore, CurrentTasksState>(
     (store) => store.currentTasks
   );
   const dispatch = useDispatch();
 
+  const len = tasks.length;
   const isLocked = Boolean(lockTime);
+  const lockable = !isLocked && len > 0;
   const day = getToday();
 
   const onPressLock = () => {
-    if (!isLocked) dispatch(tasksLock());
+    if (lockable) {
+      dispatch(tasksLock());
+    }
   };
 
   const onPressDashboard = () => {
@@ -30,6 +34,7 @@ const TasksToolbar = () => {
     <Presenter
       day={day}
       isLocked={isLocked}
+      lockable={lockable}
       onPressDashboard={onPressDashboard}
       onPressLock={onPressLock}
     />

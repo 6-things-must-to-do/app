@@ -1,19 +1,37 @@
 import {Data} from '@stmt/application';
 import {CurrentTasksState} from '@stmt/redux-store';
 
+// REDUCER
 export const SET_DATA = 'CURTASKS/SET_DATA' as const;
+export const OVERWRITE = 'CURTASKS/OVERWRITE' as const;
 export const ALIGN_TASKS = 'CURTASKS/ALIGN_TASKS' as const;
 export const ADD_TASK = 'CURTASKS/ADD_TASK' as const;
-export const FETCH_CURRENT = 'CURTASKS/FETCH_CUR' as const;
 export const UPDATE_TASK = 'CURTASKS/UPDATE_TASK' as const;
 export const DELETE_TASK = 'CURTASKS/DELETE_TASK' as const;
-export const COMPLETE_TASK_UPDATE = 'CURTASKS/COMPLETE_TASK_UPDATE' as const;
-export const COMPLETE_TASK = 'CURTASKS/COMAPLETE_TASK' as const;
 export const UPDATE_TODO = 'CURTASKS/UPDATE_TODO' as const;
+export const COMPLETE_TASK_UPDATE = 'CURTASKS/COMPLETE_TASK_UPDATE' as const;
+
+// SAGA
+export const FETCH_CURRENT = 'CURTASKS/FETCH_CUR' as const;
+export const COMPLETE_TASK = 'CURTASKS/COMAPLETE_TASK' as const;
+export const UPDATE_LOCKED_TASK_TODO = 'CURTASKS/UPDATE_LOCKED_TASK' as const;
 export const LOCK = 'CURTASKS/LOCK' as const;
+export const UNLOCK = 'CURTASKS/UNLOCK' as const;
 
 export const tasksLock = () => ({
   type: LOCK
+});
+
+export const tasksUnlock = () => ({
+  type: UNLOCK
+});
+
+export const tasksUpdateLockedTodo = (
+  priority: number,
+  todos: Array<Data.Todo>
+) => ({
+  type: UPDATE_LOCKED_TASK_TODO,
+  payload: {priority, todos}
 });
 
 export const tasksFetchCurrent = () => ({
@@ -22,6 +40,11 @@ export const tasksFetchCurrent = () => ({
 
 export const tasksSetData = (data: Partial<CurrentTasksState>) => ({
   type: SET_DATA,
+  payload: data
+});
+
+export const tasksOverwrite = (data: CurrentTasksState) => ({
+  type: OVERWRITE,
   payload: data
 });
 
