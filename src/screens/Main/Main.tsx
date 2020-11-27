@@ -14,7 +14,7 @@ import Presenter from './Presenter';
 
 const Main = (props: StackProps<MainStackParam, 'Main'>) => {
   const {navigation} = props;
-  const {tasks, lockTime} = useSelector<RootStore, CurrentTasksState>(
+  const {tasks, lockTime, current} = useSelector<RootStore, CurrentTasksState>(
     (store) => store.currentTasks
   );
 
@@ -33,7 +33,7 @@ const Main = (props: StackProps<MainStackParam, 'Main'>) => {
   };
 
   const onClickComplete = (priority: number) => (e: GestureResponderEvent) => {
-    if (!lockTime || tasks[priority].completedAt) {
+    if (!lockTime || tasks[priority].completedAt || priority !== current) {
       e.preventDefault();
       return;
     }

@@ -19,7 +19,8 @@ import {
 import {Data} from '@stmt/application';
 
 const initialState: CurrentTasksState = {
-  tasks: []
+  tasks: [],
+  current: -1
 };
 
 export type CurrentTasksAction = ReturnType<
@@ -108,7 +109,7 @@ export default function reducer(
       const {priority, completedAt} = action.payload;
       const tasks = state.tasks;
       tasks[priority].completedAt = completedAt;
-      const newState = {tasks};
+      const newState = {tasks, current: priority + 1};
       return R.mergeRight(state, newState);
     }
 

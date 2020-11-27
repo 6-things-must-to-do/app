@@ -1,5 +1,7 @@
 package com.stmt;
 
+import android.os.Bundle;
+import org.devio.rn.splashscreen.SplashScreen;
 import android.os.Bundle; //DRAGGABLE
 import org.devio.rn.splashscreen.SplashScreen;
 

@@ -9,6 +9,7 @@ const TaskInfo = () => {
   const {isRecord, isLocked} = useSelector<RootStore, TaskDetailState>(
     (store) => store.taskDetail
   );
+
   const onToggleDetail = () => {
     setIsFolded(!isFolded);
   };

@@ -76,7 +76,7 @@ function* lock() {
       data: {meta}
     } = yield call(lockApi, token, body);
 
-    yield put(tasksSetData({meta, lockTime}));
+    yield put(tasksSetData({meta, lockTime, current: 0}));
   } catch (e) {
     yield put(globalSetError(e));
   } finally {
