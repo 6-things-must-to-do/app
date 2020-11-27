@@ -19,3 +19,4 @@ export const MYPAGE = '/user' as const;
 export const SETTING = '/settings/task' as const;
 export const RANK_ALL = '/social/rank/all' as const;
 export const TASKS = '/tasks';
+export const TASK_DETAIL = (priority: number) => `/tasks/${priority}`;

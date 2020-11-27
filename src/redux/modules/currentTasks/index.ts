@@ -3,18 +3,18 @@ import {CurrentTasksState} from '@stmt/redux-store';
 import {
   ADD_TASK,
   ALIGN_TASKS,
-  CLICK_TASK_CHECKBOX,
   tasksAddTask,
   tasksSetData,
   tasksTaskAlign,
   tasksUpdateTask,
-  tasksClickTaskCheckbox,
   tasksUpdateTodo,
   SET_DATA,
   UPDATE_TASK,
   UPDATE_TODO,
   tasksDeleteTask,
-  DELETE_TASK
+  DELETE_TASK,
+  COMPLETE_TASK_UPDATE,
+  tasksCompleteUpdate
 } from './actions';
 import {Data} from '@stmt/application';
 
@@ -28,7 +28,7 @@ export type CurrentTasksAction = ReturnType<
   | typeof tasksAddTask
   | typeof tasksDeleteTask
   | typeof tasksUpdateTask
-  | typeof tasksClickTaskCheckbox
+  | typeof tasksCompleteUpdate
   | typeof tasksUpdateTodo
 >;
 
@@ -82,7 +82,6 @@ export default function reducer(
       };
 
       const {from, to} = action.payload;
-      console.log(from, to);
       const tasks = state.tasks;
 
       const isBackToFront = from > to;
@@ -105,16 +104,11 @@ export default function reducer(
       return R.mergeRight(state, newState);
     }
 
-    case CLICK_TASK_CHECKBOX: {
-      const priority = action.payload;
+    case COMPLETE_TASK_UPDATE: {
+      const {priority, completedAt} = action.payload;
       const tasks = state.tasks;
-
-      tasks[priority].completedAt = tasks[priority].completedAt
-        ? null
-        : Date.now();
-
+      tasks[priority].completedAt = completedAt;
       const newState = {tasks};
-
       return R.mergeRight(state, newState);
     }
 

@@ -6,10 +6,11 @@
  * @flow strict-local
  */
 
-import React, {ReactNode} from 'react';
+import React, {ReactNode, useEffect} from 'react';
 import {Provider} from 'react-redux';
 import getPersistedStore from '@/redux/configureStore';
 import {PersistGate} from 'redux-persist/integration/react';
+import SplashScreen from 'react-native-splash-screen';
 import GlobalTheme from './contexts/GlobalTheme';
 import ColoredSafeArea from './components/ColoredSafeArea';
 import Loading from './containers/Loading';
@@ -20,6 +21,11 @@ import GlobalErrorHandler from './containers/GlobalErrorHandler';
 
 const App = (): ReactNode => {
   const {store, persistor} = getPersistedStore();
+
+  useEffect(() => {
+    SplashScreen.hide();
+  });
+
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>

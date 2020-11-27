@@ -1,4 +1,5 @@
 declare module '@stmt/application' {
+  import {GestureResponderEvent} from 'react-native';
   namespace Data {
     interface Todo {
       content: string;
@@ -96,6 +97,10 @@ declare module '@stmt/application' {
         tasks: Array<Data.Task>;
       };
     }
+
+    interface Complete {
+      completedAt: number;
+    }
   }
 
   namespace Auth {
@@ -119,7 +124,7 @@ declare module '@stmt/application' {
 
     interface Task extends Data.Task {
       onClick: () => void;
-      onClickComplete: () => void;
+      onClickComplete: (e: GestureResponderEvent) => void;
     }
 
     type TaskListData = NotFull | Task;

@@ -7,7 +7,8 @@ export const ADD_TASK = 'CURTASKS/ADD_TASK' as const;
 export const FETCH_CURRENT = 'CURTASKS/FETCH_CUR' as const;
 export const UPDATE_TASK = 'CURTASKS/UPDATE_TASK' as const;
 export const DELETE_TASK = 'CURTASKS/DELETE_TASK' as const;
-export const CLICK_TASK_CHECKBOX = 'CURTASKS/CLICK_TASK_CHECKBOX' as const;
+export const COMPLETE_TASK_UPDATE = 'CURTASKS/COMPLETE_TASK_UPDATE' as const;
+export const COMPLETE_TASK = 'CURTASKS/COMAPLETE_TASK' as const;
 export const UPDATE_TODO = 'CURTASKS/UPDATE_TODO' as const;
 export const LOCK = 'CURTASKS/LOCK' as const;
 
@@ -34,9 +35,14 @@ export const tasksDeleteTask = (priority: number) => ({
   payload: priority
 });
 
-export const tasksClickTaskCheckbox = (priority: number) => ({
-  type: CLICK_TASK_CHECKBOX,
+export const tasksCompleteTask = (priority: number) => ({
+  type: COMPLETE_TASK,
   payload: priority
+});
+
+export const tasksCompleteUpdate = (priority: number, completedAt: number) => ({
+  type: COMPLETE_TASK_UPDATE,
+  payload: {priority, completedAt}
 });
 
 export const tasksUpdateTodo = (

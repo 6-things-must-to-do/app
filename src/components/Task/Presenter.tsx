@@ -15,7 +15,7 @@ interface Props {
   item: Data.Task;
   color: keyof Style.DimensionTheme;
   onClick: () => void;
-  onClickComplete: () => void;
+  onClickComplete: (e: GestureResponderEvent) => void;
 }
 
 export default (props: Props) => {
@@ -51,7 +51,7 @@ export default (props: Props) => {
 
 interface ClickButtonProps {
   isCompleted: boolean;
-  onClick?: () => void;
+  onClick?: (e: GestureResponderEvent) => void;
 }
 
 const ClickButton = (props: ClickButtonProps) => {

@@ -46,6 +46,7 @@
     "react-native-safe-area-context": "^3.1.8",
     "react-native-screens": "^2.12.0",
     "react-native-segmented-control-tab": "^3.4.1",
+    "react-native-splash-screen": "^3.2.0",
     "react-native-svg": "^12.1.0",
     "react-native-vector-icons": "^7.1.0",
     "react-redux": "^7.2.1",
@@ -58,6 +59,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@babel/runtime": "^7.12.1",
+    "@bam.tech/react-native-make": "^3.0.0",
     "@react-native-community/eslint-config": "^2.0.0",
     "@types/deep-equal": "^1.0.1",
     "@types/jest": "^26.0.15",

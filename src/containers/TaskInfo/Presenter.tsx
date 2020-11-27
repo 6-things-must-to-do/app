@@ -82,6 +82,7 @@ export default (props: Props) => {
           defaultValue={task.with || ''}
         />
         <StyledTimePickListItemWithController
+          defaultValue={task.willStartAt || null}
           disabled={!editable}
           mode="datetime"
           control={control}

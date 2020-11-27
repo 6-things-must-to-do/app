@@ -47,12 +47,13 @@ export default StyledTimePickListItem;
 interface WithControllerProps extends Omit<Props, 'onConfirm' | 'value'> {
   name: keyof Data.Task;
   control: Control<Data.Task>;
+  defaultValue: number | null;
 }
 
 export const StyledTimePickListItemWithController = (
   props: WithControllerProps
 ) => {
-  const {control, name, ...styledTimePickerProps} = props;
+  const {control, name, defaultValue, ...styledTimePickerProps} = props;
   return (
     <Controller
       render={({onChange, value}) => (
@@ -62,6 +63,7 @@ export const StyledTimePickListItemWithController = (
           onConfirm={onChange}
         />
       )}
+      defaultValue={defaultValue}
       control={control}
       name={name}
     />

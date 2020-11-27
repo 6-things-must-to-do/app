@@ -1,6 +1,6 @@
 import {MainStackParam} from '@/navigations/MainStack';
 import {
-  tasksClickTaskCheckbox,
+  tasksCompleteTask,
   tasksFetchCurrent
 } from '@/redux/modules/currentTasks/actions';
 import {detailSetData} from '@/redux/modules/taskDetail/actions';
@@ -8,6 +8,7 @@ import {TaskList} from '@stmt/application';
 import {StackProps} from '@stmt/navigation';
 import {CurrentTasksState, RootStore} from '@stmt/redux-store';
 import React, {useEffect} from 'react';
+import {GestureResponderEvent} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import Presenter from './Presenter';
 
@@ -31,8 +32,13 @@ const Main = (props: StackProps<MainStackParam, 'Main'>) => {
     navigation.navigate('TaskDetail');
   };
 
-  const onClickComplete = (priority: number) => () => {
-    dispatch(tasksClickTaskCheckbox(priority));
+  const onClickComplete = (priority: number) => (e: GestureResponderEvent) => {
+    if (!lockTime || tasks[priority].completedAt) {
+      e.preventDefault();
+      return;
+    }
+
+    dispatch(tasksCompleteTask(priority));
   };
 
   const makeList = () => {
@@ -47,9 +53,10 @@ const Main = (props: StackProps<MainStackParam, 'Main'>) => {
   const list = makeList();
 
   useEffect(() => {
-    if (!tasks) {
+    if (!tasks.length) {
       dispatch(tasksFetchCurrent());
     }
+    console.log('rerender');
   }, [tasks, dispatch]);
 
   return <Presenter isLocked={Boolean(lockTime)} taskList={list} />;
