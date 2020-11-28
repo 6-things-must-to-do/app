@@ -10,7 +10,7 @@ const Tab = createBottomTabNavigator();
 export default function TabNavigation() {
   return (
     <Tab.Navigator
-      initialRouteName="MainStack"
+      initialRouteName="SocialStack"
       tabBarOptions={{showLabel: false}}>
       <Tab.Screen
         options={{
