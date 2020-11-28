@@ -17,6 +17,7 @@ import Loading from './containers/Loading';
 import NavigationTheme from './components/NavigationTheme';
 import {StatusBar} from 'react-native';
 import RootNavigation from './navigations';
+// import Test from './screens/Test';
 import GlobalErrorHandler from './containers/GlobalErrorHandler';
 
 const App = (): ReactNode => {

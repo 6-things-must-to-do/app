@@ -20,6 +20,7 @@ declare module '@stmt/redux-store' {
   }
 
   interface RecordState {
+    date: number;
     tasks: Array<Data.Task>;
     standard?: number;
     metaList: Array<Data.RecordMeta>;
@@ -42,7 +43,7 @@ declare module '@stmt/redux-store' {
 
   interface DashboardState {
     date: number; // Date든 뭐든 뭐라도 되겠지 뭐
-    progress: Array<Data.Progress>;
+    progressList: Array<Data.Progress>;
     tasks?: Array<Data.Task>;
   }
 

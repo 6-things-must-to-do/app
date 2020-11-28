@@ -1,16 +1,36 @@
+import {Data} from '@stmt/application';
 import dayjs from 'dayjs';
 import calendar from 'dayjs/plugin/calendar';
+import dayOfYear from 'dayjs/plugin/dayOfYear';
 
 dayjs.extend(calendar);
+dayjs.extend(dayOfYear);
 
 export const getYesterdayTimestamp = (): number => {
   return dayjs()
-    .subtract(24, 'hour')
+    .subtract(1, 'day')
+    .set('hour', 0)
     .set('minute', 0)
     .set('second', 0)
     .set('millisecond', 0)
     .toDate()
     .getTime();
+};
+
+export const getDayOfYear = (): number => {
+  return dayjs().dayOfYear();
+};
+
+export const getProgressBase = (date: number): Data.ProgressBase => {
+  const day = dayjs(date);
+  const ret: Data.ProgressBase = {
+    day: day.daysInMonth(),
+    year: day.year(),
+    month: day.month(),
+    dayOfYear: day.dayOfYear()
+  };
+
+  return ret;
 };
 
 export const unixToDateFormat = (unix: number): string => {

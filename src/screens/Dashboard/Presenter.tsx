@@ -1,59 +1,25 @@
 import TaskList from '@/containers/TaskList';
 import React from 'react';
 import * as Progress from 'react-native-progress';
-import {VictoryBar, VictoryLabel} from 'victory-native';
 import StyledText from '@/components/StyledText';
 import useTheme from '@/hooks/useTheme';
 import styled from 'styled-components/native';
 import StyledView from '@/components/StyledView';
-import Svg from 'react-native-svg';
+import RecordLogBoard from '@/containers/RecordLogBoard';
 
 interface Props {
-  data: Array<{x: number; y: number; m: number}>;
   currentDate: number;
-  onPressDate: (newdate: number) => void;
 }
 
 export default (props: Props) => {
-  const {data, currentDate, onPressDate} = props;
+  const {currentDate} = props;
 
   const theme = useTheme();
 
   return (
     <Wrapper>
       <GraphView>
-        <Svg>
-          <VictoryBar
-            data={data}
-            labels={({datum}) => datum.x}
-            labelComponent={<VictoryLabel dy={0} />}
-            style={{
-              data: {
-                fill: ({datum}) => (datum.y === 1 ? theme.tint : theme.outfocus)
-              },
-              labels: {
-                fill: theme.text.default
-              }
-            }}
-            events={[
-              {
-                target: 'data',
-                eventHandlers: {
-                  onPressIn: () => {
-                    return [
-                      {
-                        target: 'data',
-                        mutation: (datum) => {
-                          onPressDate(datum.datum.x);
-                        }
-                      }
-                    ];
-                  }
-                }
-              }
-            ]}
-          />
-        </Svg>
+        <RecordLogBoard />
       </GraphView>
       <DateView>
         <BigCenterText color="default">11월 {currentDate}일 (목)</BigCenterText>
@@ -68,7 +34,7 @@ export default (props: Props) => {
         />
       </ProgressView>
       <ListView>
-        <TaskList isRecord list={[]} />
+        <TaskList isLocked isRecord list={[]} />
       </ListView>
     </Wrapper>
   );

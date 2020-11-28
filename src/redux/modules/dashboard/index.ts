@@ -1,3 +1,4 @@
+import {Data} from '@stmt/application';
 import {DashboardState} from '@stmt/redux-store';
 import {
   dashboardCurrentDate,
@@ -7,21 +8,11 @@ import {
   SET_LIST,
   SET_TASKS
 } from './actions';
-import getTime from '@/utils/getTime';
 
 // 오늘 날짜 기준 앞뒤로 가져오기
-const data = [
-  {x: 1, y: 1, m: 11},
-  {x: 2, y: 1, m: 11},
-  {x: 3, y: 0.8, m: 11},
-  {x: 4, y: 0.2, m: 11},
-  {x: 5, y: 0.8, m: 11},
-  {x: 6, y: 0.4, m: 11},
-  {x: 7, y: 0.75, m: 11},
-  {x: 8, y: 0.4, m: 11},
-  {x: 9, y: 0.6, m: 11}
-];
-const initialstate: DashboardState = {date: getTime(), progress: data};
+
+const data: Array<Data.Progress> = [];
+const initialstate: DashboardState = {date: Date.now(), progressList: data};
 
 export type DashboardAction = ReturnType<
   | typeof dashboardCurrentDate
@@ -42,7 +33,7 @@ export default function reducer(
     }
 
     case SET_LIST: {
-      return {...state, progress: action.payload};
+      return {...state, progressList: action.payload};
     }
 
     case SET_TASKS: {
