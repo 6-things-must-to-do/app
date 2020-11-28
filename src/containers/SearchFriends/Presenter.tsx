@@ -9,29 +9,28 @@ import {TouchableOpacity} from 'react-native';
 interface ClickButtonProps {
   onClickSearch: () => void;
   onClickAdd: () => void;
+  onTextInput: (text: string) => void;
+  search: string;
 }
 
 export default (props: ClickButtonProps) => {
   const theme = useTheme();
-  const {onClickSearch, onClickAdd} = props;
-
-  const color = theme.primary;
-  const search = 'search';
-  const add = 'adduser';
+  const {onClickSearch, onClickAdd, onTextInput, search} = props;
+  const color = theme.secondary;
 
   return (
     <Wrapper>
       <Border borderColor={theme.secondary}>
-        <StyledTextInput color={'contrast'} />
+        <StyledTextInput value={search} onChangeText={onTextInput} />
       </Border>
       <SearchIcon>
         <TouchableOpacity onPress={onClickSearch}>
-          <Ionicons color={color} size={32} name={search} />
+          <Ionicons color={color} size={32} name={'search'} />
         </TouchableOpacity>
       </SearchIcon>
       <AddIcon>
         <TouchableOpacity onPress={onClickAdd}>
-          <AntDesign color={color} size={32} name={add} />
+          <AntDesign color={color} size={32} name={'adduser'} />
         </TouchableOpacity>
       </AddIcon>
     </Wrapper>

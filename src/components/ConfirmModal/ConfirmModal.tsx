@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import {Style} from '@stmt/application';
 import styled from 'styled-components/native';
 import Modal, {ModalProps} from 'react-native-modal';
@@ -9,6 +9,7 @@ import useTheme from '@/hooks/useTheme';
 export interface ConfirmModalProps extends Partial<ModalProps> {
   onConfirm?: () => void;
   onCancel?: () => void;
+  informationBox?: ReactNode;
   information?: string;
   useCancelButton?: boolean;
   confirmText?: string;
@@ -32,15 +33,20 @@ const ConfirmModal = (props: ConfirmModalProps) => {
     confirmTextColor = 'success',
     confirmColor = 'secondary',
     cancelTextColor = 'default',
+    informationBox,
     ...modalProps
   } = props;
 
   return (
     <Modal {...modalProps}>
       <Wrapper>
-        <InformationBox>
-          <StyledText>{information}</StyledText>
-        </InformationBox>
+        {informationBox ? (
+          <Custom>{informationBox}</Custom>
+        ) : (
+          <InformationBox>
+            <StyledText>{information}</StyledText>
+          </InformationBox>
+        )}
         <ChoiceBox bgColor={theme.contrast}>
           <Choice bgColor={theme[confirmColor]} onPress={onConfirm}>
             <StyledText color={confirmTextColor}>{confirmText}</StyledText>
@@ -65,10 +71,12 @@ const Wrapper = styled(StyledView)`
   overflow: hidden;
 `;
 
-const InformationBox = styled.View`
+const Custom = styled.View`
   padding: 16px;
   flex: 3;
+`;
 
+const InformationBox = styled(Custom)`
   justify-content: center;
   align-items: center;
 `;
