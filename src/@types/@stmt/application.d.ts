@@ -111,9 +111,15 @@ declare module '@stmt/application' {
       };
     }
 
+    interface TodoUpdate {
+      todos: Array<Data.Todo>;
+    }
+
     interface Complete {
       completedAt: number;
     }
+
+    type LockedTaskUpdate = TodoUpdate | Complete;
   }
 
   namespace Auth {

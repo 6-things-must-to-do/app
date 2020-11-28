@@ -8,6 +8,7 @@ import {
   tasksTaskAlign,
   tasksUpdateTask,
   tasksUpdateTodo,
+  tasksUpdateTodoList,
   SET_DATA,
   UPDATE_TASK,
   UPDATE_TODO,
@@ -16,7 +17,8 @@ import {
   COMPLETE_TASK_UPDATE,
   tasksCompleteUpdate,
   OVERWRITE,
-  tasksOverwrite
+  tasksOverwrite,
+  UPDATE_TODO_LIST
 } from './actions';
 import {Data} from '@stmt/application';
 
@@ -34,6 +36,7 @@ export type CurrentTasksAction = ReturnType<
   | typeof tasksUpdateTask
   | typeof tasksCompleteUpdate
   | typeof tasksUpdateTodo
+  | typeof tasksUpdateTodoList
 >;
 
 export default function reducer(
@@ -137,22 +140,32 @@ export default function reducer(
 
     case UPDATE_TODO: {
       const {todo, index, taskIndex} = action.payload;
-      const tasks = [...state.tasks];
+      const cState = R.clone(state);
+      const tasks = cState.tasks;
       const targetTaskIndex = tasks.findIndex(
         (task) => task.priority === taskIndex
       );
 
       if (targetTaskIndex === -1) return state;
 
-      const targetTask = tasks[targetTaskIndex];
-      const todos = [...targetTask.todos];
+      const todos = tasks[targetTaskIndex].todos;
       const target = todos[index];
       if (!target) return state;
 
       todos[index] = todo;
-      tasks[targetTaskIndex] = {...targetTask, todos};
+      tasks[targetTaskIndex].todos = todos;
 
       return R.mergeRight(state, {tasks});
+    }
+
+    case UPDATE_TODO_LIST: {
+      const cState = R.clone(state);
+      const {priority, todos} = action.payload;
+      const targetTask = cState.tasks[priority];
+      targetTask.todos = todos;
+      const newTasks: Array<Data.Task> = [...cState.tasks];
+      const newState = {tasks: newTasks};
+      return R.mergeRight(state, newState);
     }
 
     default:

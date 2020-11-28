@@ -9,13 +9,12 @@ import {
   recordTaskAlign,
   recordUpdateTask,
   recordClickTaskCheckbox,
-  recordUpdateTodo,
   SET_DATA,
-  UPDATE_TASK,
-  UPDATE_TODO
+  UPDATE_TASK
 } from './actions';
 
 const initialState: RecordState = {
+  metaList: [],
   tasks: []
 };
 
@@ -25,7 +24,6 @@ export type RecordAction = ReturnType<
   | typeof recordAddTask
   | typeof recordUpdateTask
   | typeof recordClickTaskCheckbox
-  | typeof recordUpdateTodo
 >;
 
 export default function reducer(
@@ -85,26 +83,6 @@ export default function reducer(
 
       const newTasks = [...tasks];
       return R.mergeRight(state, {tasks: newTasks});
-    }
-
-    case UPDATE_TODO: {
-      const {todo, index, taskIndex} = action.payload;
-      const tasks = [...state.tasks];
-      const targetTaskIndex = tasks.findIndex(
-        (task) => task.priority === taskIndex
-      );
-
-      if (targetTaskIndex === -1) return state;
-
-      const targetTask = tasks[targetTaskIndex];
-      const todos = [...targetTask.todos];
-      const target = todos[index];
-      if (!target) return state;
-
-      todos[index] = todo;
-      tasks[targetTaskIndex] = {...targetTask, todos};
-
-      return R.mergeRight(state, {tasks});
     }
 
     default:

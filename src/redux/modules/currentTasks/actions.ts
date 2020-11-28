@@ -9,12 +9,14 @@ export const ADD_TASK = 'CURTASKS/ADD_TASK' as const;
 export const UPDATE_TASK = 'CURTASKS/UPDATE_TASK' as const;
 export const DELETE_TASK = 'CURTASKS/DELETE_TASK' as const;
 export const UPDATE_TODO = 'CURTASKS/UPDATE_TODO' as const;
+export const UPDATE_TODO_LIST = 'CURTASKS/UPDATE_TODO_LIST' as const;
 export const COMPLETE_TASK_UPDATE = 'CURTASKS/COMPLETE_TASK_UPDATE' as const;
 
 // SAGA
 export const FETCH_CURRENT = 'CURTASKS/FETCH_CUR' as const;
 export const COMPLETE_TASK = 'CURTASKS/COMAPLETE_TASK' as const;
-export const UPDATE_LOCKED_TASK_TODO = 'CURTASKS/UPDATE_LOCKED_TASK' as const;
+export const TOGGLE_LOCKED_TASK_TODO = 'CURTASKS/TOGGLE_LOCKED_TASK' as const; // 미완
+export const UPDATE_LOCKED_TASK_TODO_LIST = 'CURTASKS/UPDATE_LOCKED_TASK_LIST' as const;
 export const LOCK = 'CURTASKS/LOCK' as const;
 export const UNLOCK = 'CURTASKS/UNLOCK' as const;
 
@@ -30,7 +32,7 @@ export const tasksUpdateLockedTodo = (
   priority: number,
   todos: Array<Data.Todo>
 ) => ({
-  type: UPDATE_LOCKED_TASK_TODO,
+  type: UPDATE_LOCKED_TASK_TODO_LIST,
   payload: {priority, todos}
 });
 
@@ -61,6 +63,17 @@ export const tasksDeleteTask = (priority: number) => ({
 export const tasksCompleteTask = (priority: number) => ({
   type: COMPLETE_TASK,
   payload: priority
+});
+
+export const tasksUpdateTodoList = (
+  priority: number,
+  todos: Array<Data.Todo>
+) => ({
+  type: UPDATE_TODO_LIST,
+  payload: {
+    todos,
+    priority
+  }
 });
 
 export const tasksCompleteUpdate = (priority: number, completedAt: number) => ({

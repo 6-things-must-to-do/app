@@ -1,5 +1,8 @@
 import useCurrentTask from '@/hooks/useCurrentTask';
-import {tasksUpdateTodo} from '@/redux/modules/currentTasks/actions';
+import {
+  tasksUpdateLockedTodo,
+  tasksUpdateTodo
+} from '@/redux/modules/currentTasks/actions';
 import {Data} from '@stmt/application';
 import React, {useEffect, useState} from 'react';
 import {Controller} from 'react-hook-form';
@@ -7,7 +10,7 @@ import {useDispatch} from 'react-redux';
 import Presenter from './Presenter';
 
 const TodoList = () => {
-  const {control, task, isNew} = useCurrentTask();
+  const {control, task, isNew, isLocked} = useCurrentTask();
   const {todos} = task;
 
   const [isCollapsed, setIsCollapsed] = useState(true);
@@ -16,16 +19,18 @@ const TodoList = () => {
   const dispatch = useDispatch();
 
   const onToggleTodo = (index: number) => (isChecked: boolean) => {
-    if (isNew) {
-      todoList[index].isCompleted = isChecked;
-      setTodoList([...todoList]);
+    const targetTodo = todoList[index];
+    targetTodo.isCompleted = isChecked;
+    setTodoList([...todoList]);
+
+    if (isNew) return;
+
+    // TODO REDUX LOGIC (TODO Check 하는 거는 업데이트 누르지 않더라도 반영되게 하려고)
+    if (isLocked) {
+      dispatch(tasksUpdateLockedTodo(task.priority, todoList));
       return;
     }
 
-    const targetTodo = todoList[index];
-    targetTodo.isCompleted = isChecked;
-
-    // TODO REDUX LOGIC (TODO Check 하는 거는 업데이트 누르지 않더라도 반영되게 하려고)
     dispatch(tasksUpdateTodo(targetTodo, index, task.priority));
   };
 
@@ -40,14 +45,25 @@ const TodoList = () => {
   const onPressSave = (
     change: (todoList: Array<Data.Todo>) => void
   ) => (): void => {
-    if (content) {
+    try {
+      if (!content) throw new Error();
       const todo: Data.Todo = {content, isCompleted: false};
       const nextTodoList = [...todoList, todo];
-      setTodoList(nextTodoList);
-      change(nextTodoList);
+      if (isNew) {
+        change(nextTodoList);
+        setTodoList(nextTodoList);
+        return;
+      }
+
+      if (isLocked) {
+        dispatch(tasksUpdateLockedTodo(task.priority, nextTodoList));
+        return;
+      }
       setContent('');
+    } catch {
+    } finally {
+      setIsCollapsed(!isCollapsed);
     }
-    setIsCollapsed(!isCollapsed);
   };
 
   useEffect(() => {}, [todoList, todos, setTodoList]);

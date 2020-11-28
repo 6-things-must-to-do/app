@@ -13,14 +13,40 @@ import {
   tasksCompleteUpdate,
   tasksOverwrite,
   tasksSetData,
-  tasksUnlock
+  tasksUnlock,
+  UPDATE_LOCKED_TASK_TODO_LIST,
+  tasksUpdateLockedTodo,
+  tasksUpdateTodoList
 } from './actions';
 import {initialState} from '.';
 import {DynamoError} from '@/utils/error';
+import {detailUpdateTodo} from '../taskDetail/actions';
+
+type GetToken = (store: RootStore) => AuthState;
 
 // function* infoUpdate() {
 //   //
 // }
+
+function* updateLockedTodo(action: ReturnType<typeof tasksUpdateLockedTodo>) {
+  const {priority, todos} = action.payload;
+  const {token} = yield select<GetToken>((store) => store.auth);
+  try {
+    yield put(globalSetLoading(true));
+    yield call(updateLockedTaskApi, {
+      token,
+      priority,
+      type: 'todo',
+      body: {todos}
+    });
+    yield put(tasksUpdateTodoList(priority, todos));
+    yield put(detailUpdateTodo(todos));
+  } catch (e) {
+    yield put(globalSetError(e));
+  } finally {
+    yield put(globalSetLoading(false));
+  }
+}
 
 function* completeTask(action: ReturnType<typeof tasksCompleteTask>) {
   const {token} = yield select<(store: RootStore) => AuthState>(
@@ -29,17 +55,22 @@ function* completeTask(action: ReturnType<typeof tasksCompleteTask>) {
   const {tasks} = yield select<(store: RootStore) => CurrentTasksState>(
     (store) => store.currentTasks
   );
-  const {payload} = action;
+  const {payload: priority} = action;
   const completedAt = Date.now();
 
   try {
     yield put(globalSetLoading(true));
-    yield call(completeTaskApi, token, payload, {completedAt});
-    yield put(tasksCompleteUpdate(payload, completedAt));
+    yield call(updateLockedTaskApi, {
+      token,
+      priority,
+      type: 'task',
+      body: {completedAt}
+    });
+    yield put(tasksCompleteUpdate(priority, completedAt));
   } catch (e) {
     yield put(globalSetError(e));
   } finally {
-    if (payload === tasks.length - 1) {
+    if (priority === tasks.length - 1) {
       yield put(tasksUnlock());
     } else {
       yield put(globalSetLoading(false));
@@ -135,18 +166,22 @@ const unlockApi = (token: string) => api(token).delete(ENDPOINTS.TASKS);
 
 const fetchCurrentApi = (token: string) => api(token).get(ENDPOINTS.TASKS);
 
-const completeTaskApi = (
-  token: string,
-  priority: number,
-  body: APIRequest.Complete
-) =>
-  api(token).put(ENDPOINTS.TASK_DETAIL(priority), body, {
-    params: {type: 'task'}
+const updateLockedTaskApi = (data: {
+  token: string;
+  priority: number;
+  type: 'task' | 'todo';
+  body: APIRequest.LockedTaskUpdate;
+}) => {
+  const {token, priority, body, type} = data;
+  return api(token).put(ENDPOINTS.TASK_DETAIL(priority), body, {
+    params: {type}
   });
+};
 
 export default function* currentTasksSaga() {
   yield takeLatest(LOCK, lock);
   yield takeLatest(FETCH_CURRENT, fetchCurrent);
   yield takeLatest(COMPLETE_TASK, completeTask);
+  yield takeLatest(UPDATE_LOCKED_TASK_TODO_LIST, updateLockedTodo);
   yield takeLatest(UNLOCK, unlock);
 }

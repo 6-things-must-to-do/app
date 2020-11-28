@@ -47,7 +47,11 @@ const TaskDetail = (props: StackProps<MainStackParam, 'TaskDetail'>) => {
   const useRemove = !isNew && !isLocked;
 
   return (
-    <CurrentTaskDetailProvider isNew={isNew} control={control} task={detail}>
+    <CurrentTaskDetailProvider
+      isLocked={isLocked}
+      isNew={isNew}
+      control={control}
+      task={detail}>
       <Presenter
         useButton={!isRecord}
         useRemoveButton={useRemove}
