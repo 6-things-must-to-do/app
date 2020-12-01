@@ -5,18 +5,48 @@ import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import styled from 'styled-components/native';
 import {Data} from '@stmt/application';
-import StyledText from '@/components/StyledText';
+import ContentLoader, {Rect} from 'react-content-loader/native';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import UserProfile from '@/containers/UserProfile';
+import RelationshipList from '@/containers/RelationshipList';
 
 interface Props {
   onClickSearch: () => void;
+  onClickAdd: () => void;
   onChangeText: (text: string) => void;
+  isLoading: boolean;
+  isInList: boolean;
   search: string;
-  user?: Data.UserProfile;
+  user?: Data.UserBase;
 }
 
 export default (props: Props) => {
-  const {onClickSearch, user, search, onChangeText} = props;
+  const {
+    onClickSearch,
+    onClickAdd,
+    user,
+    search,
+    isLoading,
+    isInList,
+    onChangeText
+  } = props;
   const theme = useTheme();
+
+  const LoadingComponent = () => (
+    <ContentLoader
+      height={140}
+      speed={1}
+      backgroundColor={theme.outfocus}
+      foregroundColor={theme.contrast}
+      viewBox="0 0 380 70">
+      <Rect x="0" y="0" rx="40" ry="40" width="70" height="70" />
+      <Rect x="80" y="17" rx="4" ry="4" width="300" height="13" />
+      <Rect x="80" y="40" rx="3" ry="3" width="250" height="10" />
+    </ContentLoader>
+  );
+
+  const addOnIcon = isInList ? 'check' : 'adduser';
+
   return (
     <Wrapper>
       <TextInputView borderColor={theme.secondary}>
@@ -31,9 +61,27 @@ export default (props: Props) => {
           </TouchableOpacity>
         </SearchIcon>
       </TextInputView>
-      <UserView>
-        {user ? <StyledText>{JSON.stringify(user)}</StyledText> : null}
-      </UserView>
+      {
+        <UserView>
+          {isLoading ? (
+            <LoadingComponent />
+          ) : user ? (
+            <UserProfile
+              user={user}
+              addOn={
+                <TouchableOpacity disabled={isInList} onPress={onClickAdd}>
+                  <AntDesign
+                    color={theme.secondary}
+                    size={32}
+                    name={addOnIcon}
+                  />
+                </TouchableOpacity>
+              }
+            />
+          ) : null}
+        </UserView>
+      }
+      <RelationshipList />
     </Wrapper>
   );
 };
@@ -59,5 +107,5 @@ const TextInputView = styled.View<{borderColor: string}>`
 
 const UserView = styled.View`
   width: 100%;
-  flex: 1;
+  padding: 16px;
 `;

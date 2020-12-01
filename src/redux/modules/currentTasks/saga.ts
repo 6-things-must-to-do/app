@@ -1,7 +1,12 @@
 import * as ENDPOINTS from '@/constants/endpoints';
 import {api} from '@/utils/api';
 import {APIRequest, APIResponse} from '@stmt/application';
-import {AuthState, CurrentTasksState, RootStore} from '@stmt/redux-store';
+import {
+  AuthState,
+  CurrentTasksState,
+  RootStore,
+  GetToken
+} from '@stmt/redux-store';
 import {put, call, select, takeLatest} from 'redux-saga/effects';
 import {globalSetError, globalSetLoading} from '../global/actions';
 import {
@@ -21,8 +26,6 @@ import {
 import {initialState} from '.';
 import {DynamoError} from '@/utils/error';
 import {detailUpdateTodo} from '../taskDetail/actions';
-
-type GetToken = (store: RootStore) => AuthState;
 
 // function* infoUpdate() {
 //   //

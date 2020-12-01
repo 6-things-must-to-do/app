@@ -1,5 +1,6 @@
 import {Platform} from 'react-native';
 import {STAGE} from '@env';
+import {Data} from '@stmt/application';
 
 const isLocal = STAGE === 'local';
 
@@ -20,3 +21,6 @@ export const SETTING = '/settings/task' as const;
 export const RANK_ALL = '/social/rank/all' as const;
 export const TASKS = '/tasks';
 export const TASK_DETAIL = (priority: number) => `/tasks/${priority}`;
+export const FRIENDS = (email: string) => `/social/users/${email}`;
+export const RELATIONSHIPS = (endpoint: Data.RelationType) =>
+  `/social/${endpoint}`;

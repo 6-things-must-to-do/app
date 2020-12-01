@@ -12,7 +12,7 @@ const Stack = createStackNavigator<SocialStackParam>();
 
 const SocialStack = () => {
   return (
-    <Stack.Navigator initialRouteName="SearchFriend">
+    <Stack.Navigator initialRouteName="Social">
       <Stack.Screen
         options={{headerShown: false}}
         name="Social"

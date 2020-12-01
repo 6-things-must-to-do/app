@@ -1,9 +1,15 @@
+import {SocialStackParam} from '@/navigations/SocialStack';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useState} from 'react';
 import Presenter from './Presenter';
 
 const SearchFriends = () => {
   const [search, setSearch] = useState('');
-  const onClickAdd = () => {};
+  const {navigate} = useNavigation<StackNavigationProp<SocialStackParam>>();
+  const onClickAdd = () => {
+    navigate('SearchFriend');
+  };
   const onClickSearch = () => {
     console.log('Search Clicked!');
   };

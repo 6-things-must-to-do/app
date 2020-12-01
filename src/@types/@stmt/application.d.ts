@@ -87,6 +87,8 @@ declare module '@stmt/application' {
     }
 
     type ProgressData = Progress | ProgressBase;
+
+    type RelationType = 'following' | 'follower';
   }
 
   namespace APIResponse {
@@ -100,6 +102,16 @@ declare module '@stmt/application' {
 
     interface Rank {
       records: Array<Data.Rank>;
+    }
+
+    interface FollowerList {
+      count: number;
+      follower: Array<Data.UserBase>;
+    }
+
+    interface FollowingList {
+      count: number;
+      following: Array<Data.UserBase>;
     }
 
     interface CurrentTasks {

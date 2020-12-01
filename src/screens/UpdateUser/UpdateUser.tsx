@@ -1,4 +1,5 @@
 import {authCheckToken} from '@/redux/modules/auth/actions';
+import {Data} from '@stmt/application';
 import {RootStore, UserState} from '@stmt/redux-store';
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
@@ -13,7 +14,7 @@ const UpdateUser = () => {
 
   if (!user.email) fetchUserState();
 
-  return <Presenter user={user} />;
+  return <Presenter user={user as Data.UserBase} />;
 };
 
 export default UpdateUser;

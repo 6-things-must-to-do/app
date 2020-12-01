@@ -6,6 +6,8 @@ declare module '@stmt/redux-store' {
     token?: string;
   }
 
+  type GetToken = (store: RootStore) => AuthState;
+
   interface GlobalState {
     error?: any;
     isLoading: boolean;
@@ -39,6 +41,8 @@ declare module '@stmt/redux-store' {
     date: number;
     type: RankType;
     ranking: Array<Data.Rank>;
+    follower: Array<Data.UserBase>;
+    following: Array<Data.UserBase>;
   }
 
   interface DashboardState {
