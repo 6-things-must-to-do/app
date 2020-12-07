@@ -24,9 +24,9 @@ export const getDayOfYear = (): number => {
 export const getProgressBase = (date: number): Data.ProgressBase => {
   const day = dayjs(date);
   const ret: Data.ProgressBase = {
-    day: day.daysInMonth(),
+    day: day.date(),
     year: day.year(),
-    month: day.month(),
+    month: day.month() + 1,
     dayOfYear: day.dayOfYear()
   };
 

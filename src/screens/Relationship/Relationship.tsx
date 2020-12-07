@@ -9,7 +9,7 @@ import {DynamoError} from '@/utils/error';
 import {globalSetError} from '@/redux/modules/global/actions';
 import {socialFollow} from '@/redux/modules/social/actions';
 
-const SearchFriend = () => {
+const Relationship = () => {
   const [search, setSearch] = useState('');
   const [isLoading, setLoading] = useState(false);
   const [user, setUser] = useState<Data.UserBase>();
@@ -72,4 +72,4 @@ const SearchFriend = () => {
   );
 };
 
-export default SearchFriend;
+export default Relationship;

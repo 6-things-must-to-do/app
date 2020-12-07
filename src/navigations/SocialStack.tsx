@@ -1,11 +1,11 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import Social from '@/screens/Social';
-import SearchFriend from '@/screens/SearchFriend';
+import Relationship from '@/screens/Relationship';
 
 export type SocialStackParam = {
   Social: undefined;
-  SearchFriend: undefined;
+  Relationship: undefined;
 };
 
 const Stack = createStackNavigator<SocialStackParam>();
@@ -19,9 +19,9 @@ const SocialStack = () => {
         component={Social}
       />
       <Stack.Screen
-        name="SearchFriend"
-        options={{headerTitle: 'Search user'}}
-        component={SearchFriend}
+        name="Relationship"
+        options={{headerTitle: ' '}}
+        component={Relationship}
       />
     </Stack.Navigator>
   );

@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import {CurrentTasksState} from '@stmt/redux-store';
+import {CurrentTasksState, LockedCurrentTasksState} from '@stmt/redux-store';
 import {
   ADD_TASK,
   ALIGN_TASKS,
@@ -117,10 +117,16 @@ export default function reducer(
 
     case COMPLETE_TASK_UPDATE: {
       const {priority, completedAt} = action.payload;
-      const tasks = state.tasks;
-      tasks[priority].completedAt = completedAt;
-      const newState = {tasks, current: priority + 1};
-      return R.mergeRight(state, newState);
+      const cState = R.clone(state) as LockedCurrentTasksState;
+
+      cState.tasks[priority].completedAt = completedAt;
+      cState.current++;
+      cState.meta.complete++;
+      cState.meta.inComplete--;
+      cState.meta.percent =
+        cState.meta.complete / (cState.meta.complete + cState.meta.inComplete);
+
+      return R.mergeRight(state, cState);
     }
 
     case UPDATE_TASK: {

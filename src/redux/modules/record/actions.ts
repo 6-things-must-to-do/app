@@ -2,32 +2,36 @@ import {Data} from '@stmt/application';
 import {RecordState} from '@stmt/redux-store';
 
 export const SET_DATA = 'RECORD/SET_DATA' as const;
-export const ALIGN_TASKS = 'RECORD/ALIGN_TASKS' as const;
-export const ADD_TASK = 'RECORD/ADD_TASK' as const;
-export const UPDATE_TASK = 'RECORD/UPDATE_TASK' as const;
-export const CLICK_TASK_CHECKBOX = 'RECORD/CLICK_TASK_CHECKBOX' as const;
+export const SELECT_META = 'RECORD/SELECT_META' as const;
+export const FETCH_META_LIST_COMPLETE = 'RECORD/FETCH_META_LIST_COMPLETE' as const;
+
+export const FETCH_META_LIST = 'RECORD/FETCH_META_LIST' as const;
 
 export const recordSetData = (data: RecordState) => ({
   type: SET_DATA,
   payload: data
 });
 
-export const recordUpdateTask = (task: Data.Task) => ({
-  type: UPDATE_TASK,
-  payload: task
+export const recordSelectMeta = (meta: Data.RecordMeta) => ({
+  type: SELECT_META,
+  payload: meta
 });
 
-export const recordClickTaskCheckbox = (priority: number) => ({
-  type: CLICK_TASK_CHECKBOX,
-  payload: priority
+export const recordFetchMetaList = (
+  year: number,
+  month: number,
+  day?: number
+) => ({
+  type: FETCH_META_LIST,
+  payload: {year, month, day}
 });
 
-export const recordTaskAlign = (from: number, to: number) => ({
-  type: ALIGN_TASKS,
-  payload: {from, to}
-});
-
-export const recordAddTask = (task: Data.Task) => ({
-  type: ADD_TASK,
-  payload: task
+export const recordFetchMetaListComplete = (payload: {
+  year: number;
+  month: number;
+  day: number;
+  list: Array<Data.RecordMeta>;
+}) => ({
+  type: FETCH_META_LIST_COMPLETE,
+  payload
 });

@@ -13,16 +13,22 @@ declare module '@stmt/redux-store' {
     isLoading: boolean;
   }
 
-  interface CurrentTasksState {
+  interface BaseCurrentTasksState {
     current: number;
     tasks: Array<Data.Task>;
-    meta?: Data.TaskMeta;
-    lockTime?: number;
-    date?: Date;
   }
 
+  interface LockedCurrentTasksState extends BaseCurrentTasksState {
+    meta: Data.TaskMeta;
+    lockTime: number;
+    date: Date;
+  }
+
+  type CurrentTasksState = BaseCurrentTasksState | LockedCurrentTasksState;
+
   interface RecordState {
-    date: number;
+    history: {[year: number]: Array<Array<Data.RecordMeta>>};
+    selectedMeta?: Data.RecordMeta;
     tasks: Array<Data.Task>;
     standard?: number;
     metaList: Array<Data.RecordMeta>;

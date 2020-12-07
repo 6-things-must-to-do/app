@@ -1,29 +1,24 @@
 import * as R from 'ramda';
 import {RecordState} from '@stmt/redux-store';
 import {
-  ADD_TASK,
-  ALIGN_TASKS,
-  CLICK_TASK_CHECKBOX,
-  recordAddTask,
+  FETCH_META_LIST_COMPLETE,
+  recordFetchMetaListComplete,
+  recordSelectMeta,
   recordSetData,
-  recordTaskAlign,
-  recordUpdateTask,
-  recordClickTaskCheckbox,
-  SET_DATA,
-  UPDATE_TASK
+  SELECT_META,
+  SET_DATA
 } from './actions';
 
 const initialState: RecordState = {
+  history: {},
   metaList: [],
   tasks: []
 };
 
 export type RecordAction = ReturnType<
   | typeof recordSetData
-  | typeof recordTaskAlign
-  | typeof recordAddTask
-  | typeof recordUpdateTask
-  | typeof recordClickTaskCheckbox
+  | typeof recordFetchMetaListComplete
+  | typeof recordSelectMeta
 >;
 
 export default function reducer(
@@ -35,54 +30,24 @@ export default function reducer(
       return R.mergeRight(state, action.payload);
     }
 
-    case ALIGN_TASKS: {
-      const {from, to} = action.payload;
-      const tasks = state.tasks;
-
-      [tasks[from].priority, tasks[to].priority] = [
-        tasks[to].priority,
-        tasks[from].priority
-      ];
-      [tasks[from], tasks[to]] = [tasks[to], tasks[from]];
-
-      const newState = {tasks};
-
-      return R.mergeRight(state, newState);
+    case SELECT_META: {
+      state.selectedMeta = action.payload;
+      return state;
     }
 
-    case ADD_TASK: {
-      const tasks = state.tasks;
-      tasks.push(action.payload);
-      const newState = {tasks};
-      return R.mergeRight(state, newState);
-    }
+    case FETCH_META_LIST_COMPLETE: {
+      const cState = R.clone(state);
+      const fullMonthDay = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+      const {year, month, day, list} = action.payload;
+      const isFullMonthDay = fullMonthDay[month] === day;
+      if (isFullMonthDay) {
+        const log = cState.history[year] || Array(13).fill([]);
+        log[month] = list;
+        cState.history[year] = log;
+      }
 
-    case CLICK_TASK_CHECKBOX: {
-      const priority = action.payload;
-      const tasks = state.tasks;
-
-      tasks[priority].completedAt = tasks[priority].completedAt
-        ? null
-        : Date.now();
-
-      const newState = {tasks};
-
-      return R.mergeRight(state, newState);
-    }
-
-    case UPDATE_TASK: {
-      const tasks = state.tasks;
-      const target = action.payload;
-
-      const arrayIndex = tasks.findIndex(
-        (task) => task.priority === target.priority
-      );
-      if (arrayIndex === -1) return state;
-
-      tasks[arrayIndex] = target;
-
-      const newTasks = [...tasks];
-      return R.mergeRight(state, {tasks: newTasks});
+      cState.metaList = list;
+      return R.mergeRight(state, cState);
     }
 
     default:

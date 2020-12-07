@@ -21,21 +21,20 @@ export default (props: Props) => {
       <GraphView>
         <RecordLogBoard />
       </GraphView>
-      <DateView>
+      <TextualView>
         <BigCenterText color="default">11월 {currentDate}일 (목)</BigCenterText>
         <CenterText color="default">4/5 (80%)</CenterText>
-      </DateView>
-      <ProgressView>
-        <Progress.Bar
-          progress={4 / 5}
-          color={theme.tint}
-          width={300}
-          height={2}
-        />
-      </ProgressView>
-      <ListView>
+        <ProgressView>
+          <Progress.Bar
+            progress={4 / 5}
+            color={theme.tint}
+            width={300}
+            height={2}
+          />
+        </ProgressView>
+
         <TaskList isLocked isRecord list={[]} />
-      </ListView>
+      </TextualView>
     </Wrapper>
   );
 };
@@ -45,20 +44,16 @@ const Wrapper = styled(StyledView)`
 `;
 
 const GraphView = styled.View`
-  flex: 1.4;
+  flex: 1.5;
 `;
 
-const DateView = styled.View`
-  flex: 0.35;
-`;
-
-const ProgressView = styled.View`
-  flex: 0.1;
+const TextualView = styled.View`
+  flex: 2;
   align-items: center;
 `;
 
-const ListView = styled.View`
-  flex: 2;
+const ProgressView = styled.View`
+  align-items: center;
 `;
 
 const CenterText = styled(StyledText)`

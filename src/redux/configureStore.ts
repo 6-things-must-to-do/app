@@ -31,7 +31,7 @@ import createSagaMiddleware from 'redux-saga';
 import {all} from 'redux-saga/effects';
 import globalSaga from './modules/global/saga';
 import appSettingSaga from './modules/appSetting/saga';
-import dashboardSaga from './modules/dashboard/saga';
+import recordSaga from './modules/record/saga';
 import socialSaga from './modules/social/saga';
 import currentTasksSaga from './modules/currentTasks/saga';
 
@@ -47,7 +47,8 @@ const currentTasksPersistConfig: PersistConfig<CurrentTasksState> = {
 
 const recordPersistConfig: PersistConfig<RecordState> = {
   key: 'record',
-  storage
+  storage,
+  whitelist: ['history']
 };
 
 const appSettingPersistConfig: PersistConfig<AppSettingState> = {
@@ -89,7 +90,7 @@ function* rootSaga() {
     authSaga(),
     globalSaga(),
     appSettingSaga(),
-    dashboardSaga(),
+    recordSaga(),
     socialSaga(),
     currentTasksSaga()
   ]);

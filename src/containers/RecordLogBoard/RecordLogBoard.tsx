@@ -1,18 +1,72 @@
-import {DashboardState, RootStore} from '@stmt/redux-store';
-import React from 'react';
-import {useSelector} from 'react-redux';
+import {
+  recordFetchMetaList,
+  recordSelectMeta
+} from '@/redux/modules/record/actions';
+import {getProgressBase} from '@/utils/date';
+import {Data} from '@stmt/application';
+import {CurrentTasksState, RecordState, RootStore} from '@stmt/redux-store';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import Presenter from './Presenter';
 
 const RecordLogBoard = () => {
-  const {progressList} = useSelector<RootStore, DashboardState>(
-    (store) => store.dashboard
+  const [fetched, setFetched] = useState(false);
+  const {metaList, selectedMeta} = useSelector<RootStore, RecordState>(
+    (store) => store.record
   );
+  const current = useSelector<RootStore, CurrentTasksState>(
+    (store) => store.currentTasks
+  );
+  const dispatch = useDispatch();
 
-  const onPressDate = (date: number) => {
-    console.log(date);
+  const onPressDate = (datum: Data.RecordMeta) => {
+    dispatch(recordSelectMeta(datum));
   };
 
-  return <Presenter progressList={progressList} onPressDate={onPressDate} />;
+  const getCurrentMeta = (): Data.RecordMeta => {
+    const {tasks} = current;
+    let meta: Data.TaskMeta = {
+      percent: 0,
+      inComplete: tasks.length,
+      complete: 0,
+      lockTime: Date.now()
+    };
+
+    if ('lockTime' in current) {
+      meta = current.meta;
+    }
+
+    const base = getProgressBase(meta.lockTime);
+    return {...meta, score: meta.percent, ...base, nickname: ''};
+  };
+
+  const currentMeta: Data.RecordMeta = getCurrentMeta();
+  const progressList = [...metaList, currentMeta];
+
+  useEffect(() => {
+    if (!fetched && !metaList.length) {
+      const {year, month, day} = getProgressBase(Date.now());
+      console.log(year, month, day);
+      dispatch(recordFetchMetaList(year, month, day - 1));
+      setFetched(true);
+    }
+  }, [metaList, fetched, dispatch]);
+
+  useEffect(() => {
+    if (!selectedMeta) {
+      dispatch(recordSelectMeta(currentMeta));
+    }
+  }, [selectedMeta, dispatch, currentMeta]);
+
+  const selected = selectedMeta || currentMeta;
+
+  return (
+    <Presenter
+      selected={selected}
+      progressList={progressList}
+      onPressDate={onPressDate}
+    />
+  );
 };
 
 export default RecordLogBoard;

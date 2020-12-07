@@ -24,3 +24,5 @@ export const TASK_DETAIL = (priority: number) => `/tasks/${priority}`;
 export const FRIENDS = (email: string) => `/social/users/${email}`;
 export const RELATIONSHIPS = (endpoint: Data.RelationType) =>
   `/social/${endpoint}`;
+
+export const RECORD_META_LIST = '/records';
