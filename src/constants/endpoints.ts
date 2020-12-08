@@ -9,6 +9,8 @@ const localUrl =
     ? 'http://10.0.2.2:4000/api'
     : 'http://127.0.0.1:4000/api';
 
+console.log(isLocal);
+
 const prodUrl = '';
 
 const devServer = 'https://dev.sixthings.tech/api';

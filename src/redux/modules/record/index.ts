@@ -31,8 +31,9 @@ export default function reducer(
     }
 
     case SELECT_META: {
-      state.selectedMeta = action.payload;
-      return state;
+      const cState = R.clone(state);
+      cState.selectedMeta = action.payload;
+      return R.mergeRight(state, cState);
     }
 
     case FETCH_META_LIST_COMPLETE: {

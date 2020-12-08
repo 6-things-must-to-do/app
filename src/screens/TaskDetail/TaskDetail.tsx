@@ -30,7 +30,9 @@ const TaskDetail = (props: StackProps<MainStackParam, 'TaskDetail'>) => {
 
   const onClickAddTask = handleSubmit((form) => {
     const actionCreator = isNew ? tasksAddTask : tasksUpdateTask;
-    dispatch(actionCreator({...form, priority: detail.priority}));
+    dispatch(
+      actionCreator({...form, priority: detail.priority, createdAt: Date.now()})
+    );
     navigation.goBack();
   });
 

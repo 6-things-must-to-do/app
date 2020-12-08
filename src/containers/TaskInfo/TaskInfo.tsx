@@ -13,9 +13,7 @@ const TaskInfo = () => {
   const onToggleDetail = () => {
     setIsFolded(!isFolded);
   };
-
   const {control, task} = useCurrentTask();
-
   const editable = !isRecord && !isLocked;
 
   return (

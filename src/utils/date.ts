@@ -2,9 +2,22 @@ import {Data} from '@stmt/application';
 import dayjs from 'dayjs';
 import calendar from 'dayjs/plugin/calendar';
 import dayOfYear from 'dayjs/plugin/dayOfYear';
+import isoWeek from 'dayjs/plugin/isoWeek';
 
 dayjs.extend(calendar);
 dayjs.extend(dayOfYear);
+dayjs.extend(isoWeek);
+
+export const getFormattedDateFromRecordMeta = (meta: Data.RecordMeta) => {
+  const {day, month, year, lockTime} = meta;
+  const format = 'MMMM D (ddd)';
+  if (lockTime) {
+    const ret = dayjs(lockTime).format(format);
+    return ret;
+  }
+
+  return dayjs(new Date(year, month - 1, day)).format(format);
+};
 
 export const getYesterdayTimestamp = (): number => {
   return dayjs()
@@ -15,6 +28,16 @@ export const getYesterdayTimestamp = (): number => {
     .set('millisecond', 0)
     .toDate()
     .getTime();
+};
+
+export const getDateFromRecordMeta = (meta: Data.RecordMeta) => {
+  const {day, month, year, lockTime} = meta;
+
+  if (lockTime) {
+    return unixToDate(lockTime);
+  }
+
+  return new Date(year, month - 1, day);
 };
 
 export const getDayOfYear = (): number => {

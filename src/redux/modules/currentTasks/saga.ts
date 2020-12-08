@@ -71,7 +71,8 @@ function* completeTask(action: ReturnType<typeof tasksCompleteTask>) {
     });
     yield put(tasksCompleteUpdate(priority, completedAt));
   } catch (e) {
-    yield put(globalSetError(e));
+    const axiosError = e?.response?.data;
+    yield put(globalSetError(axiosError || e));
   } finally {
     if (priority === tasks.length - 1) {
       yield put(tasksUnlock());
