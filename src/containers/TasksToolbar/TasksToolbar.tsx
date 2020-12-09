@@ -10,15 +10,25 @@ import Presenter from './Presenter';
 
 const TasksToolbar = () => {
   const {navigate} = useNavigation<StackNavigationProp<MainStackParam>>();
-  const {lockTime, tasks} = useSelector<RootStore, CurrentTasksState>(
+  const current = useSelector<RootStore, CurrentTasksState>(
     (store) => store.currentTasks
   );
+  const {tasks} = current;
   const dispatch = useDispatch();
 
   const len = tasks.length;
-  const isLocked = Boolean(lockTime);
+  const isLocked = 'lockTime' in current;
   const lockable = !isLocked && len > 0;
   const day = getToday();
+
+  const getPercent = () => {
+    if (!len) return 0;
+    const completeCount = tasks.filter((task) => Boolean(task.completedAt))
+      .length;
+    return completeCount / len;
+  };
+
+  const percent = getPercent();
 
   const onPressLock = () => {
     if (lockable) {
@@ -33,6 +43,7 @@ const TasksToolbar = () => {
   return (
     <Presenter
       day={day}
+      percent={percent}
       isLocked={isLocked}
       lockable={lockable}
       onPressDashboard={onPressDashboard}

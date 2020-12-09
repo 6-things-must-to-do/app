@@ -10,8 +10,6 @@ const RecordDetail = () => {
     (store) => store.record
   );
 
-  console.log(selectedMeta);
-
   if (!selectedMeta) return <Loading />;
 
   const formattedDate = getFormattedDateFromRecordMeta(selectedMeta);
