@@ -1,5 +1,6 @@
 import {Data} from '@stmt/application';
-import React, {ComponentProps, useState} from 'react';
+import React, {ComponentProps, useEffect, useState} from 'react';
+import {Platform} from 'react-native';
 import {Control, Controller} from 'react-hook-form';
 import Presenter from './Presenter';
 
@@ -16,18 +17,24 @@ const StyledPickerListItem = (props: Props) => {
   const [item, setItem] = useState(value);
 
   const onValueChange = (minutes: number) => {
-    setItem(minutes);
+    if (Platform.OS === 'android' && onChange) {
+      onChange(minutes);
+    } else {
+      setItem(item);
+    }
   };
 
   const onDonePress = () => {
     if (onChange) onChange(item);
   };
 
+  useEffect(() => {}, [value]);
+
   return (
     <Presenter
       onValueChange={onValueChange}
       onDonePress={onDonePress}
-      value={item}
+      value={value}
       {...others}
     />
   );
