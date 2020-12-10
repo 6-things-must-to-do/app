@@ -9,7 +9,7 @@ export const FETCH_DETAIL_COMPLETE = 'RECORD/FETCH_DETAIL_COMPLETE' as const;
 export const FETCH_META_LIST = 'RECORD/FETCH_META_LIST' as const;
 export const FETCH_DETAIL = 'RECORD/FETCH_DETAIL' as const;
 
-export const recordSetData = (data: RecordState) => ({
+export const recordSetData = (data: Partial<RecordState>) => ({
   type: SET_DATA,
   payload: data
 });

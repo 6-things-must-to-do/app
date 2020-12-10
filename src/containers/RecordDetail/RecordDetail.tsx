@@ -5,7 +5,7 @@ import Presenter from './Presenter';
 import {getFormattedDateFromRecordMeta} from '@/utils/date';
 import Loading from '@/components/Loading';
 import {Data, TaskList} from '@stmt/application';
-import {recordFetchDetail} from '@/redux/modules/record/actions';
+import {recordFetchDetail, recordSetData} from '@/redux/modules/record/actions';
 
 const RecordDetail = () => {
   const {selectedMeta, tasks} = useSelector<RootStore, RecordState>(
@@ -27,8 +27,12 @@ const RecordDetail = () => {
   };
 
   useEffect(() => {
-    if (!lockTime) return;
-    dispatch(recordFetchDetail(lockTime));
+    if (lockTime) {
+      dispatch(recordFetchDetail(lockTime));
+      return;
+    }
+
+    dispatch(recordSetData({tasks: []}));
   }, [lockTime, dispatch]);
 
   if (!selectedMeta) return <Loading />;

@@ -30,7 +30,6 @@ const TaskDetail = (props: StackProps<MainStackParam, 'TaskDetail'>) => {
 
   const onClickAddTask = handleSubmit((form) => {
     const actionCreator = isNew ? tasksAddTask : tasksUpdateTask;
-    console.log(form);
     dispatch(
       actionCreator({...form, priority: detail.priority, createdAt: Date.now()})
     );
@@ -47,6 +46,7 @@ const TaskDetail = (props: StackProps<MainStackParam, 'TaskDetail'>) => {
   };
 
   const buttonText = isNew ? 'Add Task' : 'Update Task';
+  const useButton = !isRecord && !isLocked;
   const useRemove = !isNew && !isLocked;
 
   return (
@@ -56,7 +56,7 @@ const TaskDetail = (props: StackProps<MainStackParam, 'TaskDetail'>) => {
       control={control}
       task={detail}>
       <Presenter
-        useButton={!isRecord}
+        useButton={useButton}
         useRemoveButton={useRemove}
         buttonText={buttonText}
         onClickAddTask={onClickAddTask}

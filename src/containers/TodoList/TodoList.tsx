@@ -9,25 +9,30 @@ import {Controller} from 'react-hook-form';
 import {useDispatch} from 'react-redux';
 import Presenter from './Presenter';
 
+interface State {
+  isCollapsed: boolean;
+  content: string;
+  todoList: Array<Data.Todo>;
+}
+
 const TodoList = () => {
   const {control, task, isNew, isLocked} = useCurrentTask();
   const {todos} = task;
 
-  const [isCollapsed, setIsCollapsed] = useState(true);
-  const [content, setContent] = useState('');
-  const [todoList, setTodoList] = useState<Array<Data.Todo>>(todos);
+  const initialState: State = {isCollapsed: true, content: '', todoList: todos};
+  const [state, setState] = useState<State>(initialState);
   const dispatch = useDispatch();
 
   const onToggleTodo = (index: number) => (isChecked: boolean) => {
-    const targetTodo = todoList[index];
+    const targetTodo = state.todoList[index];
     targetTodo.isCompleted = isChecked;
-    setTodoList([...todoList]);
+    setState({...state, todoList: state.todoList});
 
     if (isNew) return;
 
     // TODO REDUX LOGIC (TODO Check 하는 거는 업데이트 누르지 않더라도 반영되게 하려고)
     if (isLocked) {
-      dispatch(tasksUpdateLockedTodo(task.priority, todoList));
+      dispatch(tasksUpdateLockedTodo(task.priority, state.todoList));
       return;
     }
 
@@ -35,38 +40,33 @@ const TodoList = () => {
   };
 
   const onPressAdd = () => {
-    setIsCollapsed(!isCollapsed);
+    setState({...state, isCollapsed: false});
   };
 
   const onChangeContent = (text: string) => {
-    setContent(text);
+    setState({...state, content: text});
   };
 
   const onPressSave = (
     change: (todoList: Array<Data.Todo>) => void
   ) => (): void => {
+    const {content, todoList} = state;
+    const todo: Data.Todo = {content, isCompleted: false};
+    const nextTodoList = [...todoList, todo];
     try {
       if (!content) throw new Error();
-      const todo: Data.Todo = {content, isCompleted: false};
-      const nextTodoList = [...todoList, todo];
-      if (isNew) {
-        change(nextTodoList);
-        setTodoList(nextTodoList);
-        return;
-      }
 
       if (isLocked) {
         dispatch(tasksUpdateLockedTodo(task.priority, nextTodoList));
-        return;
       }
-      setContent('');
     } catch {
     } finally {
-      setIsCollapsed(!isCollapsed);
+      change(nextTodoList);
+      setState({...initialState, todoList: nextTodoList});
     }
   };
 
-  useEffect(() => {}, [todoList, todos, setTodoList]);
+  useEffect(() => {}, [state, todos]);
 
   return (
     <Controller
@@ -75,11 +75,11 @@ const TodoList = () => {
       control={control}
       render={({onChange, value}) => (
         <Presenter
-          contentValue={content}
+          contentValue={state.content}
           onChangeContent={onChangeContent}
           onPressSave={onPressSave(onChange)}
           onPressAdd={onPressAdd}
-          isCollapsed={isCollapsed}
+          isCollapsed={state.isCollapsed}
           todos={value}
           onToggleTodo={onToggleTodo}
         />
