@@ -1,10 +1,8 @@
 import useTheme from '@/hooks/useTheme';
 import {Data, Style} from '@stmt/application';
-import {CurrentTasksState, RootStore} from '@stmt/redux-store';
 import React from 'react';
 import {GestureResponderEvent, TouchableOpacity} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useSelector} from 'react-redux';
 import styled from 'styled-components/native';
 import StyledButton from '../StyledButton';
 import StyledText from '../StyledText';
@@ -12,6 +10,7 @@ import StyledView from '../StyledView';
 
 interface Props {
   drag: (e: GestureResponderEvent) => void;
+  draggable: boolean;
   item: Data.Task;
   color: keyof Style.DimensionTheme;
   onClick: () => void;
@@ -19,15 +18,11 @@ interface Props {
 }
 
 export default (props: Props) => {
-  const {item, drag, color, onClick, onClickComplete} = props;
+  const {item, drag, draggable, color, onClick, onClickComplete} = props;
   const isCompleted = Boolean(item.completedAt);
 
-  const {lockTime} = useSelector<RootStore, CurrentTasksState>(
-    (store) => store.currentTasks
-  );
-
   const onLongPress = (e: GestureResponderEvent) => {
-    if (!lockTime) {
+    if (draggable) {
       drag(e);
       return;
     }

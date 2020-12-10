@@ -5,6 +5,7 @@ import {
 import {getProgressBase} from '@/utils/date';
 import {Data} from '@stmt/application';
 import {CurrentTasksState, RecordState, RootStore} from '@stmt/redux-store';
+import {clone} from 'ramda';
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import Presenter from './Presenter';
@@ -36,13 +37,41 @@ const RecordLogBoard = () => {
     return {...meta, score: meta.percent, ...base, nickname: ''};
   };
 
+  const getProgressList = (
+    currentMeta: Data.RecordMeta
+  ): Array<Data.RecordMeta> => {
+    if (!metaList.length) return [currentMeta];
+
+    const inScope =
+      metaList[0].month === currentMeta.month &&
+      metaList[0].year === currentMeta.year;
+
+    if (!inScope) {
+      return metaList;
+    }
+
+    const currentIndex = metaList.findIndex(
+      (meta) => meta.day === currentMeta.day
+    );
+
+    if (currentIndex === -1) return metaList;
+
+    if (metaList[currentIndex].lockTime) {
+      return metaList;
+    }
+
+    const ret = clone(metaList);
+    ret[currentIndex] = currentMeta;
+    return ret;
+  };
+
   const currentMeta: Data.RecordMeta = getCurrentMeta();
-  const progressList = [...metaList, currentMeta];
+  const progressList = getProgressList(currentMeta);
 
   useEffect(() => {
     if (!fetched && !metaList.length) {
       const {year, month, day} = getProgressBase(Date.now());
-      dispatch(recordFetchMetaList(year, month, day - 1));
+      dispatch(recordFetchMetaList(year, month, day));
       setFetched(true);
     }
   }, [metaList, fetched, dispatch]);

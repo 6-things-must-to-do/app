@@ -3,8 +3,12 @@ import {RenderItemParams} from 'react-native-draggable-flatlist';
 import React from 'react';
 import Presenter from './Presenter';
 
-const Task = (props: RenderItemParams<TaskList.Task>) => {
-  const {item, drag} = props;
+interface Props extends RenderItemParams<TaskList.Task> {
+  draggable: boolean;
+}
+
+const Task = (props: Props) => {
+  const {item, drag, draggable} = props;
   const color: keyof Style.DimensionTheme = item.completedAt ? 'tint' : 'warn';
 
   return (
@@ -12,6 +16,7 @@ const Task = (props: RenderItemParams<TaskList.Task>) => {
       onClick={item.onClick}
       onClickComplete={item.onClickComplete}
       drag={drag}
+      draggable={draggable}
       item={item}
       color={color}
     />

@@ -26,7 +26,9 @@ const TaskList = (props: TaskListProps) => {
     `${item.priority}`;
 
   const onDragEnd = (param: DragEndParams<Data.Task | TL.NotFull>) => {
-    dispatch(tasksTaskAlign(param.from, param.to));
+    if (!isRecord && !isLocked) {
+      dispatch(tasksTaskAlign(param.from, param.to));
+    }
   };
 
   const data: Array<TL.Task> = [...list];
@@ -52,13 +54,16 @@ const TaskList = (props: TaskListProps) => {
   };
 
   const useAddButton = !isRecord && !isLocked && list.length < 6;
+  const draggable = !isRecord && !isLocked;
 
   return (
     <Presenter
       onClickAdd={onClickAdd}
       onDragEnd={onDragEnd}
       data={data}
-      renderItem={Task}
+      renderItem={(renderProps) => (
+        <Task {...renderProps} draggable={draggable} />
+      )}
       keyExtractor={keyExtractor}
       dragItemOverflow={false}
       animationConfig={{} as Animated.SpringConfig}
