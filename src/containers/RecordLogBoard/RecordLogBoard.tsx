@@ -5,7 +5,6 @@ import {
 import {getProgressBase} from '@/utils/date';
 import {Data} from '@stmt/application';
 import {CurrentTasksState, RecordState, RootStore} from '@stmt/redux-store';
-import {clone} from 'ramda';
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import Presenter from './Presenter';
@@ -26,6 +25,8 @@ const RecordLogBoard = () => {
 
   const getCurrentMeta = (): Data.RecordMeta => {
     const {tasks} = current;
+    let date = Date.now();
+
     let meta: Data.TaskMeta = {
       percent: 0,
       inComplete: tasks.length,
@@ -33,40 +34,17 @@ const RecordLogBoard = () => {
       lockTime: 0
     };
 
-    const base = getProgressBase(meta.lockTime);
-    return {...meta, score: meta.percent, ...base, nickname: ''};
-  };
-
-  const getProgressList = (
-    currentMeta: Data.RecordMeta
-  ): Array<Data.RecordMeta> => {
-    if (!metaList.length) return [currentMeta];
-
-    const inScope =
-      metaList[0].month === currentMeta.month &&
-      metaList[0].year === currentMeta.year;
-
-    if (!inScope) {
-      return metaList;
+    if ('lockTime' in current) {
+      date = current.lockTime;
+      meta = current.meta;
     }
 
-    const currentIndex = metaList.findIndex(
-      (meta) => meta.day === currentMeta.day
-    );
+    const base = getProgressBase(date);
 
-    if (currentIndex === -1) return metaList;
-
-    if (metaList[currentIndex].lockTime) {
-      return metaList;
-    }
-
-    const ret = clone(metaList);
-    ret[currentIndex] = currentMeta;
-    return ret;
+    return {...meta, score: meta.percent, lockTime: 0, ...base, nickname: ''};
   };
 
   const currentMeta: Data.RecordMeta = getCurrentMeta();
-  const progressList = getProgressList(currentMeta);
 
   useEffect(() => {
     if (!fetched && !metaList.length) {
@@ -83,6 +61,7 @@ const RecordLogBoard = () => {
   }, [selectedMeta, dispatch, currentMeta]);
 
   const selected = selectedMeta || currentMeta;
+  const progressList = metaList.length ? metaList : [currentMeta];
 
   return (
     <Presenter
