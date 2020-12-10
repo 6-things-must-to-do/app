@@ -14,7 +14,6 @@ import currentTasks, {CurrentTasksAction} from './modules/currentTasks';
 import record, {RecordAction} from './modules/record';
 import global from './modules/global';
 import user from './modules/user';
-import dashboard from './modules/dashboard';
 import taskDetail from './modules/taskDetail';
 import social from './modules/social';
 import appSetting, {AppSettingAction} from './modules/appSetting';
@@ -70,7 +69,6 @@ const rootReducer = combineReducers<RootStore>({
   ),
   global,
   user,
-  dashboard,
   currentTasks: persistReducer<CurrentTasksState, CurrentTasksAction>(
     currentTasksPersistConfig,
     currentTasks

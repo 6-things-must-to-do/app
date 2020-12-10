@@ -9,8 +9,6 @@ const localUrl =
     ? 'http://10.0.2.2:4000/api'
     : 'http://127.0.0.1:4000/api';
 
-console.log(isLocal);
-
 const prodUrl = '';
 
 const devServer = 'https://dev.sixthings.tech/api';
@@ -28,3 +26,5 @@ export const RELATIONSHIPS = (endpoint: Data.RelationType) =>
   `/social/${endpoint}`;
 
 export const RECORD_META_LIST = '/records';
+export const RECORD_DETAIL = (lockTime: number) =>
+  `/records/${lockTime}/detail`;

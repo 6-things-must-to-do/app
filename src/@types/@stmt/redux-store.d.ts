@@ -51,12 +51,6 @@ declare module '@stmt/redux-store' {
     following: Array<Data.UserBase>;
   }
 
-  interface DashboardState {
-    date: number; // Date든 뭐든 뭐라도 되겠지 뭐
-    progressList: Array<Data.Progress>;
-    tasks?: Array<Data.Task>;
-  }
-
   type UserState = Partial<Data.UserBase>;
 
   interface TaskRelated {
@@ -76,6 +70,5 @@ declare module '@stmt/redux-store' {
     taskDetail: TaskDetailState;
     social: SocialState;
     record: PersistPartial & RecordState;
-    dashboard: DashboardState;
   }
 }

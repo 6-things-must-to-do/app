@@ -29,12 +29,8 @@ const RecordLogBoard = () => {
       percent: 0,
       inComplete: tasks.length,
       complete: 0,
-      lockTime: Date.now()
+      lockTime: 0
     };
-
-    if ('lockTime' in current) {
-      meta = current.meta;
-    }
 
     const base = getProgressBase(meta.lockTime);
     return {...meta, score: meta.percent, ...base, nickname: ''};
@@ -46,7 +42,6 @@ const RecordLogBoard = () => {
   useEffect(() => {
     if (!fetched && !metaList.length) {
       const {year, month, day} = getProgressBase(Date.now());
-      console.log(year, month, day);
       dispatch(recordFetchMetaList(year, month, day - 1));
       setFetched(true);
     }

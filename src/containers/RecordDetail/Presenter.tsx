@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import {Data} from '@stmt/application';
+import {Data, TaskList as TL} from '@stmt/application';
 import TaskList from '../TaskList';
 import StyledText from '@/components/StyledText';
 import * as Progress from 'react-native-progress';
@@ -9,10 +9,11 @@ import useTheme from '@/hooks/useTheme';
 interface Props {
   formattedDate: string;
   meta: Data.RecordMeta;
+  list: Array<TL.Task>;
 }
 
 export default (props: Props) => {
-  const {formattedDate, meta} = props;
+  const {formattedDate, meta, list} = props;
   const theme = useTheme();
   return (
     <>
@@ -28,7 +29,9 @@ export default (props: Props) => {
           height={2}
         />
       </ProgressView>
-      <TaskList isLocked isRecord list={[]} />
+      <TaskListView>
+        <TaskList isLocked isRecord list={list} />
+      </TaskListView>
     </>
   );
 };
@@ -44,4 +47,13 @@ const ProgressView = styled.View`
 const BigCenterText = styled(CenterText)`
   font-weight: bold;
   font-size: 20px;
+`;
+
+const TaskListView = styled.View`
+  margin-top: 16px;
+  padding-horizontal: 16px;
+  flex-direction: row;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
 `;

@@ -8,7 +8,7 @@ const SearchFriends = () => {
   const [search, setSearch] = useState('');
   const {navigate} = useNavigation<StackNavigationProp<SocialStackParam>>();
   const onClickAdd = () => {
-    navigate('SearchFriend');
+    navigate('Relationship');
   };
   const onClickSearch = () => {
     console.log('Search Clicked!');

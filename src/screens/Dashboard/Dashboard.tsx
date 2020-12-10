@@ -21,13 +21,16 @@ export default Dashboard;
 
 const Wrapper = styled(StyledView)`
   flex: 1;
+  width: 100%;
 `;
 
 const GraphView = styled.View`
   flex: 1.5;
+  width: 100%;
 `;
 
 const TextualView = styled.View`
   flex: 2;
   align-items: center;
+  width: 100%;
 `;

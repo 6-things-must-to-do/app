@@ -1,7 +1,9 @@
 import * as R from 'ramda';
 import {RecordState} from '@stmt/redux-store';
 import {
+  FETCH_DETAIL_COMPLETE,
   FETCH_META_LIST_COMPLETE,
+  recordFetchDetailComplete,
   recordFetchMetaListComplete,
   recordSelectMeta,
   recordSetData,
@@ -18,6 +20,7 @@ const initialState: RecordState = {
 export type RecordAction = ReturnType<
   | typeof recordSetData
   | typeof recordFetchMetaListComplete
+  | typeof recordFetchDetailComplete
   | typeof recordSelectMeta
 >;
 
@@ -33,6 +36,13 @@ export default function reducer(
     case SELECT_META: {
       const cState = R.clone(state);
       cState.selectedMeta = action.payload;
+      return R.mergeRight(state, cState);
+    }
+
+    case FETCH_DETAIL_COMPLETE: {
+      const cState = R.clone(state);
+
+      cState.tasks = action.payload;
       return R.mergeRight(state, cState);
     }
 

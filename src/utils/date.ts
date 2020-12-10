@@ -9,13 +9,8 @@ dayjs.extend(dayOfYear);
 dayjs.extend(isoWeek);
 
 export const getFormattedDateFromRecordMeta = (meta: Data.RecordMeta) => {
-  const {day, month, year, lockTime} = meta;
+  const {day, month, year} = meta;
   const format = 'MMMM D (ddd)';
-  if (lockTime) {
-    const ret = dayjs(lockTime).format(format);
-    return ret;
-  }
-
   return dayjs(new Date(year, month - 1, day)).format(format);
 };
 
