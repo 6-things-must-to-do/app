@@ -13,8 +13,6 @@ STMT is cross platform application which is made of [React Native](https://react
 ### Main, Set task
 
 <img src="./images/02-main.jpeg" width="250px" />
-<img src="./images/03-settask.jpeg" width="250px" />
-<img src="./images/04-fullmain.jpeg" width="250px" />
 
 ### Dashboard
 
