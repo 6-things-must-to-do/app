@@ -12,9 +12,7 @@ STMT는 [React Native](https://reactnative.dev/)로 만들어진 크로스 플�
 
 ### 메인, 태스크 설정
 
-<img src="./images/02-main.jpeg" width="250px" />
-<img src="./images/03-settask.jpeg" width="250px" />
-<img src="./images/04-fullmain.jpeg" width="250px" />
+<img src="./images/02-main.jpeg" width="750px" />
 
 ### 대시보드
 
